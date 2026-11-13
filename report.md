@@ -7,7 +7,7 @@
 
 **Branch:** main
 
-**Submission Commit SHA:a687fe940c73cc9de691849b5ec35c3912c0caa5
+**Submission Commit SHA:** `a687fe940c73cc9de691849b5ec35c3912c0caa5`
 
 ### 1. Project Overview
 
