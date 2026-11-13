@@ -1,0 +1,102 @@
+{
+  "result": "PASS",
+  "kind": "GENUINE SAVED YAHOO SESSION; BOTH UPSTREAMS DISABLED",
+  "selection": {
+    "start": "2026-11-10T20:50:00Z",
+    "end": "2026-11-10T20:50:59.999999Z"
+  },
+  "frames": 69,
+  "runs_identical": true,
+  "counts_before": {
+    "raw_observations": 454,
+    "observation_arrivals": 454,
+    "market_observations": 1958
+  },
+  "counts_after": {
+    "raw_observations": 454,
+    "observation_arrivals": 454,
+    "market_observations": 1958
+  },
+  "records_sha256_before": "70dc9aa79bb0d16a30cf58c97cba2bc76a6bbfd66d8f86fabe2b1ba14d239218",
+  "records_sha256_after": "70dc9aa79bb0d16a30cf58c97cba2bc76a6bbfd66d8f86fabe2b1ba14d239218",
+  "expected_ohlc_from_sql": {
+    "open": 349.7,
+    "high": 349.9,
+    "low": 349.62,
+    "close": 349.8
+  },
+  "expected_volume": null,
+  "volume_reason": "Different cumulative counters share a source timestamp; independent messages cannot be assumed corrections",
+  "ambiguous_same_timestamp_counters": [
+    {
+      "source_time": "2026-11-10T20:50:00.000000+00:00",
+      "first_counter": 19859039,
+      "next_counter": 19869321
+    },
+    {
+      "source_time": "2026-11-10T20:50:00.000000+00:00",
+      "first_counter": 19869321,
+      "next_counter": 19870611
+    },
+    {
+      "source_time": "2026-11-10T20:50:00.000000+00:00",
+      "first_counter": 19870611,
+      "next_counter": 19871107
+    },
+    {
+      "source_time": "2026-11-10T20:50:00.000000+00:00",
+      "first_counter": 19871107,
+      "next_counter": 19871363
+    },
+    {
+      "source_time": "2026-11-10T20:50:00.000000+00:00",
+      "first_counter": 19871363,
+      "next_counter": 19873807
+    },
+    {
+      "source_time": "2026-11-10T20:50:00.000000+00:00",
+      "first_counter": 19873807,
+      "next_counter": 19876854
+    },
+    {
+      "source_time": "2026-11-10T20:50:01.000000+00:00",
+      "first_counter": 19877693,
+      "next_counter": 19880065
+    },
+    {
+      "source_time": "2026-11-10T20:50:03.000000+00:00",
+      "first_counter": 19883815,
+      "next_counter": 19889856
+    },
+    {
+      "source_time": "2026-11-10T20:50:11.000000+00:00",
+      "first_counter": 19901294,
+      "next_counter": 19901431
+    },
+    {
+      "source_time": "2026-11-10T20:50:15.000000+00:00",
+      "first_counter": 19906070,
+      "next_counter": 19906242
+    },
+    {
+      "source_time": "2026-11-10T20:50:30.000000+00:00",
+      "first_counter": 19938206,
+      "next_counter": 19940822
+    },
+    {
+      "source_time": "2026-11-10T20:50:32.000000+00:00",
+      "first_counter": 19946246,
+      "next_counter": 19948481
+    },
+    {
+      "source_time": "2026-11-10T20:50:34.000000+00:00",
+      "first_counter": 19951127,
+      "next_counter": 19951144
+    },
+    {
+      "source_time": "2026-11-10T20:50:47.000000+00:00",
+      "first_counter": 19971681,
+      "next_counter": 19972851
+    }
+  ]
+}

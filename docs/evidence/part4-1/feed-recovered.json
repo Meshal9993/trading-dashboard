@@ -1,0 +1,23 @@
+{
+  "symbol": "AAPL",
+  "source": "yahoo_finance_chart",
+  "transport": "http_polling",
+  "delivery": "websocket",
+  "state": "available",
+  "market_status": "closed",
+  "data_label": "latest_available_polled_not_guaranteed_realtime",
+  "is_realtime": false,
+  "data_age_seconds": 194136.624219,
+  "data_kind": "historical_or_stale",
+  "provider_delay_seconds": null,
+  "market_status_basis": "last_yahoo_regular_session_metadata",
+  "stale": true,
+  "latest_event_time": "2026-11-06T21:00:00+00:00",
+  "latest_receipt_time": "2026-11-09T02:53:44.236452+00:00",
+  "last_successful_poll": "2026-11-09T02:55:36.564182+00:00",
+  "consecutive_failures": 0,
+  "error": null,
+  "skipped_rows": 0,
+  "next_poll_seconds": 30.0,
+  "completion_basis": "interval_elapsed_inferred_not_provider_final"
+}

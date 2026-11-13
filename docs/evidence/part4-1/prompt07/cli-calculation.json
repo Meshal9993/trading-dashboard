@@ -1,0 +1,45 @@
+{
+  "symbol": "AAPL",
+  "source": "yahoo_finance_websocket",
+  "as_of": "2026-11-09T15:01:00+00:00",
+  "candles": [
+    {
+      "timestamp": "2026-11-09T14:59:00Z",
+      "open": 99,
+      "high": 99,
+      "low": 99,
+      "close": 99,
+      "volume": null
+    },
+    {
+      "timestamp": "2026-11-09T15:00:00Z",
+      "open": 100,
+      "high": 103,
+      "low": 100,
+      "close": 101,
+      "volume": 11
+    }
+  ],
+  "metadata": [
+    {
+      "timestamp": "2026-11-09T14:59:00Z",
+      "is_complete": true,
+      "state": "complete",
+      "completion_basis": "interval_elapsed_not_immutable",
+      "volume_status": "unknown",
+      "volume_unknown_reasons": [
+        "missing_session_baseline"
+      ],
+      "observation_count": 1
+    },
+    {
+      "timestamp": "2026-11-09T15:00:00Z",
+      "is_complete": true,
+      "state": "complete",
+      "completion_basis": "interval_elapsed_not_immutable",
+      "volume_status": "known",
+      "volume_unknown_reasons": [],
+      "observation_count": 3
+    }
+  ]
+}

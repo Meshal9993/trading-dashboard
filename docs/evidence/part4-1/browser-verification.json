@@ -1,0 +1,15 @@
+{
+  "captured_at_utc": "2026-11-09T02:57:44.379Z",
+  "scenario": "real-candle controlled historical replay after append",
+  "candle_count_text": "Up candle\nDown candle\n5 candles\n·\nScroll to zoom · drag to explore",
+  "notice": "ⓘ\nStale observations\n\nThe latest candle is more than 3 minutes old. Prices shown are historical, not current quotes.",
+  "connection": "Connected",
+  "ledger": [
+    "Nov 06, 2026, 21:00:00342.37342.37342.37342.370r0 localElapsed*",
+    "Nov 06, 2026, 20:59:00342.42342.67342.29342.36647,051r0 localElapsed*",
+    "Nov 06, 2026, 20:58:00342.46342.63342.26342.42313,586r0 localElapsed*",
+    "Nov 06, 2026, 20:57:00342.68342.69342.34342.45192,566r0 localElapsed*",
+    "Nov 06, 2026, 20:56:00342.68342.95342.56342.68113,984r0 localElapsed*"
+  ],
+  "console": []
+}

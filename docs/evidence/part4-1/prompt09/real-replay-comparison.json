@@ -1,0 +1,292 @@
+{
+  "result": "PASS",
+  "kind": "GENUINE SAVED YAHOO SESSION; BOTH UPSTREAMS DISABLED",
+  "selection": {
+    "start": "2026-11-10T20:50:00Z",
+    "end": "2026-11-10T20:50:59.999999Z"
+  },
+  "frames": 69,
+  "runs_identical": true,
+  "counts_before": {
+    "raw_observations": 454,
+    "observation_arrivals": 454,
+    "market_observations": 1958
+  },
+  "counts_after": {
+    "raw_observations": 454,
+    "observation_arrivals": 454,
+    "market_observations": 1958
+  },
+  "records_sha256_before": "70dc9aa79bb0d16a30cf58c97cba2bc76a6bbfd66d8f86fabe2b1ba14d239218",
+  "records_sha256_after": "70dc9aa79bb0d16a30cf58c97cba2bc76a6bbfd66d8f86fabe2b1ba14d239218",
+  "expected_ohlc_from_sql": {
+    "open": 349.7,
+    "high": 349.9,
+    "low": 349.62,
+    "close": 349.8
+  },
+  "expected_volume": null,
+  "volume_reason": "Different cumulative counters share a source timestamp; independent messages cannot be assumed corrections",
+  "counter_regressions": [],
+  "ambiguous_same_timestamp_counters": [
+    {
+      "source_time": "2026-11-10T20:50:00.000000+00:00",
+      "first_counter": 19859039,
+      "next_counter": 19869321
+    },
+    {
+      "source_time": "2026-11-10T20:50:00.000000+00:00",
+      "first_counter": 19869321,
+      "next_counter": 19870611
+    },
+    {
+      "source_time": "2026-11-10T20:50:00.000000+00:00",
+      "first_counter": 19870611,
+      "next_counter": 19871107
+    },
+    {
+      "source_time": "2026-11-10T20:50:00.000000+00:00",
+      "first_counter": 19871107,
+      "next_counter": 19871363
+    },
+    {
+      "source_time": "2026-11-10T20:50:00.000000+00:00",
+      "first_counter": 19871363,
+      "next_counter": 19873807
+    },
+    {
+      "source_time": "2026-11-10T20:50:00.000000+00:00",
+      "first_counter": 19873807,
+      "next_counter": 19876854
+    },
+    {
+      "source_time": "2026-11-10T20:50:01.000000+00:00",
+      "first_counter": 19877693,
+      "next_counter": 19880065
+    },
+    {
+      "source_time": "2026-11-10T20:50:03.000000+00:00",
+      "first_counter": 19883815,
+      "next_counter": 19889856
+    },
+    {
+      "source_time": "2026-11-10T20:50:11.000000+00:00",
+      "first_counter": 19901294,
+      "next_counter": 19901431
+    },
+    {
+      "source_time": "2026-11-10T20:50:15.000000+00:00",
+      "first_counter": 19906070,
+      "next_counter": 19906242
+    },
+    {
+      "source_time": "2026-11-10T20:50:30.000000+00:00",
+      "first_counter": 19938206,
+      "next_counter": 19940822
+    },
+    {
+      "source_time": "2026-11-10T20:50:32.000000+00:00",
+      "first_counter": 19946246,
+      "next_counter": 19948481
+    },
+    {
+      "source_time": "2026-11-10T20:50:34.000000+00:00",
+      "first_counter": 19951127,
+      "next_counter": 19951144
+    },
+    {
+      "source_time": "2026-11-10T20:50:47.000000+00:00",
+      "first_counter": 19971681,
+      "next_counter": 19972851
+    }
+  ],
+  "final_frame": {
+    "symbol": "AAPL",
+    "source": "yahoo_finance_websocket",
+    "timeframe": "1m",
+    "as_of": "2026-11-10T20:50:59.503964+00:00",
+    "calendar": "NASDAQ",
+    "session_policy": "regular",
+    "excluded_nonregular_minutes": 0,
+    "is_guaranteed_realtime": false,
+    "candles": [
+      {
+        "timestamp": "2026-11-10T20:49:00Z",
+        "open": 349.475,
+        "high": 349.64,
+        "low": 349.43,
+        "close": 349.62,
+        "volume": null
+      },
+      {
+        "timestamp": "2026-11-10T20:50:00Z",
+        "open": 349.7,
+        "high": 349.9,
+        "low": 349.62,
+        "close": 349.8,
+        "volume": null
+      }
+    ],
+    "metadata": [
+      {
+        "timestamp": "2026-11-10T20:49:00Z",
+        "interval_end": "2026-11-10T20:50:00Z",
+        "session_date": "2026-11-10",
+        "session_open": "2026-11-10T14:30:00Z",
+        "session_close": "2026-11-10T21:00:00Z",
+        "is_complete": true,
+        "state": "complete",
+        "completion_basis": "interval_elapsed_not_immutable",
+        "expected_minutes": 1,
+        "available_minutes": 1,
+        "complete_minutes": 1,
+        "missing_minutes": 0,
+        "is_coverage_complete": true,
+        "coverage_status": "full",
+        "volume_status": "unknown",
+        "volume_unknown_reasons": [
+          "ambiguous_cumulative_baseline",
+          "ambiguous_same_timestamp_volume"
+        ],
+        "volume_basis": "sum_of_available_minute_volumes"
+      },
+      {
+        "timestamp": "2026-11-10T20:50:00Z",
+        "interval_end": "2026-11-10T20:51:00Z",
+        "session_date": "2026-11-10",
+        "session_open": "2026-11-10T14:30:00Z",
+        "session_close": "2026-11-10T21:00:00Z",
+        "is_complete": false,
+        "state": "forming",
+        "completion_basis": "interval_elapsed_not_immutable",
+        "expected_minutes": 1,
+        "available_minutes": 1,
+        "complete_minutes": 0,
+        "missing_minutes": 0,
+        "is_coverage_complete": false,
+        "coverage_status": "partial",
+        "volume_status": "unknown",
+        "volume_unknown_reasons": [
+          "ambiguous_cumulative_baseline",
+          "ambiguous_same_timestamp_volume"
+        ],
+        "volume_basis": "sum_of_available_minute_volumes"
+      }
+    ],
+    "dataset": "raw",
+    "mode": "replay",
+    "type": "snapshot",
+    "sequence": 224,
+    "replay": {
+      "cursor": 224,
+      "high_water": 454,
+      "processed": 69,
+      "total": 69,
+      "complete": true,
+      "empty": false,
+      "clock": "2026-11-10T20:50:59.503964+00:00",
+      "arrival": {
+        "arrival_sequence": 224,
+        "observation_id": 224,
+        "receipt_time_utc": "2026-11-10T20:50:59.503964+00:00",
+        "source_time_utc": "2026-11-10T20:50:59.000000+00:00",
+        "disposition": "inserted",
+        "revision": 0,
+        "supersedes_id": null
+      },
+      "range_basis": "backend_receipt_time_utc_inclusive",
+      "message": null
+    },
+    "last_recorded_arrival": {
+      "arrival_sequence": 224,
+      "observation_id": 224,
+      "receipt_time_utc": "2026-11-10T20:50:59.503964+00:00",
+      "source_time_utc": "2026-11-10T20:50:59.000000+00:00",
+      "disposition": "inserted",
+      "revision": 0,
+      "supersedes_id": null
+    },
+    "feed_status": {
+      "state": "replay",
+      "source": "yahoo_finance_websocket",
+      "fallback_active": false,
+      "upstream_state": "not_required",
+      "upstream_connected": false,
+      "latest_event_time": "2026-11-10T20:50:59.000000+00:00",
+      "latest_receipt_time": "2026-11-10T20:50:59.503964+00:00",
+      "is_realtime": false,
+      "data_label": "Replay \u00b7 recorded Yahoo observations"
+    }
+  },
+  "frame_hashes": [
+    "a607a66c83f55887cefb0c09d101a01f890e628249896fc54574156d0bdb840a",
+    "7e1352cac00c0fb94ec515e639d8c8f00804d10f82f621dad7bb46fea30c895e",
+    "f86a0f856530a0ec837adf86bd67bc59a31c15977f7d23f6a36691cc8913a8a5",
+    "ecdce77b74035af68e0ece635ebd639ebc1fc465ee0b02b1a96fd73700d63bd4",
+    "fac87f7f59abf8d261cff94ff11a76c7baa7f7f7f7f2d6b301ada321a846af07",
+    "2ff35729787f6d2d6e339ca31fdfd5b0f4e64f3f3d56e05b466e83045d73ed7f",
+    "480cab680cb3b11dae74b9791cf8e918e3f084b530a781d637fb0b9aebe41cff",
+    "743b9c19cfacd94ff89276d26bde3560d91be0ed5c0c34a0ee7a5aa567e4424f",
+    "ed12ed4b8daa58640f1c53690b24283c0cdf4ee7424a8545bbd80180c987533d",
+    "5fda591786c1199bec22580fa4e40dbf82bb1de3d11816a798cdf4fcdfa9d55c",
+    "3bded691df5a13593c576b7470af234b10b1fcdf58ff7a9c7352b4c027c99257",
+    "73b4c578335321a0cd86721793fc49e1c7b6e2a18bafee74b282182ef2417329",
+    "2c23e2766feeb5ffc851faaf61a278bf5745225e7bc083561aec018f11fce0d2",
+    "2d511728d079f94a65b8dfd4f6de5aa517cf15583ae60328df4b44fb34454bfb",
+    "01b1af8c7472945e3882c3cb241dc673e9d5c9ebfb7c68e12fdc772e58c04bbf",
+    "bc3d44ae12e1d9d3ad5065f6dd31984fa9d382ed90d038162979c51eaa75674b",
+    "42ce4bbe0f2a64b1b50a30f299c45bbc39ddbc267f40d63782e7195d53bb727a",
+    "acc6eb829fcd9a7d8d270e6a001ecb8003afbb7af44418b39831d1cfd8ceafa0",
+    "2d5c79ece03767f39e17aca8fb860f82f9f90e31772e4179128dc8f773252a6a",
+    "9017603b78e5a98bacac9d47aae1c5ce639d9d2b64fc3a0bd359498915e37419",
+    "444c183d01c031f745c67f585e8cc1f215117c4caaad5d25cc42f06a182534ef",
+    "39b80e6db37daffed090248d7243c18d2c9dc21042bc61b7c0741487da816a9e",
+    "febeaf39f629e6e00c87933a573c2536b9f571f666e83153dc7146557c1dc195",
+    "f5176abd6dedfa616436b4aa8a6f3e97bb6df3262225b95227458eb1ab51ac52",
+    "e36b63359b85ee21a8354c2ef046ae4e604f9df10a53adb03daf1aeaac4768fa",
+    "3856edeec6000fd657af0503bd1c73f9578d2af11e1d0b8f6ce9521e3e069579",
+    "c3dfa367bcaeb41c82a6fa08f5d7ff210d6eae6ba18046de35f36fb93372eaf6",
+    "0c27d3046828bef0f61dfb86f7f45b748e452193c4d1a0aa1b684285cbea90ed",
+    "c9a455dd1a4d22e4602f158cb70847e9070afa4d0ec53d263d4f4a4f71d0c994",
+    "e74856d15ff8e0b4815c10362db406cb75759ec22dcbd01329c9e64491bbcb27",
+    "507468b4d7b538c4d7acf7eff0b233fb6046ca2658c99017ea6be5fcf3c8a8c8",
+    "89816d167d3827b16403a8dbc3d68fd05d3812148add6a8db205a5497a6b00f0",
+    "80a8ba692f8f92d744ea65a78da3a73329c65e9a6639e20c1f5692b1e8398376",
+    "d92e5dd5f5aed8f6a31183e3363f02b23237bca3d88791a3bf45d236607c2f1c",
+    "354487068e0908add42b63a163771fcc451590c59b11264d04de08733cda635a",
+    "0a9e52dc32e0ad772fd921d40e1436653d3a8649c183608f60e76f0c8fa10afa",
+    "e5c5c83079d8b83e5776e051e7e10af1eb591ef1538ac88c0f608a01f4654abd",
+    "02b5f31b8c6d4f068ae0ebdd9dca218100441b298d9c91e2df7795be48b8c5ee",
+    "637ea5b358de15e87b5e3ccfc8ca8e924aa7e5e407f60fc8b66c3101d8fb58ba",
+    "6454c9f3062e35dd7a8ff8ad1ae90142ba46772933d9d11d62c16490b8262a1f",
+    "e8cee3c32bcc81401d48f127538c050186d2a45eacc30bb488b0527bf5d1562b",
+    "90b3e5a290cdd5c0880fe6329f58df152c8b4f270ecadeb07e0a26fcf9ff9b4c",
+    "84b4eb762fbe2ad81b0f241197a0d70f88d07a58f46fe16a2d4005c5a919c7a4",
+    "5339de0724cfed96995e61df5f399e378be1615886d6be17fb6ec34d706aa20e",
+    "967e6b6b601071c05fdcff043ff2ac73c0f267c331b294fc77acbb28607352cd",
+    "df787ad3b037df4d5bc862b66117dfc57469162ace3b6a283cc596422e124e99",
+    "bc9fe17d9e2ecfe808699f8fd426a1d872017fc925ed50110f455a2b0a253f7d",
+    "8495c7274376b7d6db58d6064d1802b4ea6ace9c10727302d947297f1352f09d",
+    "5eb2b9d9a4c82aa6d5de65694f5297bcf7ea8b952e54215c14ffb086f17da91e",
+    "1e1ce41f3d52c02638a9cda5258468fd4898aab50d5230adf3879306cda9881f",
+    "038d95fb7c7ecd08f9dda4813258354841c81e45d0c6d8fbc216d863f273c500",
+    "40f76d601fb52f69e646c1a981883d6d6e57453d3e6d42211a64b88decfd0cf1",
+    "23f64d984f7a93f2010351bb602660cbd469d0d30e844540978bbf43970249c8",
+    "a29d9202745e6318d524ab397535af34d08f3319c33ba634b13ddc58c15aa383",
+    "2596def63c243e945ea804617dffaee4ba29846219bd6a9c12f0feb6ba8043da",
+    "b52081d252cd9fa15f3c2127765ec779a51f1efe798856a0868a62e7124f738f",
+    "f07d01c264b3d3cda46edc4d7858c4242a18b4ca608210585b42f20214ace500",
+    "808fac6002e7c3778f7cb914344159730489355a7833f58a393e42143757c6ed",
+    "73ea342af185a7a0218893a91b16617eebd4ac092a4892e8f82595bf04ee1d18",
+    "0be6647d9ede99ad8df9b0a4d5c8849367889855c1a25fa321ffd86b2941edcf",
+    "dc95c8bd67744006345ea5a8fc1852bc054d9220745a3f102051a0cd555e43db",
+    "461663c5702c64a6a495abe9b87d553e9f0af6458b28fe6a0c163fdc72534de7",
+    "329ad8f8af960c5fa18efebf2ccf7bf73b4a345954017ed889c880e373a71eee",
+    "348d66015fe427918b5a621007fe851688beba8a1302659deef5d0596f7912db",
+    "f44d2ebd3ecb0f037c957a40025e2e2ffae1a5f6f938973787ad0380a6171fc7",
+    "65f3d3ca156665f7d5ca6c927285f720eb299b336b9a6717c089f7ebc66ea637",
+    "5f57aff7d89160e2bcc584e6ab528b407ddfedc659926d421c4133ec9d86ebd6",
+    "5c8de529fd04c86f9978be8147835f119d06b9982f88826f424a47d9ca820985",
+    "9fba9a21762292d8600e97f35c02b12bd4deecd7fded81a8fa3439c454eb6650"
+  ]
+}

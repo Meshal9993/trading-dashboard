@@ -1,0 +1,4 @@
+........................................................................ [ 75%]
+........................                                                 [100%]
+- generated xml file: /Users/alqufaidi/Desktop/trading-dashboard/docs/evidence/part4-1/prompt06/backend-junit.xml -
+96 passed in 0.68s

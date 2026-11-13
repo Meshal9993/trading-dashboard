@@ -1,0 +1,24 @@
+INFO:     Started server process [67765]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
+INFO:     127.0.0.1:50463 - "WebSocket /ws/market" [accepted]
+INFO:     connection open
+INFO:     127.0.0.1:50464 - "GET /observations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50472 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50474 - "GET /observations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50476 - "WebSocket /ws/market" [accepted]
+INFO:     connection open
+INFO:     connection closed
+INFO:     127.0.0.1:50478 - "WebSocket /ws/market" [accepted]
+INFO:     connection open
+INFO:     connection closed
+INFO:     connection closed
+INFO:     127.0.0.1:50496 - "WebSocket /ws/market" [accepted]
+INFO:     connection open
+INFO:     127.0.0.1:50495 - "GET /observations HTTP/1.1" 200 OK
+INFO:     Shutting down
+INFO:     connection closed
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [67765]

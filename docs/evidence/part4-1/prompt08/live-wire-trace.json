@@ -1,0 +1,177 @@
+{
+  "result": "PASS",
+  "kind": "GENUINE YAHOO WEBSOCKET QUOTE, NOT CONSTRUCTED DATA",
+  "captured_at_utc": "2026-11-10T20:49:03.568315+00:00",
+  "database": "/tmp/prompt08-live-20261110.sqlite3",
+  "checks": [
+    "Committed arrival row exists before message receipt",
+    "Stored raw price/source timestamp match message trace",
+    "Derived candle close equals traced price",
+    "Full candle and metadata state equals independent as-of SQLite calculation"
+  ],
+  "wire_message": {
+    "symbol": "AAPL",
+    "source": "yahoo_finance_websocket",
+    "timeframe": "1m",
+    "as_of": "2026-11-10T20:49:03.506893+00:00",
+    "calendar": "NASDAQ",
+    "session_policy": "regular",
+    "excluded_nonregular_minutes": 0,
+    "is_guaranteed_realtime": false,
+    "candles": [
+      {
+        "timestamp": "2026-11-10T20:47:00Z",
+        "open": 349.3201,
+        "high": 349.39,
+        "low": 349.29,
+        "close": 349.35,
+        "volume": null
+      },
+      {
+        "timestamp": "2026-11-10T20:48:00Z",
+        "open": 349.34,
+        "high": 349.5088,
+        "low": 349.31,
+        "close": 349.44,
+        "volume": null
+      },
+      {
+        "timestamp": "2026-11-10T20:49:00Z",
+        "open": 349.475,
+        "high": 349.48,
+        "low": 349.44,
+        "close": 349.44,
+        "volume": null
+      }
+    ],
+    "metadata": [
+      {
+        "timestamp": "2026-11-10T20:47:00Z",
+        "interval_end": "2026-11-10T20:48:00Z",
+        "session_date": "2026-11-10",
+        "session_open": "2026-11-10T14:30:00Z",
+        "session_close": "2026-11-10T21:00:00Z",
+        "is_complete": true,
+        "state": "complete",
+        "completion_basis": "interval_elapsed_not_immutable",
+        "expected_minutes": 1,
+        "available_minutes": 1,
+        "complete_minutes": 1,
+        "missing_minutes": 0,
+        "is_coverage_complete": true,
+        "coverage_status": "full",
+        "volume_status": "unknown",
+        "volume_unknown_reasons": [
+          "ambiguous_cumulative_baseline",
+          "ambiguous_same_timestamp_volume",
+          "missing_session_baseline"
+        ],
+        "volume_basis": "sum_of_available_minute_volumes"
+      },
+      {
+        "timestamp": "2026-11-10T20:48:00Z",
+        "interval_end": "2026-11-10T20:49:00Z",
+        "session_date": "2026-11-10",
+        "session_open": "2026-11-10T14:30:00Z",
+        "session_close": "2026-11-10T21:00:00Z",
+        "is_complete": true,
+        "state": "complete",
+        "completion_basis": "interval_elapsed_not_immutable",
+        "expected_minutes": 1,
+        "available_minutes": 1,
+        "complete_minutes": 1,
+        "missing_minutes": 0,
+        "is_coverage_complete": true,
+        "coverage_status": "full",
+        "volume_status": "unknown",
+        "volume_unknown_reasons": [
+          "ambiguous_cumulative_baseline",
+          "ambiguous_same_timestamp_volume"
+        ],
+        "volume_basis": "sum_of_available_minute_volumes"
+      },
+      {
+        "timestamp": "2026-11-10T20:49:00Z",
+        "interval_end": "2026-11-10T20:50:00Z",
+        "session_date": "2026-11-10",
+        "session_open": "2026-11-10T14:30:00Z",
+        "session_close": "2026-11-10T21:00:00Z",
+        "is_complete": false,
+        "state": "forming",
+        "completion_basis": "interval_elapsed_not_immutable",
+        "expected_minutes": 1,
+        "available_minutes": 1,
+        "complete_minutes": 0,
+        "missing_minutes": 0,
+        "is_coverage_complete": false,
+        "coverage_status": "partial",
+        "volume_status": "unknown",
+        "volume_unknown_reasons": [
+          "ambiguous_cumulative_baseline",
+          "ambiguous_same_timestamp_volume"
+        ],
+        "volume_basis": "sum_of_available_minute_volumes"
+      }
+    ],
+    "dataset": "raw",
+    "type": "snapshot",
+    "sequence": 123,
+    "feed_status": {
+      "symbol": "AAPL",
+      "source": "yahoo_finance_websocket",
+      "transport": "upstream_websocket",
+      "state": "available",
+      "upstream_state": "available",
+      "upstream_connected": true,
+      "upstream_error": null,
+      "upstream_failures": 0,
+      "fallback_active": false,
+      "polling_state": "degraded",
+      "data_label": "Streamed observations \u00b7 delay not guaranteed",
+      "is_realtime": false,
+      "market_status": "open",
+      "latest_event_time": "2026-11-10T20:49:02+00:00",
+      "latest_receipt_time": "2026-11-10T20:49:03.435929+00:00",
+      "latest_upstream_source_time": "2026-11-10T20:49:02+00:00",
+      "last_upstream_receipt_time": "2026-11-10T20:49:03.435929+00:00",
+      "last_successful_poll": "2026-11-10T20:48:33.290675+00:00",
+      "data_age_seconds": 1.508019,
+      "stale": false,
+      "age_basis": "source_observation_time",
+      "ignored_messages": 0,
+      "provider_delay_seconds": null
+    },
+    "last_recorded_arrival": {
+      "arrival_sequence": 96,
+      "observation_id": 96,
+      "disposition": "inserted",
+      "revision": 0,
+      "source_time_utc": "2026-11-10T20:49:02+00:00",
+      "receipt_time_utc": "2026-11-10T20:49:03.435929+00:00",
+      "price": 349.44
+    }
+  },
+  "stored_row": {
+    "arrival_sequence": 96,
+    "receipt_time_utc": "2026-11-10T20:49:03.435929+00:00",
+    "observation_id": 96,
+    "source": "yahoo_finance_websocket",
+    "symbol": "AAPL",
+    "source_time_ms": 1794343742000,
+    "source_time_utc": "2026-11-10T20:49:02.000000+00:00",
+    "source_timestamp_units": "milliseconds_since_unix_epoch",
+    "first_receipt_time_utc": "2026-11-10T20:49:03.435929+00:00",
+    "payload_json": "{\"change\":-1.25,\"change_percent\":-0.35644016,\"day_volume\":\"19788983\",\"exchange\":\"NMS\",\"id\":\"AAPL\",\"last_size\":\"200\",\"market_hours\":1,\"price\":349.44,\"price_hint\":\"2\",\"quote_type\":8,\"time\":\"1794343742000\"}",
+    "revision": 0,
+    "supersedes_id": null,
+    "correction_evidence": null
+  },
+  "matching_candle": {
+    "timestamp": "2026-11-10T20:49:00Z",
+    "open": 349.475,
+    "high": 349.48,
+    "low": 349.44,
+    "close": 349.44,
+    "volume": null
+  }
+}

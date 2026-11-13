@@ -1,0 +1,129 @@
+▥
+MARKET / OBSERVATORY
+IST 402 / A4.1
+Replay · offline capable
+
+MARKET WORKSPACE / EQUITIES
+
+A clearer view of the market.
+
+Price, volume, and the context behind every observation.
+
+Y!
+Yahoo Finance
+|
+REPLAY · RECORDED DATA
+Live dashboard
+Replay
+Replay recorded observations
+
+Read-only SQLite playback · receipt range in UTC · original arrival order
+
+Saved symbol
+Select symbol
+AAPL
+Start receipt (UTC ISO)
+End receipt (UTC ISO)
+Load / restart replay
+Play replay
+Next observation
+Replay clock · 2026-11-10T20:50:59.503964+00:00
+69 / 69 arrivals · Finished
+Arrival #224 · inserted · source 2026-11-10T20:50:59.000000+00:00 · original receipt 2026-11-10T20:50:59.503964+00:00
+
+Pre-range records supply baselines and correction context within affected candles. No observations are written. Playback advances one arrival every 300 ms, plus request time.
+
+A
+AAPL NASDAQ
+
+Apple Inc. · USD
+
+LATEST OBSERVED CLOSE
+349.80 USD
+
++0.14% over displayed candles
+
+CANDLE INTERVAL
+5 minutes
+Regular session only
+LATEST CANDLE VOLUME
+Unknown
+Shares · observed volume
+Replay / AAPL
+
+5 minutes candles · UTC · Forming candle
+
+1m
+5m
+15m
+1h
+1d
+Latest 390
+All received
+⤢
+O 349.70
+H 349.90
+L 349.62
+C 349.80
+ VOL Unknown
+	
+	
+
+
+
+	
+	
+
+	
+	
+Up candle
+Down candle
+2 candles
+·
+Scroll to zoom · drag to explore
+ⓘ
+Replay · recorded observations
+
+Read-only arrival-order playback from SQLite. Source timestamps are preserved; late observations and revisions appear when their receipt is replayed. This is not live data.
+
+Feed monitor
+AAPL
+Replay · recorded data
+Data source
+Yahoo Finance
+Delivery
+SQLite arrival replay
+Upstream
+Not required for replay · socket closed
+Market
+Unknown
+Data age
+0s
+NEWEST SOURCE OBSERVATION · UTC
+Nov 10, 2026, 20:50:59
+LATEST SOURCE RECEIPT · UTC
+Nov 10, 2026, 20:50:59
+LAST SUCCESSFUL POLL · UTC
+Not available
+KNOW YOUR DATA
+Context before conviction.
+
+Raw candles are calculated from stored Yahoo WebSocket observations. Polling fallback is a separate dataset. Neither source guarantees real-time exchange prices.
+
+Age uses the newest received source timestamp for streamed observations, or the latest provider timestamp for polling fallback. Unknown volume is shown explicitly; completion does not guarantee finality.
+
+EXPLICIT PROVENANCE · NO REAL-TIME GUARANTEE
+Observation ledger
+
+Most recent derived candles · UTC
+
+LAST 5 OBSERVATIONS
+Latest AAPL candles, including coverage and completion status
+EVENT TIME · UTC	OPEN	HIGH	LOW	CLOSE	VOLUME	COVERAGE	INTERVAL
+Nov 10, 2026, 20:50:00	349.70	349.90	349.62	349.80	Unknown	1/5 min	Forming
+Nov 10, 2026, 20:45:00	349.32	349.64	349.29	349.62	Unknown	3/5 min	Complete*
+
+*Interval elapsed is inferred; provider corrections can still arrive.
+
+MARKET OBSERVATORY / IST 402 · Assignment 4.1
+TradingView Lightweight Charts™ · Copyright (с) 2025 TradingView, Inc. · TradingView

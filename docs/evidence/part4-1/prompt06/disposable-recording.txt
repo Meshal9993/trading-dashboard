@@ -1,0 +1,27 @@
+{
+  "result": "PASS",
+  "input_kind": "CONSTRUCTED TEST DATA, NOT YAHOO MARKET EVIDENCE",
+  "database_path": "/var/folders/20/7d6ym4q54q907m_10zpjv1zw0000gn/T/prompt06-test-2guj86fj/disposable.sqlite3",
+  "captured_at_utc": "2026-11-10T19:02:22.486490+00:00",
+  "expected": {
+    "distinct_observations": 4,
+    "arrivals_before_restart": 6,
+    "next_sequence_after_restart": 7,
+    "dispositions_before_restart": [
+      "inserted",
+      "duplicate",
+      "inserted",
+      "inserted",
+      "revision",
+      "duplicate"
+    ]
+  },
+  "observed": {
+    "distinct_observations": 4,
+    "arrivals_before_restart": 6,
+    "next_sequence_after_restart": 7,
+    "sqlite_integrity": "ok",
+    "restart_preserved_all_fields": true
+  },
+  "restart_method": "First FastAPI lifespan closed; a new interpreter process initialized FastAPI with the same SQLite path and polling disabled."
+}

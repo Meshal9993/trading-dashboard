@@ -1,0 +1,93 @@
+{
+  "symbol": "AAPL",
+  "started_at_utc": "2026-11-10T19:02:26.996023+00:00",
+  "timeout_seconds": 60.0,
+  "connected": true,
+  "subscription_sent": true,
+  "receipt_verified": true,
+  "quote": {
+    "symbol": "AAPL",
+    "price": 348.235,
+    "source": "yahoo_finance_websocket",
+    "source_timestamp_raw": "1794337346000",
+    "source_timestamp_units": "milliseconds_since_unix_epoch",
+    "source_time_utc": "2026-11-10T19:02:26+00:00",
+    "backend_receipt_time_utc": "2026-11-10T19:02:28.228322+00:00",
+    "source_age_seconds_at_receipt": 2.228322,
+    "freshness": "recent_observation_delay_not_guaranteed",
+    "is_guaranteed_realtime": false,
+    "volume_fields": {
+      "day_volume": {
+        "raw_value": "15947999",
+        "value": 15947999,
+        "meaning": "reported cumulative day/session volume; not per-trade"
+      }
+    },
+    "raw_message": {
+      "id": "AAPL",
+      "price": 348.235,
+      "time": "1794337346000",
+      "exchange": "NMS",
+      "quote_type": 8,
+      "market_hours": 1,
+      "change_percent": -0.70005333,
+      "day_volume": "15947999",
+      "change": -2.455017,
+      "price_hint": "2"
+    }
+  },
+  "ignored_messages": 0,
+  "outcome": "quote_received",
+  "cleanup_error": null,
+  "capture_target": 3,
+  "capture_target_reached": true,
+  "valid_quotes_received": 3,
+  "recording_enabled": true,
+  "recorded_arrivals": [
+    {
+      "observation_id": 1,
+      "arrival_sequence": 1,
+      "disposition": "inserted",
+      "revision": 0
+    },
+    {
+      "observation_id": 2,
+      "arrival_sequence": 2,
+      "disposition": "inserted",
+      "revision": 0
+    },
+    {
+      "observation_id": 3,
+      "arrival_sequence": 3,
+      "disposition": "inserted",
+      "revision": 0
+    }
+  ],
+  "persistence_error": null,
+  "connected_at_utc": "2026-11-10T19:02:27.197068+00:00",
+  "finished_at_utc": "2026-11-10T19:02:30.299307+00:00",
+  "elapsed_seconds_including_cleanup": 3.303,
+  "database_path": "/private/tmp/trading-dashboard-prompt06.1bVsb9/market.sqlite3",
+  "environment": {
+    "python": "3.9.6 (default, May 22 2026, 11:13:45) \n[Clang 21.0.0 (clang-2100.1.1.101)]",
+    "interpreter": "/Users/alqufaidi/Desktop/trading-dashboard/backend/.venv/bin/python",
+    "os": "macOS-26.6-arm64-arm-64bit",
+    "yfinance": "0.2.66",
+    "websockets": "15.0.1"
+  },
+  "command": [
+    "/Users/alqufaidi/Desktop/trading-dashboard/backend/.venv/bin/python",
+    "-m",
+    "backend.app.services.yahoo_stream",
+    "--symbol",
+    "AAPL",
+    "--timeout",
+    "60",
+    "--max-quotes",
+    "3",
+    "--database",
+    "/tmp/trading-dashboard-prompt06.1bVsb9/market.sqlite3",
+    "--output",
+    "docs/evidence/part4-1/prompt06/live-recording.json"
+  ]
+}

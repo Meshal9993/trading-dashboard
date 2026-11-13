@@ -1,0 +1,11 @@
+
+> trading-dashboard-frontend@0.1.0 dev
+> vite --host 127.0.0.1
+
+
+  VITE v7.3.7  ready in 104 ms
+
+  ➜  Local:   http://127.0.0.1:5173/
+5:33:21 PM [vite] vite.config.js changed, restarting server...
+5:33:21 PM [vite] server restarted.
+5:37:40 PM [vite] (client) hmr update /src/App.vue

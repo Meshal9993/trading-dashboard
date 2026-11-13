@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuites name="vitest tests" tests="34" failures="0" errors="0" time="0.111488291">
+    <testsuite name="tests/App.test.js" timestamp="2026-11-10T20:54:40.471Z" hostname="Meshals-MacBook-Air.local" tests="10" failures="0" errors="0" skipped="0" time="0.081028958">
+        <testcase classname="tests/App.test.js" name="dashboard states &gt; starts with a truthful loading state and no fabricated price" time="0.019044">
+        </testcase>
+        <testcase classname="tests/App.test.js" name="dashboard states &gt; shows saved candles, OHLCV, provenance, timestamps, and closed/stale state" time="0.020149833">
+        </testcase>
+        <testcase classname="tests/App.test.js" name="dashboard states &gt; shows exceptional state while preserving candles" time="0.005904958">
+        </testcase>
+        <testcase classname="tests/App.test.js" name="dashboard states &gt; shows exceptional state while preserving candles" time="0.003431667">
+        </testcase>
+        <testcase classname="tests/App.test.js" name="dashboard states &gt; shows exceptional state while preserving candles" time="0.006085709">
+        </testcase>
+        <testcase classname="tests/App.test.js" name="dashboard states &gt; shows exceptional state while preserving candles" time="0.003881333">
+        </testcase>
+        <testcase classname="tests/App.test.js" name="dashboard states &gt; shows empty data without inventing candles and supports reconnect" time="0.007512">
+        </testcase>
+        <testcase classname="tests/App.test.js" name="dashboard states &gt; updates visible close and volume when a revision arrives" time="0.005242041">
+        </testcase>
+        <testcase classname="tests/App.test.js" name="shows upstream outage independently from the connected browser and exposes interval selector" time="0.005724375">
+        </testcase>
+        <testcase classname="tests/App.test.js" name="shows forming candles, unknown volume and observation-based age for streaming" time="0.003171958">
+        </testcase>
+    </testsuite>
+    <testsuite name="tests/MarketChart.test.js" timestamp="2026-11-10T20:54:40.472Z" hostname="Meshals-MacBook-Air.local" tests="3" failures="0" errors="0" skipped="0" time="0.011647">
+        <testcase classname="tests/MarketChart.test.js" name="plots OHLC and volume at source timestamps, then updates revisions" time="0.007936167">
+        </testcase>
+        <testcase classname="tests/MarketChart.test.js" name="redraws older corrections while preserving chart range" time="0.001727333">
+        </testcase>
+        <testcase classname="tests/MarketChart.test.js" name="renders unknown volume as whitespace rather than a zero histogram bar" time="0.001455917">
+        </testcase>
+    </testsuite>
+    <testsuite name="tests/marketClient.test.js" timestamp="2026-11-10T20:54:40.472Z" hostname="Meshals-MacBook-Air.local" tests="10" failures="0" errors="0" skipped="0" time="0.016400291">
+        <testcase classname="tests/marketClient.test.js" name="market connection &gt; loads saved observations over HTTP and connects using secure WebSockets" time="0.003546209">
+        </testcase>
+        <testcase classname="tests/marketClient.test.js" name="market connection &gt; merges snapshots and revisions while ignoring stale revisions" time="0.000869959">
+        </testcase>
+        <testcase classname="tests/marketClient.test.js" name="market connection &gt; retains saved data during disconnect, retries, and reconnects with a snapshot" time="0.00217925">
+        </testcase>
+        <testcase classname="tests/marketClient.test.js" name="market connection &gt; handles unavailable backend without making up prices" time="0.002017">
+        </testcase>
+        <testcase classname="tests/marketClient.test.js" name="market connection &gt; retains backend feed errors and rejects malformed messages" time="0.001176292">
+        </testcase>
+        <testcase classname="tests/marketClient.test.js" name="market connection &gt; detects a silent connection and advances local age clock" time="0.001314708">
+        </testcase>
+        <testcase classname="tests/marketClient.test.js" name="market connection &gt; cleans up timers and ignores messages after unmount" time="0.000971542">
+        </testcase>
+        <testcase classname="tests/marketClient.test.js" name="market connection &gt; does not let late HTTP status overwrite newer WebSocket status" time="0.001188917">
+        </testcase>
+        <testcase classname="tests/marketClient.test.js" name="switches interval, clears old bars and ignores old socket and HTTP responses" time="0.001348542">
+        </testcase>
+        <testcase classname="tests/marketClient.test.js" name="replaces datasets rather than merging polling and raw prices and preserves unknown volume" time="0.000780833">
+        </testcase>
+    </testsuite>
+    <testsuite name="tests/observations.test.js" timestamp="2026-11-10T20:54:40.473Z" hostname="Meshals-MacBook-Air.local" tests="11" failures="0" errors="0" skipped="0" time="0.002412042">
+        <testcase classname="tests/observations.test.js" name="observation ordering and provenance &gt; keeps highest revisions and the first receipt of replays" time="0.000615833">
+        </testcase>
+        <testcase classname="tests/observations.test.js" name="observation ordering and provenance &gt; sorts late candles and preserves source timestamps" time="0.00019625">
+        </testcase>
+        <testcase classname="tests/observations.test.js" name="observation ordering and provenance &gt; rejects malformed or unrelated data: {&quot;symbol&quot;:&quot;MSFT&quot;}" time="0.00024975">
+        </testcase>
+        <testcase classname="tests/observations.test.js" name="observation ordering and provenance &gt; rejects malformed or unrelated data: {&quot;source&quot;:&quot;fake&quot;}" time="0.000074584">
+        </testcase>
+        <testcase classname="tests/observations.test.js" name="observation ordering and provenance &gt; rejects malformed or unrelated data: {&quot;volume&quot;:null}" time="0.000043584">
+        </testcase>
+        <testcase classname="tests/observations.test.js" name="observation ordering and provenance &gt; rejects malformed or unrelated data: {&quot;close&quot;:null}" time="0.000049958">
+        </testcase>
+        <testcase classname="tests/observations.test.js" name="observation ordering and provenance &gt; rejects malformed or unrelated data: {&quot;revision&quot;:-1}" time="0.000037625">
+        </testcase>
+        <testcase classname="tests/observations.test.js" name="observation ordering and provenance &gt; rejects malformed or unrelated data: {&quot;event_time&quot;:&quot;invalid&quot;}" time="0.00006075">
+        </testcase>
+        <testcase classname="tests/observations.test.js" name="observation ordering and provenance &gt; rejects malformed or unrelated data: {&quot;high&quot;:95}" time="0.000165958">
+        </testcase>
+        <testcase classname="tests/observations.test.js" name="observation ordering and provenance &gt; ages data without receiving another observation" time="0.000128">
+        </testcase>
+        <testcase classname="tests/observations.test.js" name="observation ordering and provenance &gt; provides unique increasing chart timestamps with matching OHLCV" time="0.000256875">
+        </testcase>
+    </testsuite>
+</testsuites>

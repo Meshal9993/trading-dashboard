@@ -1,0 +1,101 @@
+{
+  "result": "PASS",
+  "input_kind": "GENUINE YAHOO WEBSOCKET QUOTES, NOT TEST PRICES",
+  "database_path": "/private/tmp/trading-dashboard-prompt06.1bVsb9/market.sqlite3",
+  "checks": [
+    "Three raw messages persisted",
+    "Arrival sequences 1,2,3",
+    "First stored message equals decoded quote exactly",
+    "First receipt timestamp matches callback receipt",
+    "Fresh backend process reopened the database with polling disabled"
+  ],
+  "rows": [
+    {
+      "arrival_sequence": 1,
+      "receipt_time_utc": "2026-11-10T19:02:28.228322+00:00",
+      "disposition": "inserted",
+      "arrival_correction_evidence": null,
+      "observation_id": 1,
+      "source": "yahoo_finance_websocket",
+      "symbol": "AAPL",
+      "source_time_ms": 1794337346000,
+      "source_time_utc": "2026-11-10T19:02:26.000000+00:00",
+      "source_timestamp_units": "milliseconds_since_unix_epoch",
+      "first_receipt_time_utc": "2026-11-10T19:02:28.228322+00:00",
+      "payload_json": "{\"change\":-2.455017,\"change_percent\":-0.70005333,\"day_volume\":\"15947999\",\"exchange\":\"NMS\",\"id\":\"AAPL\",\"market_hours\":1,\"price\":348.235,\"price_hint\":\"2\",\"quote_type\":8,\"time\":\"1794337346000\"}",
+      "revision": 0,
+      "supersedes_id": null,
+      "correction_evidence": null,
+      "source_fields": {
+        "change": -2.455017,
+        "change_percent": -0.70005333,
+        "day_volume": "15947999",
+        "exchange": "NMS",
+        "id": "AAPL",
+        "market_hours": 1,
+        "price": 348.235,
+        "price_hint": "2",
+        "quote_type": 8,
+        "time": "1794337346000"
+      }
+    },
+    {
+      "arrival_sequence": 2,
+      "receipt_time_utc": "2026-11-10T19:02:29.250476+00:00",
+      "disposition": "inserted",
+      "arrival_correction_evidence": null,
+      "observation_id": 2,
+      "source": "yahoo_finance_websocket",
+      "symbol": "AAPL",
+      "source_time_ms": 1794337346000,
+      "source_time_utc": "2026-11-10T19:02:26.000000+00:00",
+      "source_timestamp_units": "milliseconds_since_unix_epoch",
+      "first_receipt_time_utc": "2026-11-10T19:02:29.250476+00:00",
+      "payload_json": "{\"change\":-2.455017,\"change_percent\":-0.70005333,\"day_volume\":\"15948008\",\"exchange\":\"NMS\",\"id\":\"AAPL\",\"market_hours\":1,\"price\":348.235,\"price_hint\":\"2\",\"quote_type\":8,\"time\":\"1794337346000\"}",
+      "revision": 0,
+      "supersedes_id": null,
+      "correction_evidence": null,
+      "source_fields": {
+        "change": -2.455017,
+        "change_percent": -0.70005333,
+        "day_volume": "15948008",
+        "exchange": "NMS",
+        "id": "AAPL",
+        "market_hours": 1,
+        "price": 348.235,
+        "price_hint": "2",
+        "quote_type": 8,
+        "time": "1794337346000"
+      }
+    },
+    {
+      "arrival_sequence": 3,
+      "receipt_time_utc": "2026-11-10T19:02:30.275567+00:00",
+      "disposition": "inserted",
+      "arrival_correction_evidence": null,
+      "observation_id": 3,
+      "source": "yahoo_finance_websocket",
+      "symbol": "AAPL",
+      "source_time_ms": 1794337349000,
+      "source_time_utc": "2026-11-10T19:02:29.000000+00:00",
+      "source_timestamp_units": "milliseconds_since_unix_epoch",
+      "first_receipt_time_utc": "2026-11-10T19:02:30.275567+00:00",
+      "payload_json": "{\"change\":-2.455017,\"change_percent\":-0.70005333,\"day_volume\":\"15948151\",\"exchange\":\"NMS\",\"id\":\"AAPL\",\"market_hours\":1,\"price\":348.235,\"price_hint\":\"2\",\"quote_type\":8,\"time\":\"1794337349000\"}",
+      "revision": 0,
+      "supersedes_id": null,
+      "correction_evidence": null,
+      "source_fields": {
+        "change": -2.455017,
+        "change_percent": -0.70005333,
+        "day_volume": "15948151",
+        "exchange": "NMS",
+        "id": "AAPL",
+        "market_hours": 1,
+        "price": 348.235,
+        "price_hint": "2",
+        "quote_type": 8,
+        "time": "1794337349000"
+      }
+    }
+  ]
+}

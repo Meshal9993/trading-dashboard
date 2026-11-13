@@ -1,0 +1,33 @@
+$ /Users/alqufaidi/Desktop/trading-dashboard/backend/.venv/bin/python -m backend.app.services.minute_candles --database /private/tmp/trading-dashboard-prompt06.1bVsb9/market.sqlite3 --output docs/evidence/part4-1/prompt07/saved-yahoo-calculation.json
+{
+  "symbol": "AAPL",
+  "source": "yahoo_finance_websocket",
+  "as_of": "2026-11-10T19:11:34.919736+00:00",
+  "candles": [
+    {
+      "timestamp": "2026-11-10T19:02:00Z",
+      "open": 348.235,
+      "high": 348.235,
+      "low": 348.235,
+      "close": 348.235,
+      "volume": null
+    }
+  ],
+  "metadata": [
+    {
+      "timestamp": "2026-11-10T19:02:00Z",
+      "is_complete": true,
+      "state": "complete",
+      "completion_basis": "interval_elapsed_not_immutable",
+      "volume_status": "unknown",
+      "volume_unknown_reasons": [
+        "ambiguous_cumulative_baseline",
+        "ambiguous_same_timestamp_volume",
+        "missing_session_baseline"
+      ],
+      "observation_count": 3
+    }
+  ]
+}
+
+Exit code: 0

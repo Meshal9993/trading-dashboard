@@ -1,0 +1,234 @@
+{
+  "result": "PASS",
+  "input_kind": "CONSTRUCTED INSTRUCTOR TEST DATA; NOT LIVE YAHOO PRICES",
+  "database_path": "/var/folders/20/7d6ym4q54q907m_10zpjv1zw0000gn/T/prompt07-test-jvdjf6c8/candles.sqlite3",
+  "expected": {
+    "timestamp": "2026-11-09T15:00:00Z",
+    "open": 100,
+    "high": 103,
+    "low": 100,
+    "close": 101,
+    "volume": 11
+  },
+  "forming": {
+    "candle": {
+      "timestamp": "2026-11-09T15:00:00Z",
+      "open": 100,
+      "high": 103,
+      "low": 100,
+      "close": 101,
+      "volume": 11
+    },
+    "metadata": {
+      "timestamp": "2026-11-09T15:00:00Z",
+      "is_complete": false,
+      "state": "forming",
+      "completion_basis": "interval_elapsed_not_immutable",
+      "volume_status": "known",
+      "volume_unknown_reasons": [],
+      "observation_count": 3
+    }
+  },
+  "complete": {
+    "candle": {
+      "timestamp": "2026-11-09T15:00:00Z",
+      "open": 100,
+      "high": 103,
+      "low": 100,
+      "close": 101,
+      "volume": 11
+    },
+    "metadata": {
+      "timestamp": "2026-11-09T15:00:00Z",
+      "is_complete": true,
+      "state": "complete",
+      "completion_basis": "interval_elapsed_not_immutable",
+      "volume_status": "known",
+      "volume_unknown_reasons": [],
+      "observation_count": 3
+    }
+  },
+  "before_late_arrival": {
+    "candle": {
+      "timestamp": "2026-11-09T15:00:00Z",
+      "open": 100,
+      "high": 101,
+      "low": 100,
+      "close": 101,
+      "volume": 11
+    },
+    "metadata": {
+      "timestamp": "2026-11-09T15:00:00Z",
+      "is_complete": true,
+      "state": "complete",
+      "completion_basis": "interval_elapsed_not_immutable",
+      "volume_status": "known",
+      "volume_unknown_reasons": [],
+      "observation_count": 2
+    }
+  },
+  "after_late_arrival": {
+    "candle": {
+      "timestamp": "2026-11-09T15:00:00Z",
+      "open": 100,
+      "high": 103,
+      "low": 100,
+      "close": 101,
+      "volume": 11
+    },
+    "metadata": {
+      "timestamp": "2026-11-09T15:00:00Z",
+      "is_complete": true,
+      "state": "complete",
+      "completion_basis": "interval_elapsed_not_immutable",
+      "volume_status": "known",
+      "volume_unknown_reasons": [],
+      "observation_count": 3
+    }
+  },
+  "missing_baseline": {
+    "candle": {
+      "timestamp": "2026-11-09T15:00:00Z",
+      "open": 100,
+      "high": 101,
+      "low": 100,
+      "close": 101,
+      "volume": null
+    },
+    "metadata": {
+      "timestamp": "2026-11-09T15:00:00Z",
+      "is_complete": true,
+      "state": "complete",
+      "completion_basis": "interval_elapsed_not_immutable",
+      "volume_status": "unknown",
+      "volume_unknown_reasons": [
+        "missing_session_baseline"
+      ],
+      "observation_count": 2
+    }
+  },
+  "reset_counter": {
+    "candle": {
+      "timestamp": "2026-11-09T15:00:00Z",
+      "open": 100,
+      "high": 103,
+      "low": 100,
+      "close": 103,
+      "volume": null
+    },
+    "metadata": {
+      "timestamp": "2026-11-09T15:00:00Z",
+      "is_complete": true,
+      "state": "complete",
+      "completion_basis": "interval_elapsed_not_immutable",
+      "volume_status": "unknown",
+      "volume_unknown_reasons": [
+        "cumulative_counter_reset_or_regression"
+      ],
+      "observation_count": 2
+    }
+  },
+  "saved_journal_unchanged": true,
+  "input_journal": [
+    {
+      "arrival_sequence": 1,
+      "receipt_time_utc": "2026-11-09T14:59:59.001000+00:00",
+      "disposition": "inserted",
+      "arrival_correction_evidence": null,
+      "observation_id": 1,
+      "source": "yahoo_finance_websocket",
+      "symbol": "AAPL",
+      "source_time_ms": 1794236399000,
+      "source_time_utc": "2026-11-09T14:59:59.000000+00:00",
+      "source_timestamp_units": "milliseconds_since_unix_epoch",
+      "first_receipt_time_utc": "2026-11-09T14:59:59.001000+00:00",
+      "payload_json": "{\"day_volume\":1000,\"exchange\":\"NMS\",\"id\":\"AAPL\",\"price\":99,\"test_label\":\"CONSTRUCTED PROMPT 07 DATA\",\"time\":\"1794236399000\"}",
+      "revision": 0,
+      "supersedes_id": null,
+      "correction_evidence": null,
+      "source_fields": {
+        "day_volume": 1000,
+        "exchange": "NMS",
+        "id": "AAPL",
+        "price": 99,
+        "test_label": "CONSTRUCTED PROMPT 07 DATA",
+        "time": "1794236399000"
+      }
+    },
+    {
+      "arrival_sequence": 2,
+      "receipt_time_utc": "2026-11-09T15:00:05.001000+00:00",
+      "disposition": "inserted",
+      "arrival_correction_evidence": null,
+      "observation_id": 2,
+      "source": "yahoo_finance_websocket",
+      "symbol": "AAPL",
+      "source_time_ms": 1794236405000,
+      "source_time_utc": "2026-11-09T15:00:05.000000+00:00",
+      "source_timestamp_units": "milliseconds_since_unix_epoch",
+      "first_receipt_time_utc": "2026-11-09T15:00:05.001000+00:00",
+      "payload_json": "{\"day_volume\":1004,\"exchange\":\"NMS\",\"id\":\"AAPL\",\"price\":100,\"test_label\":\"CONSTRUCTED PROMPT 07 DATA\",\"time\":\"1794236405000\"}",
+      "revision": 0,
+      "supersedes_id": null,
+      "correction_evidence": null,
+      "source_fields": {
+        "day_volume": 1004,
+        "exchange": "NMS",
+        "id": "AAPL",
+        "price": 100,
+        "test_label": "CONSTRUCTED PROMPT 07 DATA",
+        "time": "1794236405000"
+      }
+    },
+    {
+      "arrival_sequence": 3,
+      "receipt_time_utc": "2026-11-09T15:00:20.001000+00:00",
+      "disposition": "inserted",
+      "arrival_correction_evidence": null,
+      "observation_id": 3,
+      "source": "yahoo_finance_websocket",
+      "symbol": "AAPL",
+      "source_time_ms": 1794236420000,
+      "source_time_utc": "2026-11-09T15:00:20.000000+00:00",
+      "source_timestamp_units": "milliseconds_since_unix_epoch",
+      "first_receipt_time_utc": "2026-11-09T15:00:20.001000+00:00",
+      "payload_json": "{\"day_volume\":1009,\"exchange\":\"NMS\",\"id\":\"AAPL\",\"price\":103,\"test_label\":\"CONSTRUCTED PROMPT 07 DATA\",\"time\":\"1794236420000\"}",
+      "revision": 0,
+      "supersedes_id": null,
+      "correction_evidence": null,
+      "source_fields": {
+        "day_volume": 1009,
+        "exchange": "NMS",
+        "id": "AAPL",
+        "price": 103,
+        "test_label": "CONSTRUCTED PROMPT 07 DATA",
+        "time": "1794236420000"
+      }
+    },
+    {
+      "arrival_sequence": 4,
+      "receipt_time_utc": "2026-11-09T15:00:50.001000+00:00",
+      "disposition": "inserted",
+      "arrival_correction_evidence": null,
+      "observation_id": 4,
+      "source": "yahoo_finance_websocket",
+      "symbol": "AAPL",
+      "source_time_ms": 1794236450000,
+      "source_time_utc": "2026-11-09T15:00:50.000000+00:00",
+      "source_timestamp_units": "milliseconds_since_unix_epoch",
+      "first_receipt_time_utc": "2026-11-09T15:00:50.001000+00:00",
+      "payload_json": "{\"day_volume\":1011,\"exchange\":\"NMS\",\"id\":\"AAPL\",\"price\":101,\"test_label\":\"CONSTRUCTED PROMPT 07 DATA\",\"time\":\"1794236450000\"}",
+      "revision": 0,
+      "supersedes_id": null,
+      "correction_evidence": null,
+      "source_fields": {
+        "day_volume": 1011,
+        "exchange": "NMS",
+        "id": "AAPL",
+        "price": 101,
+        "test_label": "CONSTRUCTED PROMPT 07 DATA",
+        "time": "1794236450000"
+      }
+    }
+  ]
+}

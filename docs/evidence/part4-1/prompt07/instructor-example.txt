@@ -1,0 +1,132 @@
+{
+  "result": "PASS",
+  "input_kind": "CONSTRUCTED INSTRUCTOR TEST DATA; NOT LIVE YAHOO PRICES",
+  "database_path": "/var/folders/20/7d6ym4q54q907m_10zpjv1zw0000gn/T/prompt07-test-jvdjf6c8/candles.sqlite3",
+  "expected": {
+    "timestamp": "2026-11-09T15:00:00Z",
+    "open": 100,
+    "high": 103,
+    "low": 100,
+    "close": 101,
+    "volume": 11
+  },
+  "forming": {
+    "candle": {
+      "timestamp": "2026-11-09T15:00:00Z",
+      "open": 100,
+      "high": 103,
+      "low": 100,
+      "close": 101,
+      "volume": 11
+    },
+    "metadata": {
+      "timestamp": "2026-11-09T15:00:00Z",
+      "is_complete": false,
+      "state": "forming",
+      "completion_basis": "interval_elapsed_not_immutable",
+      "volume_status": "known",
+      "volume_unknown_reasons": [],
+      "observation_count": 3
+    }
+  },
+  "complete": {
+    "candle": {
+      "timestamp": "2026-11-09T15:00:00Z",
+      "open": 100,
+      "high": 103,
+      "low": 100,
+      "close": 101,
+      "volume": 11
+    },
+    "metadata": {
+      "timestamp": "2026-11-09T15:00:00Z",
+      "is_complete": true,
+      "state": "complete",
+      "completion_basis": "interval_elapsed_not_immutable",
+      "volume_status": "known",
+      "volume_unknown_reasons": [],
+      "observation_count": 3
+    }
+  },
+  "before_late_arrival": {
+    "candle": {
+      "timestamp": "2026-11-09T15:00:00Z",
+      "open": 100,
+      "high": 101,
+      "low": 100,
+      "close": 101,
+      "volume": 11
+    },
+    "metadata": {
+      "timestamp": "2026-11-09T15:00:00Z",
+      "is_complete": true,
+      "state": "complete",
+      "completion_basis": "interval_elapsed_not_immutable",
+      "volume_status": "known",
+      "volume_unknown_reasons": [],
+      "observation_count": 2
+    }
+  },
+  "after_late_arrival": {
+    "candle": {
+      "timestamp": "2026-11-09T15:00:00Z",
+      "open": 100,
+      "high": 103,
+      "low": 100,
+      "close": 101,
+      "volume": 11
+    },
+    "metadata": {
+      "timestamp": "2026-11-09T15:00:00Z",
+      "is_complete": true,
+      "state": "complete",
+      "completion_basis": "interval_elapsed_not_immutable",
+      "volume_status": "known",
+      "volume_unknown_reasons": [],
+      "observation_count": 3
+    }
+  },
+  "missing_baseline": {
+    "candle": {
+      "timestamp": "2026-11-09T15:00:00Z",
+      "open": 100,
+      "high": 101,
+      "low": 100,
+      "close": 101,
+      "volume": null
+    },
+    "metadata": {
+      "timestamp": "2026-11-09T15:00:00Z",
+      "is_complete": true,
+      "state": "complete",
+      "completion_basis": "interval_elapsed_not_immutable",
+      "volume_status": "unknown",
+      "volume_unknown_reasons": [
+        "missing_session_baseline"
+      ],
+      "observation_count": 2
+    }
+  },
+  "reset_counter": {
+    "candle": {
+      "timestamp": "2026-11-09T15:00:00Z",
+      "open": 100,
+      "high": 103,
+      "low": 100,
+      "close": 103,
+      "volume": null
+    },
+    "metadata": {
+      "timestamp": "2026-11-09T15:00:00Z",
+      "is_complete": true,
+      "state": "complete",
+      "completion_basis": "interval_elapsed_not_immutable",
+      "volume_status": "unknown",
+      "volume_unknown_reasons": [
+        "cumulative_counter_reset_or_regression"
+      ],
+      "observation_count": 2
+    }
+  },
+  "saved_journal_unchanged": true
+}

@@ -1,0 +1,44 @@
+[
+  {
+    "name": "backend-tests",
+    "command": [
+      "/Users/alqufaidi/Desktop/trading-dashboard/backend/.venv/bin/python",
+      "-m",
+      "pytest",
+      "backend/tests",
+      "-v",
+      "--junitxml=docs/evidence/part4-1/backend-junit.xml"
+    ],
+    "cwd": "/Users/alqufaidi/Desktop/trading-dashboard",
+    "started_at_utc": "2026-11-09T02:54:05.303536+00:00",
+    "finished_at_utc": "2026-11-09T02:54:05.874797+00:00",
+    "exit_code": 0
+  },
+  {
+    "name": "frontend-tests",
+    "command": [
+      "npm",
+      "test",
+      "--",
+      "--reporter=verbose",
+      "--reporter=junit",
+      "--outputFile.junit=../docs/evidence/part4-1/frontend-junit.xml"
+    ],
+    "cwd": "/Users/alqufaidi/Desktop/trading-dashboard/frontend",
+    "started_at_utc": "2026-11-09T02:54:05.874807+00:00",
+    "finished_at_utc": "2026-11-09T02:54:06.894685+00:00",
+    "exit_code": 0
+  },
+  {
+    "name": "production-build",
+    "command": [
+      "npm",
+      "run",
+      "build"
+    ],
+    "cwd": "/Users/alqufaidi/Desktop/trading-dashboard/frontend",
+    "started_at_utc": "2026-11-09T02:54:06.894695+00:00",
+    "finished_at_utc": "2026-11-09T02:54:07.431225+00:00",
+    "exit_code": 0
+  }
+]

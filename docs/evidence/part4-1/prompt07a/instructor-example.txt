@@ -1,0 +1,169 @@
+{
+  "result": "PASS",
+  "input_kind": "CONSTRUCTED INSTRUCTOR CSV AND TEST OBSERVATIONS; NOT LIVE YAHOO PRICES",
+  "database_path": "/var/folders/20/7d6ym4q54q907m_10zpjv1zw0000gn/T/prompt07a-test-yuuq5l30/raw.sqlite3",
+  "calendar_package": "4.6.1",
+  "expected": {
+    "timestamp": "2026-11-09T14:30:00Z",
+    "open": 100,
+    "high": 105,
+    "low": 99,
+    "close": 104,
+    "volume": 3550
+  },
+  "five_minute": {
+    "symbol": "AAPL",
+    "source": "CONSTRUCTED_TEST_MINUTES",
+    "timeframe": "5m",
+    "as_of": "2026-11-09T21:00:00+00:00",
+    "calendar": "NASDAQ",
+    "session_policy": "regular",
+    "excluded_nonregular_minutes": 0,
+    "is_guaranteed_realtime": false,
+    "candles": [
+      {
+        "timestamp": "2026-11-09T14:30:00Z",
+        "open": 100.0,
+        "high": 105.0,
+        "low": 99.0,
+        "close": 104.0,
+        "volume": 3550
+      }
+    ],
+    "metadata": [
+      {
+        "timestamp": "2026-11-09T14:30:00Z",
+        "interval_end": "2026-11-09T14:35:00Z",
+        "session_date": "2026-11-09",
+        "session_open": "2026-11-09T14:30:00Z",
+        "session_close": "2026-11-09T21:00:00Z",
+        "is_complete": true,
+        "state": "complete",
+        "completion_basis": "interval_elapsed_not_immutable",
+        "expected_minutes": 5,
+        "available_minutes": 3,
+        "complete_minutes": 3,
+        "missing_minutes": 2,
+        "is_coverage_complete": false,
+        "coverage_status": "partial",
+        "volume_status": "known",
+        "volume_unknown_reasons": [],
+        "volume_basis": "sum_of_available_minute_volumes"
+      }
+    ]
+  },
+  "daily": {
+    "symbol": "AAPL",
+    "source": "CONSTRUCTED_TEST_MINUTES",
+    "timeframe": "1d",
+    "as_of": "2026-11-09T21:00:00+00:00",
+    "calendar": "NASDAQ",
+    "session_policy": "regular",
+    "excluded_nonregular_minutes": 0,
+    "is_guaranteed_realtime": false,
+    "candles": [
+      {
+        "timestamp": "2026-11-09T14:30:00Z",
+        "open": 100.0,
+        "high": 105.0,
+        "low": 99.0,
+        "close": 104.0,
+        "volume": 3550
+      }
+    ],
+    "metadata": [
+      {
+        "timestamp": "2026-11-09T14:30:00Z",
+        "interval_end": "2026-11-09T21:00:00Z",
+        "session_date": "2026-11-09",
+        "session_open": "2026-11-09T14:30:00Z",
+        "session_close": "2026-11-09T21:00:00Z",
+        "is_complete": true,
+        "state": "complete",
+        "completion_basis": "interval_elapsed_not_immutable",
+        "expected_minutes": 390,
+        "available_minutes": 3,
+        "complete_minutes": 3,
+        "missing_minutes": 387,
+        "is_coverage_complete": false,
+        "coverage_status": "partial",
+        "volume_status": "known",
+        "volume_unknown_reasons": [],
+        "volume_basis": "sum_of_available_minute_volumes"
+      }
+    ]
+  },
+  "session_checks": {
+    "2026-03-06": {
+      "open": "2026-03-06T14:30:00Z",
+      "close": "2026-03-06T21:00:00Z"
+    },
+    "2026-03-09": {
+      "open": "2026-03-09T13:30:00Z",
+      "close": "2026-03-09T20:00:00Z"
+    },
+    "2026-10-30": {
+      "open": "2026-10-30T13:30:00Z",
+      "close": "2026-10-30T20:00:00Z"
+    },
+    "2026-11-02": {
+      "open": "2026-11-02T14:30:00Z",
+      "close": "2026-11-02T21:00:00Z"
+    },
+    "2026-11-26": null,
+    "2026-11-27": {
+      "open": "2026-11-27T14:30:00Z",
+      "close": "2026-11-27T18:00:00Z"
+    },
+    "2026-12-24": {
+      "open": "2026-12-24T14:30:00Z",
+      "close": "2026-12-24T18:00:00Z"
+    }
+  },
+  "early_close_final_hour": {
+    "symbol": "AAPL",
+    "source": "CONSTRUCTED_TEST_MINUTES",
+    "timeframe": "1h",
+    "as_of": "2026-11-27T18:00:00+00:00",
+    "calendar": "NASDAQ",
+    "session_policy": "regular",
+    "excluded_nonregular_minutes": 0,
+    "is_guaranteed_realtime": false,
+    "candles": [
+      {
+        "timestamp": "2026-11-27T17:30:00Z",
+        "open": 100,
+        "high": 103,
+        "low": 99,
+        "close": 102,
+        "volume": 100
+      }
+    ],
+    "metadata": [
+      {
+        "timestamp": "2026-11-27T17:30:00Z",
+        "interval_end": "2026-11-27T18:00:00Z",
+        "session_date": "2026-11-27",
+        "session_open": "2026-11-27T14:30:00Z",
+        "session_close": "2026-11-27T18:00:00Z",
+        "is_complete": true,
+        "state": "complete",
+        "completion_basis": "interval_elapsed_not_immutable",
+        "expected_minutes": 30,
+        "available_minutes": 1,
+        "complete_minutes": 1,
+        "missing_minutes": 29,
+        "is_coverage_complete": false,
+        "coverage_status": "partial",
+        "volume_status": "known",
+        "volume_unknown_reasons": [],
+        "volume_basis": "sum_of_available_minute_volumes"
+      }
+    ]
+  },
+  "journal_unchanged": true,
+  "sources": [
+    "https://nasdaqtrader.com/Trader.aspx?id=Calendar",
+    "https://pandas-market-calendars.readthedocs.io/en/latest/usage.html"
+  ]
+}

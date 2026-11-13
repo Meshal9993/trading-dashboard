@@ -1,0 +1,46 @@
+$ npm test -- --reporter=verbose --reporter=junit --outputFile.junit=../docs/evidence/part4-1/frontend-junit.xml
+
+> trading-dashboard-frontend@0.1.0 test
+> vitest run --reporter=verbose --reporter=junit --outputFile.junit=../docs/evidence/part4-1/frontend-junit.xml
+
+
+ RUN  v3.2.7 /Users/alqufaidi/Desktop/trading-dashboard/frontend
+
+ ✓ tests/observations.test.js > observation ordering and provenance > keeps highest revisions and the first receipt of replays 1ms
+ ✓ tests/observations.test.js > observation ordering and provenance > sorts late candles and preserves source timestamps 0ms
+ ✓ tests/observations.test.js > observation ordering and provenance > rejects malformed or unrelated data: {"symbol":"MSFT"} 0ms
+ ✓ tests/observations.test.js > observation ordering and provenance > rejects malformed or unrelated data: {"source":"fake"} 0ms
+ ✓ tests/observations.test.js > observation ordering and provenance > rejects malformed or unrelated data: {"volume":null} 0ms
+ ✓ tests/observations.test.js > observation ordering and provenance > rejects malformed or unrelated data: {"close":null} 0ms
+ ✓ tests/observations.test.js > observation ordering and provenance > rejects malformed or unrelated data: {"revision":-1} 0ms
+ ✓ tests/observations.test.js > observation ordering and provenance > rejects malformed or unrelated data: {"event_time":"invalid"} 0ms
+ ✓ tests/observations.test.js > observation ordering and provenance > rejects malformed or unrelated data: {"high":95} 0ms
+ ✓ tests/observations.test.js > observation ordering and provenance > ages data without receiving another observation 0ms
+ ✓ tests/observations.test.js > observation ordering and provenance > provides unique increasing chart timestamps with matching OHLCV 0ms
+ ✓ tests/marketClient.test.js > market connection > loads saved observations over HTTP and connects using secure WebSockets 3ms
+ ✓ tests/marketClient.test.js > market connection > merges snapshots and revisions while ignoring stale revisions 1ms
+ ✓ tests/marketClient.test.js > market connection > retains saved data during disconnect, retries, and reconnects with a snapshot 2ms
+ ✓ tests/marketClient.test.js > market connection > handles unavailable backend without making up prices 1ms
+ ✓ tests/marketClient.test.js > market connection > retains backend feed errors and rejects malformed messages 0ms
+ ✓ tests/marketClient.test.js > market connection > detects a silent connection and advances local age clock 1ms
+ ✓ tests/marketClient.test.js > market connection > cleans up timers and ignores messages after unmount 1ms
+ ✓ tests/marketClient.test.js > market connection > does not let late HTTP status overwrite newer WebSocket status 1ms
+ ✓ tests/MarketChart.test.js > plots OHLC and volume at source timestamps, then updates revisions 7ms
+ ✓ tests/MarketChart.test.js > redraws older corrections while preserving chart range 2ms
+ ✓ tests/App.test.js > dashboard states > starts with a truthful loading state and no fabricated price 16ms
+ ✓ tests/App.test.js > dashboard states > shows saved candles, OHLCV, provenance, timestamps, and closed/stale state 30ms
+ ✓ tests/App.test.js > dashboard states > shows exceptional state while preserving candles 5ms
+ ✓ tests/App.test.js > dashboard states > shows exceptional state while preserving candles 5ms
+ ✓ tests/App.test.js > dashboard states > shows exceptional state while preserving candles 4ms
+ ✓ tests/App.test.js > dashboard states > shows exceptional state while preserving candles 3ms
+ ✓ tests/App.test.js > dashboard states > shows empty data without inventing candles and supports reconnect 4ms
+ ✓ tests/App.test.js > dashboard states > updates visible close and volume when a revision arrives 5ms
+
+ Test Files  4 passed (4)
+      Tests  29 passed (29)
+   Start at  21:54:06
+   Duration  654ms (transform 120ms, setup 0ms, collect 276ms, tests 93ms, environment 1.28s, prepare 148ms)
+
+JUNIT report written to /Users/alqufaidi/Desktop/trading-dashboard/docs/evidence/part4-1/frontend-junit.xml
+
+Exit code: 0

@@ -1,0 +1,29 @@
+
+> trading-dashboard-frontend@0.1.0 dev
+> vite --host 127.0.0.1
+
+
+  VITE v7.3.7  ready in 97 ms
+
+  ➜  Local:   http://127.0.0.1:5173/
+3:48:11 PM [vite] (client) hmr update /src/App.vue
+3:48:11 PM [vite] (client) hmr update /src/App.vue
+3:49:03 PM [vite] (client) hmr update /src/App.vue
+3:51:48 PM [vite] ws proxy error:
+Error: connect ECONNREFUSED 127.0.0.1:8000
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1638:16)
+3:51:48 PM [vite] http proxy error: /history?symbol=AAPL&timeframe=1m&dataset=auto
+Error: connect ECONNREFUSED 127.0.0.1:8000
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1638:16)
+3:54:12 PM [vite] (client) hmr update /src/App.vue
+3:55:24 PM [vite] ws proxy error:
+Error: This socket has been ended by the other party
+    at genericNodeError (node:internal/errors:983:15)
+    at wrappedFn (node:internal/errors:537:14)
+    at Socket.writeAfterFIN [as write] (node:net:576:14)
+    at Socket.ondata (node:internal/streams/readable:1009:22)
+    at Socket.emit (node:events:519:28)
+    at addChunk (node:internal/streams/readable:561:12)
+    at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+    at Readable.push (node:internal/streams/readable:392:5)
+    at TCP.onStreamRead (node:internal/stream_base_commons:189:23)

@@ -1,0 +1,14 @@
+{
+  "result": "PASS",
+  "arrival_sequence": 96,
+  "raw_price": 349.44,
+  "source_time": "2026-11-10T20:49:02+00:00",
+  "candle": {
+    "timestamp": "2026-11-10T20:49:00Z",
+    "open": 349.475,
+    "high": 349.48,
+    "low": 349.44,
+    "close": 349.44,
+    "volume": null
+  }
+}

@@ -1,0 +1,18 @@
+
+> trading-dashboard-frontend@0.1.0 test
+> vitest run --reporter=default --reporter=junit --outputFile=../docs/evidence/part4-1/prompt08/frontend-junit.xml
+
+
+ RUN  v3.2.7 /Users/alqufaidi/Desktop/trading-dashboard/frontend
+
+ ✓ tests/observations.test.js (11 tests) 2ms
+ ✓ tests/marketClient.test.js (10 tests) 16ms
+ ✓ tests/MarketChart.test.js (3 tests) 12ms
+ ✓ tests/App.test.js (10 tests) 81ms
+
+ Test Files  4 passed (4)
+      Tests  34 passed (34)
+   Start at  15:54:39
+   Duration  555ms (transform 116ms, setup 0ms, collect 295ms, tests 111ms, environment 850ms, prepare 129ms)
+
+JUNIT report written to /Users/alqufaidi/Desktop/trading-dashboard/docs/evidence/part4-1/prompt08/frontend-junit.xml

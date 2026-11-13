@@ -1,0 +1,110 @@
+▥
+MARKET / OBSERVATORY
+IST 402 / A4.1
+Connected
+
+MARKET WORKSPACE / EQUITIES
+
+A clearer view of the market.
+
+Price, volume, and the context behind every observation.
+
+Y!
+Yahoo Finance
+|
+WEBSOCKET · DELAY MAY VARY
+A
+AAPL NASDAQ
+
+Apple Inc. · USD
+
+LATEST OBSERVED CLOSE
+349.77 USD
+
++0.13% over displayed candles
+
+CANDLE INTERVAL
+Daily
+Regular session only
+LATEST CANDLE VOLUME
+Unknown
+Shares · observed volume
+Price & volume / AAPL
+
+Daily candles · UTC · Forming candle
+
+1m
+5m
+15m
+1h
+1d
+Latest 390
+All received
+⤢
+O 349.32
+H 349.90
+L 349.29
+C 349.77
+ VOL Unknown
+	
+	
+
+
+
+	
+	
+
+	
+	
+Up candle
+Down candle
+1 candles
+·
+Scroll to zoom · drag to explore
+ⓘ
+Streamed observations · not guaranteed real-time
+
+Yahoo WebSocket observations are persisted before candle calculation. Quotes can be delayed, volume may be unknown, and candles can be revised.
+
+Feed monitor
+AAPL
+Available
+Data source
+Yahoo Finance
+Delivery
+Yahoo WS → FastAPI WS
+Upstream
+available · socket open
+Market
+Open · regular session
+Data age
+0s
+NEWEST SOURCE OBSERVATION · UTC
+Nov 10, 2026, 20:52:48
+LATEST SOURCE RECEIPT · UTC
+Nov 10, 2026, 20:52:48
+LAST SUCCESSFUL POLL · UTC
+Nov 10, 2026, 20:52:30
+↻
+Reconnect
+KNOW YOUR DATA
+Context before conviction.
+
+Raw candles are calculated from stored Yahoo WebSocket observations. Polling fallback is a separate dataset. Neither source guarantees real-time exchange prices.
+
+Age uses the newest received source timestamp for streamed observations, or candle start for polling fallback. Unknown volume is shown explicitly; completion does not guarantee finality.
+
+EXPLICIT PROVENANCE · NO REAL-TIME GUARANTEE
+Observation ledger
+
+Most recent derived candles · UTC
+
+LAST 5 OBSERVATIONS
+Latest AAPL candles, including coverage and completion status
+EVENT TIME · UTC	OPEN	HIGH	LOW	CLOSE	VOLUME	COVERAGE	INTERVAL
+Nov 10, 2026, 14:30:00	349.32	349.90	349.29	349.77	Unknown	6/390 min	Forming
+
+*Interval elapsed is inferred; provider corrections can still arrive.
+
+MARKET OBSERVATORY / IST 402 · Assignment 4.1
+TradingView Lightweight Charts™ · Copyright (с) 2025 TradingView, Inc. · TradingView

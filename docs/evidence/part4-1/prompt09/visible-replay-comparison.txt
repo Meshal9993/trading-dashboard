@@ -1,0 +1,14 @@
+{
+  "result": "PASS",
+  "checks": [
+    "Two visible replay runs have identical rows, cursor and clock",
+    "Visible OHLCV matches the SQL-verified final API frame",
+    "Replay provenance and disconnected-upstream independence are visible"
+  ],
+  "cursor": 224,
+  "clock": "2026-11-10T20:50:59.503964+00:00",
+  "visible_rows": [
+    "Nov 10, 2026, 20:50:00\t349.70\t349.90\t349.62\t349.80\tUnknown\t1/1 min\tForming",
+    "Nov 10, 2026, 20:49:00\t349.48\t349.64\t349.43\t349.62\tUnknown\t1/1 min\tComplete*"
+  ]
+}

@@ -1,0 +1,114 @@
+▥
+MARKET / OBSERVATORY
+IST 402 / A4.1
+Connected
+
+MARKET WORKSPACE / EQUITIES
+
+A clearer view of the market.
+
+Price, volume, and the context behind every observation.
+
+Y!
+Yahoo Finance
+|
+POLLING FALLBACK · DELAYED/POLLED
+A
+AAPL NASDAQ
+
+Apple Inc. · USD
+
+LATEST OBSERVED CLOSE
+349.77 USD
+
++2.40% over displayed candles
+
+CANDLE INTERVAL
+Daily
+Regular session only
+LATEST CANDLE VOLUME
+58,791,709
+Shares · observed volume
+Price & volume / AAPL
+
+Daily candles · UTC · Forming candle
+
+1m
+5m
+15m
+1h
+1d
+Latest 390
+All received
+⤢
+O 351.55
+H 353.87
+L 346.46
+C 349.77
+ VOL 58,791,709
+	
+	
+
+
+
+	
+	
+
+	
+	
+Up candle
+Down candle
+5 candles
+·
+Scroll to zoom · drag to explore
+ⓘ
+Upstream unavailable · polling fallback
+
+Yahoo WebSocket is reconnecting. The browser remains connected; displayed candles come from the separately labeled polling history.
+
+Feed monitor
+AAPL
+Degraded
+Data source
+Yahoo Finance
+Delivery
+HTTP poll → WebSocket
+Upstream
+unavailable · socket closed
+Market
+Open · regular session
+Data age
+20s
+LATEST POLLED CANDLE · UTC
+Nov 10, 2026, 20:51:59
+LATEST SOURCE RECEIPT · UTC
+Nov 10, 2026, 20:52:00
+LAST SUCCESSFUL POLL · UTC
+Nov 10, 2026, 20:52:00
+↻
+Reconnect
+KNOW YOUR DATA
+Context before conviction.
+
+Raw candles are calculated from stored Yahoo WebSocket observations. Polling fallback is a separate dataset. Neither source guarantees real-time exchange prices.
+
+Age uses the newest received source timestamp for streamed observations, or candle start for polling fallback. Unknown volume is shown explicitly; completion does not guarantee finality.
+
+EXPLICIT PROVENANCE · NO REAL-TIME GUARANTEE
+Observation ledger
+
+Most recent derived candles · UTC
+
+LAST 5 OBSERVATIONS
+Latest AAPL candles, including coverage and completion status
+EVENT TIME · UTC	OPEN	HIGH	LOW	CLOSE	VOLUME	COVERAGE	INTERVAL
+Nov 10, 2026, 14:30:00	351.55	353.87	346.46	349.77	58,791,709	381/390 min	Forming
+Nov 09, 2026, 14:30:00	344.93	352.28	344.79	350.49	86,707,982	390/390 min	Complete*
+Nov 06, 2026, 14:30:00	338.30	345.79	338.30	342.36	55,992,243	390/390 min	Complete*
+Nov 05, 2026, 14:30:00	353.90	355.38	342.06	344.31	214,193,322	390/390 min	Complete*
+Nov 04, 2026, 14:30:00	341.58	354.47	340.99	349.61	163,255,989	390/390 min	Complete*
+
+*Interval elapsed is inferred; provider corrections can still arrive.
+
+MARKET OBSERVATORY / IST 402 · Assignment 4.1
+TradingView Lightweight Charts™ · Copyright (с) 2025 TradingView, Inc. · TradingView

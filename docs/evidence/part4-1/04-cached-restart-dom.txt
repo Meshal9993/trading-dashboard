@@ -1,0 +1,164 @@
+- banner:
+  - link "Market Observatory home":
+    - /url: "#main"
+    - generic: ▥
+    - generic: MARKET / OBSERVATORY
+  - generic: IST 402 / A4.1
+  - generic: Connected
+- main:
+  - paragraph: MARKET WORKSPACE / EQUITIES
+  - heading "A clearer view of the market." [level=1]
+  - paragraph: Price, volume, and the context behind every observation.
+  - text: Y!
+  - generic: Yahoo Finance
+  - generic: "|"
+  - generic: POLLED / DELAY MAY VARY
+  - region "AAPL overview":
+    - generic: A
+    - generic: AAPL NASDAQ
+    - paragraph: Apple Inc. · USD
+    - text: LATEST OBSERVED CLOSE
+    - generic: 342.37 USD
+    - paragraph: +0.58% over displayed candles
+    - generic: CANDLE INTERVAL
+    - strong: 1 minute
+    - generic: Regular session only
+    - generic: LATEST CANDLE VOLUME
+    - strong: "0"
+    - generic: Shares · observed volume
+  - region "Price & volume / AAPL":
+    - heading "Price & volume / AAPL" [level=2]
+    - paragraph: 1-minute candles · UTC
+    - generic "Observation window":
+      - button "Latest 390" [pressed]
+      - button "All received"
+    - button "Fit chart to observations": ⤢
+    - generic "Selected candle":
+      - generic: O 342.37
+      - generic: H 342.37
+      - generic: L 342.37
+      - generic: C 342.37
+      - generic: VOL 0
+    - img "AAPL one-minute OHLC candlesticks and trading volume, Yahoo Finance polled data. Times in UTC.":
+      - table:
+        - row:
+          - cell
+          - cell
+          - cell
+        - row:
+          - cell
+        - row "Charting by TradingView":
+          - cell
+          - cell "Charting by TradingView":
+            - link "Charting by TradingView":
+              - /url: https://www.tradingview.com/?utm_medium=lwc-link&utm_campaign=lwc-chart&utm_source=127.0.0.1/
+          - cell
+        - row:
+          - cell
+          - cell
+          - cell
+    - text: Up candle
+    - text: Down candle
+    - text: 390 candles
+    - generic: ·
+    - text: Scroll to zoom · drag to explore
+    - status:
+      - generic: ⓘ
+      - strong: Polling paused · saved observations
+      - paragraph: External polling is disabled on the backend. Saved candles remain available for review.
+  - complementary:
+    - region "Feed monitor":
+      - heading "Feed monitor" [level=2]
+      - generic: AAPL
+      - strong: Paused · saved data
+      - generic: STALE
+      - term: Data source
+      - definition: Yahoo Finance
+      - term: Delivery
+      - definition: Polled → WebSocket
+      - term: Market
+      - definition: Unknown
+      - term: Data age
+      - definition: 2d 5h
+      - generic: LATEST OBSERVATION · UTC
+      - strong: Nov 06, 2026, 21:00:00
+      - generic: FIRST RECEIPT OF REVISION · UTC
+      - strong: Nov 09, 2026, 02:53:44
+      - generic: LAST SUCCESSFUL POLL · UTC
+      - strong: Not available
+      - button "Reconnect":
+        - generic: ↻
+        - text: Reconnect
+    - text: KNOW YOUR DATA
+    - heading "Context before conviction." [level=2]
+    - paragraph: These are observed candles, not a real-time quote feed. Yahoo data can be delayed; exact provider latency is unknown.
+    - paragraph: Age is measured from the candle’s start time, not the last trade. Completion is inferred and prices may be revised.
+    - generic: POLLED DATA · NO REAL-TIME GUARANTEE
+  - region "Observation ledger":
+    - heading "Observation ledger" [level=2]
+    - paragraph: Most recent saved or received candles · UTC
+    - generic: LAST 5 OBSERVATIONS
+    - table "Latest AAPL candles, including local revision and inferred completion status":
+      - caption: Latest AAPL candles, including local revision and inferred completion status
+      - rowgroup:
+        - row "EVENT TIME · UTC OPEN HIGH LOW CLOSE VOLUME REVISION INTERVAL":
+          - columnheader "EVENT TIME · UTC"
+          - columnheader "OPEN"
+          - columnheader "HIGH"
+          - columnheader "LOW"
+          - columnheader "CLOSE"
+          - columnheader "VOLUME"
+          - columnheader "REVISION"
+          - columnheader "INTERVAL"
+      - rowgroup:
+        - row "Nov 06, 2026, 21:00:00 342.37 342.37 342.37 342.37 0 r0 local Elapsed*":
+          - cell "Nov 06, 2026, 21:00:00"
+          - cell "342.37"
+          - cell "342.37"
+          - cell "342.37"
+          - cell "342.37"
+          - cell "0"
+          - cell "r0 local"
+          - cell "Elapsed*"
+        - row "Nov 06, 2026, 20:59:00 342.42 342.67 342.29 342.36 647,051 r0 local Elapsed*":
+          - cell "Nov 06, 2026, 20:59:00"
+          - cell "342.42"
+          - cell "342.67"
+          - cell "342.29"
+          - cell "342.36"
+          - cell "647,051"
+          - cell "r0 local"
+          - cell "Elapsed*"
+        - row "Nov 06, 2026, 20:58:00 342.46 342.63 342.26 342.42 313,586 r0 local Elapsed*":
+          - cell "Nov 06, 2026, 20:58:00"
+          - cell "342.46"
+          - cell "342.63"
+          - cell "342.26"
+          - cell "342.42"
+          - cell "313,586"
+          - cell "r0 local"
+          - cell "Elapsed*"
+        - row "Nov 06, 2026, 20:57:00 342.68 342.69 342.34 342.45 192,566 r0 local Elapsed*":
+          - cell "Nov 06, 2026, 20:57:00"
+          - cell "342.68"
+          - cell "342.69"
+          - cell "342.34"
+          - cell "342.45"
+          - cell "192,566"
+          - cell "r0 local"
+          - cell "Elapsed*"
+        - row "Nov 06, 2026, 20:56:00 342.68 342.95 342.56 342.68 113,984 r0 local Elapsed*":
+          - cell "Nov 06, 2026, 20:56:00"
+          - cell "342.68"
+          - cell "342.95"
+          - cell "342.56"
+          - cell "342.68"
+          - cell "113,984"
+          - cell "r0 local"
+          - cell "Elapsed*"
+    - paragraph: "*Interval elapsed is inferred; provider corrections can still arrive."
+- contentinfo:
+  - generic: MARKET OBSERVATORY / IST 402 · Assignment 4.1
+  - text: TradingView Lightweight Charts™ · Copyright (с) 2025 TradingView, Inc. ·
+  - link "TradingView":
+    - /url: https://www.tradingview.com/

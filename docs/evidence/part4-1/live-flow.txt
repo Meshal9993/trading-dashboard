@@ -1,0 +1,18 @@
+{
+  "captured_at_utc": "2026-11-09T02:54:14.656725+00:00",
+  "scenario": "real-yahoo-default-polling",
+  "result": "PASS",
+  "checks": [
+    "FastAPI health through Vite proxy",
+    "HTTP snapshot equals actual WebSocket snapshot",
+    "WebSocket reconnect snapshot",
+    "SQLite current rows equal WebSocket OHLCV, timestamps and revisions",
+    "SQLite integrity_check",
+    "Background 30-second poll produced a newer successful-poll timestamp"
+  ],
+  "current_database_rows": 1951,
+  "stored_revisions": 1951,
+  "websocket_candles": 390,
+  "sqlite_integrity": "ok",
+  "note": "Browser chart rendering is checked separately; this script verifies transport and storage equality."
+}

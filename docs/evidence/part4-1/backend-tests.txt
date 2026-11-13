@@ -1,0 +1,71 @@
+$ /Users/alqufaidi/Desktop/trading-dashboard/backend/.venv/bin/python -m pytest backend/tests -v --junitxml=docs/evidence/part4-1/backend-junit.xml
+============================= test session starts ==============================
+platform darwin -- Python 3.9.6, pytest-8.4.2, pluggy-1.6.0 -- /Users/alqufaidi/Desktop/trading-dashboard/backend/.venv/bin/python
+cachedir: .pytest_cache
+rootdir: /Users/alqufaidi/Desktop/trading-dashboard
+plugins: anyio-4.12.1
+collecting ... collected 58 items
+
+backend/tests/test_backend.py::test_startup_initializes_database_and_health PASSED [  1%]
+backend/tests/test_backend.py::test_environment_database_path PASSED     [  3%]
+backend/tests/test_backend.py::test_health_reports_database_failure PASSED [  5%]
+backend/tests/test_backend.py::test_initialization_preserves_existing_data PASSED [  6%]
+backend/tests/test_backend.py::test_duplicate_preserves_first_receipt PASSED [  8%]
+backend/tests/test_backend.py::test_revisions_and_late_revisions PASSED  [ 10%]
+backend/tests/test_backend.py::test_conflicting_revision_is_rejected_without_changes PASSED [ 12%]
+backend/tests/test_backend.py::test_identity_cannot_change_event_time PASSED [ 13%]
+backend/tests/test_backend.py::test_out_of_order_candles_are_sorted_by_event_time PASSED [ 15%]
+backend/tests/test_backend.py::test_identities_are_scoped_to_source_and_symbol PASSED [ 17%]
+backend/tests/test_backend.py::test_timezone_normalization_makes_equivalent_times_duplicates PASSED [ 18%]
+backend/tests/test_backend.py::test_concurrent_duplicates_insert_once PASSED [ 20%]
+backend/tests/test_backend.py::test_concurrent_revisions_keep_highest_current PASSED [ 22%]
+backend/tests/test_backend.py::test_invalid_observations_rejected[changes0] PASSED [ 24%]
+backend/tests/test_backend.py::test_invalid_observations_rejected[changes1] PASSED [ 25%]
+backend/tests/test_backend.py::test_invalid_observations_rejected[changes2] PASSED [ 27%]
+backend/tests/test_backend.py::test_invalid_observations_rejected[changes3] PASSED [ 29%]
+backend/tests/test_backend.py::test_invalid_observations_rejected[changes4] PASSED [ 31%]
+backend/tests/test_backend.py::test_invalid_observations_rejected[changes5] PASSED [ 32%]
+backend/tests/test_backend.py::test_invalid_observations_rejected[changes6] PASSED [ 34%]
+backend/tests/test_backend.py::test_invalid_observations_rejected[changes7] PASSED [ 36%]
+backend/tests/test_backend.py::test_invalid_observations_rejected[changes8] PASSED [ 37%]
+backend/tests/test_backend.py::test_invalid_observations_rejected[changes9] PASSED [ 39%]
+backend/tests/test_backend.py::test_invalid_observations_rejected[changes10] PASSED [ 41%]
+backend/tests/test_backend.py::test_invalid_observations_rejected[changes11] PASSED [ 43%]
+backend/tests/test_backend.py::test_invalid_observations_rejected[changes12] PASSED [ 44%]
+backend/tests/test_backend.py::test_invalid_observations_rejected[changes13] PASSED [ 46%]
+backend/tests/test_backend.py::test_invalid_observations_rejected[changes14] PASSED [ 48%]
+backend/tests/test_backend.py::test_invalid_observations_rejected[changes15] PASSED [ 50%]
+backend/tests/test_backend.py::test_invalid_observations_rejected[changes16] PASSED [ 51%]
+backend/tests/test_backend.py::test_database_constraints_reject_invalid_direct_write PASSED [ 53%]
+backend/tests/test_backend.py::test_subsecond_event_ordering PASSED      [ 55%]
+backend/tests/test_feed.py::test_chart_conversion_and_timestamps PASSED  [ 56%]
+backend/tests/test_feed.py::test_missing_feed[data0] PASSED              [ 58%]
+backend/tests/test_feed.py::test_missing_feed[data1] PASSED              [ 60%]
+backend/tests/test_feed.py::test_missing_feed[data2] PASSED              [ 62%]
+backend/tests/test_feed.py::test_bad_chart_shape[wrong_symbol] PASSED    [ 63%]
+backend/tests/test_feed.py::test_bad_chart_shape[missing_volume] PASSED  [ 65%]
+backend/tests/test_feed.py::test_bad_chart_shape[misaligned] PASSED      [ 67%]
+backend/tests/test_feed.py::test_bad_chart_shape[duplicate] PASSED       [ 68%]
+backend/tests/test_feed.py::test_bad_chart_shape[no_candles] PASSED      [ 70%]
+backend/tests/test_feed.py::test_nulls_skipped_without_fabricating_volume PASSED [ 72%]
+backend/tests/test_feed.py::test_http_adapter_uses_yahoo_chart PASSED    [ 74%]
+backend/tests/test_feed.py::test_http_failures[401] PASSED               [ 75%]
+backend/tests/test_feed.py::test_http_failures[429] PASSED               [ 77%]
+backend/tests/test_feed.py::test_http_failures[500] PASSED               [ 79%]
+backend/tests/test_feed.py::test_http_failures[503] PASSED               [ 81%]
+backend/tests/test_feed.py::test_timeout_and_bad_json PASSED             [ 82%]
+backend/tests/test_feed.py::test_persistence_revisions_replay_and_restart PASSED [ 84%]
+backend/tests/test_feed.py::test_completion_transition_is_revision PASSED [ 86%]
+backend/tests/test_feed.py::test_feed_failure_recovery_status_and_fanout PASSED [ 87%]
+backend/tests/test_feed.py::test_degraded_unknown_market_and_slow_consumer PASSED [ 89%]
+backend/tests/test_feed.py::test_rest_and_websocket_snapshot_reconnect PASSED [ 91%]
+backend/tests/test_feed.py::test_lifespan_worker_streams_to_clients PASSED [ 93%]
+backend/tests/test_feed.py::test_five_session_bootstrap_does_not_overflow_subscriber PASSED [ 94%]
+backend/tests/test_feed.py::test_status_age_increases_without_new_data_and_restore PASSED [ 96%]
+backend/tests/test_feed.py::test_snapshot_batch_rolls_back_on_conflict PASSED [ 98%]
+backend/tests/test_feed.py::test_websocket_broadcasts_persisted_revision PASSED [100%]
+
+- generated xml file: /Users/alqufaidi/Desktop/trading-dashboard/docs/evidence/part4-1/backend-junit.xml -
+============================== 58 passed in 0.33s ==============================
+
+Exit code: 0

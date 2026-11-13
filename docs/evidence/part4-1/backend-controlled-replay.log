@@ -1,0 +1,26 @@
+INFO:     Started server process [67888]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
+INFO:     127.0.0.1:50810 - "WebSocket /ws/market" [accepted]
+INFO:     connection open
+INFO:     127.0.0.1:50811 - "GET /observations HTTP/1.1" 200 OK
+INFO:     connection closed
+INFO:     127.0.0.1:50820 - "GET /observations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50822 - "WebSocket /ws/market" [accepted]
+INFO:     connection open
+INFO:     127.0.0.1:50939 - "WebSocket /ws/market" [accepted]
+INFO:     connection open
+INFO:     127.0.0.1:50940 - "POST /__evidence/poll HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50940 - "POST /__evidence/poll HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50940 - "GET /observations HTTP/1.1" 200 OK
+INFO:     connection closed
+INFO:     127.0.0.1:51379 - "GET /en-US/splunkd/__raw/servicesNS/-/-/messages?sort_key=timeCreated_epochSecs&sort_dir=desc&output_mode=json&count=1000 HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:51379 - "GET /en-US/splunkd/__raw/services/server/health/splunkd?output_mode=json HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:51380 - "POST /en-US/splunkd/__raw/servicesNS/nobody/search/search/v2/jobs/1794192192.56/control HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:51379 - "GET /en-US/splunkd/__raw/services/server/health/splunkd?output_mode=json HTTP/1.1" 404 Not Found
+INFO:     Shutting down
+INFO:     connection closed
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [67888]

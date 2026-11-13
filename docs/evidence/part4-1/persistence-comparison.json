@@ -1,0 +1,8 @@
+{
+  "result": "PASS",
+  "checks": [
+    "Live, restarted-disabled, and mocked-unavailable snapshots match exactly including receipts",
+    "Row/revision counts unchanged across restarts and outage"
+  ],
+  "stored_revisions": 1951
+}

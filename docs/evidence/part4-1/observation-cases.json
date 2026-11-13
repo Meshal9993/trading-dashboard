@@ -1,0 +1,14 @@
+{
+  "result": "PASS",
+  "source": "actual Yahoo observations from live-flow.json",
+  "checks": [
+    "Exact duplicate ignored",
+    "Late candles inserted in reverse event order are read chronologically",
+    "Mock revision 2 supersedes revision 0",
+    "Late mock revision 1 retained without replacing revision 2",
+    "Repeated revised version ignored"
+  ],
+  "revision_simulation": "Only revision/is_complete metadata was modified in an isolated temporary database. This is NOT evidence of an actual Yahoo-issued revision; prices, volume and event timestamps remain unchanged.",
+  "expected_rows": 7,
+  "actual_rows": 7
+}

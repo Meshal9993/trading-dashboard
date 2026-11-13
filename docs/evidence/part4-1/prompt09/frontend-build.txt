@@ -1,0 +1,13 @@
+
+> trading-dashboard-frontend@0.1.0 build
+> vite build
+
+vite v7.3.7 building client environment for production...
+transforming...
+✓ 21 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                   0.59 kB │ gzip:  0.37 kB
+dist/assets/index-NRcPEx8H.css   13.91 kB │ gzip:  3.63 kB
+dist/assets/index-C5NQ8NO9.js   262.39 kB │ gzip: 90.27 kB
+✓ built in 347ms

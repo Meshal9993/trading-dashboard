@@ -1,0 +1,16 @@
+{
+  "capturedAt": "2026-11-10T20:51:04.413Z",
+  "panel": {
+    "arrivalSequence": "229",
+    "snapshotAsOf": "2026-11-10T20:51:03.514336+00:00",
+    "timeframe": "1m"
+  },
+  "rows": [
+    "Nov 10, 2026, 20:51:00\t349.78\t349.81\t349.77\t349.81\tUnknown\t1/1 min\tForming",
+    "Nov 10, 2026, 20:50:00\t349.70\t349.90\t349.62\t349.77\tUnknown\t1/1 min\tComplete*",
+    "Nov 10, 2026, 20:49:00\t349.48\t349.64\t349.43\t349.62\tUnknown\t1/1 min\tComplete*",
+    "Nov 10, 2026, 20:48:00\t349.34\t349.51\t349.31\t349.44\tUnknown\t1/1 min\tComplete*",
+    "Nov 10, 2026, 20:47:00\t349.32\t349.39\t349.29\t349.35\tUnknown\t1/1 min\tComplete*"
+  ],
+  "text": "▥\nMARKET / OBSERVATORY\nIST 402 / A4.1\nConnected\n\nMARKET WORKSPACE / EQUITIES\n\nA clearer view of the market.\n\nPrice, volume, and the context behind every observation.\n\nY!\nYahoo Finance\n|\nWEBSOCKET · DELAY MAY VARY\nA\nAAPL NASDAQ\n\nApple Inc. · USD\n\nLATEST OBSERVED CLOSE\n349.81 USD\n\n+0.14% over displayed candles\n\nCANDLE INTERVAL\n1 minute\nRegular session only\nLATEST CANDLE VOLUME\nUnknown\nShares · observed volume\nPrice & volume / AAPL\n\n1 minute candles · UTC · Forming candle\n\n1m\n5m\n15m\n1h\n1d\nLatest 390\nAll received\n⤢\nO 349.78\nH 349.81\nL 349.77\nC 349.81\n VOL Unknown\n\t\n\t\n\n\n\n\t\n\t\n\n\t\n\t\nUp candle\nDown candle\n5 candles\n·\nScroll to zoom · drag to explore\nⓘ\nStreamed observations · not guaranteed real-time\n\nYahoo WebSocket observations are persisted before candle calculation. Quotes can be delayed, volume may be unknown, and candles can be revised.\n\nFeed monitor\nAAPL\nAvailable\nData source\nYahoo Finance\nDelivery\nYahoo WS → FastAPI WS\nUpstream\navailable · socket open\nMarket\nOpen · regular session\nData age\n2s\nNEWEST SOURCE OBSERVATION · UTC\nNov 10, 2026, 20:51:02\nLATEST SOURCE RECEIPT · UTC\nNov 10, 2026, 20:51:03\nLAST SUCCESSFUL POLL · UTC\nNov 10, 2026, 20:50:34\n↻\nReconnect\nKNOW YOUR DATA\nContext before conviction.\n\nRaw candles are calculated from stored Yahoo WebSocket observations. Polling fallback is a separate dataset. Neither source guarantees real-time exchange prices.\n\nAge uses the newest received source timestamp for streamed observations, or candle start for polling fallback. Unknown volume is shown explicitly; completion does not guarantee finality.\n\nEXPLICIT PROVENANCE · NO REAL-TIME GUARANTEE\nObservation ledger\n\nMost recent derived candles · UTC\n\nLAST 5 OBSERVATIONS\nLatest AAPL candles, including coverage and completion status\nEVENT TIME · UTC\tOPEN\tHIGH\tLOW\tCLOSE\tVOLUME\tCOVERAGE\tINTERVAL\nNov 10, 2026, 20:51:00\t349.78\t349.81\t349.77\t349.81\tUnknown\t1/1 min\tForming\nNov 10, 2026, 20:50:00\t349.70\t349.90\t349.62\t349.77\tUnknown\t1/1 min\tComplete*\nNov 10, 2026, 20:49:00\t349.48\t349.64\t349.43\t349.62\tUnknown\t1/1 min\tComplete*\nNov 10, 2026, 20:48:00\t349.34\t349.51\t349.31\t349.44\tUnknown\t1/1 min\tComplete*\nNov 10, 2026, 20:47:00\t349.32\t349.39\t349.29\t349.35\tUnknown\t1/1 min\tComplete*\n\n*Interval elapsed is inferred; provider corrections can still arrive.\n\nMARKET OBSERVATORY / IST 402 · Assignment 4.1\nTradingView Lightweight Charts™ · Copyright (с) 2025 TradingView, Inc. · TradingView"
+}

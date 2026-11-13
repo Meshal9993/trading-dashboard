@@ -1,0 +1,65 @@
+{
+  "result": "PASS",
+  "checks": [
+    "All five visible OHLC rows match independent SQLite aggregation at displayed snapshot clock",
+    "Unknown volumes match null SQLite-derived volumes",
+    "Visible arrival sequence exists in committed SQLite"
+  ],
+  "visible_arrival_sequence": 229,
+  "receipt_time": "2026-11-10T20:51:03.511861+00:00",
+  "raw_payload": {
+    "change": -0.88500977,
+    "change_percent": -0.25236243,
+    "day_volume": "19992831",
+    "exchange": "NMS",
+    "id": "AAPL",
+    "last_size": "96",
+    "market_hours": 1,
+    "price": 349.805,
+    "price_hint": "2",
+    "quote_type": 8,
+    "time": "1794343862000"
+  },
+  "derived_candles": [
+    {
+      "timestamp": "2026-11-10T20:47:00Z",
+      "open": 349.3201,
+      "high": 349.39,
+      "low": 349.29,
+      "close": 349.35,
+      "volume": null
+    },
+    {
+      "timestamp": "2026-11-10T20:48:00Z",
+      "open": 349.34,
+      "high": 349.5088,
+      "low": 349.31,
+      "close": 349.44,
+      "volume": null
+    },
+    {
+      "timestamp": "2026-11-10T20:49:00Z",
+      "open": 349.475,
+      "high": 349.64,
+      "low": 349.43,
+      "close": 349.62,
+      "volume": null
+    },
+    {
+      "timestamp": "2026-11-10T20:50:00Z",
+      "open": 349.7,
+      "high": 349.9,
+      "low": 349.62,
+      "close": 349.77,
+      "volume": null
+    },
+    {
+      "timestamp": "2026-11-10T20:51:00Z",
+      "open": 349.775,
+      "high": 349.805,
+      "low": 349.77,
+      "close": 349.805,
+      "volume": null
+    }
+  ]
+}

@@ -1,0 +1,114 @@
+▥
+MARKET / OBSERVATORY
+IST 402 / A4.1
+Connected
+
+MARKET WORKSPACE / EQUITIES
+
+A clearer view of the market.
+
+Price, volume, and the context behind every observation.
+
+Y!
+Yahoo Finance
+|
+WEBSOCKET · DELAY MAY VARY
+A
+AAPL NASDAQ
+
+Apple Inc. · USD
+
+LATEST OBSERVED CLOSE
+349.70 USD
+
++0.11% over displayed candles
+
+CANDLE INTERVAL
+1 minute
+Regular session only
+LATEST CANDLE VOLUME
+Unknown
+Shares · observed volume
+Price & volume / AAPL
+
+1 minute candles · UTC · Forming candle
+
+1m
+5m
+15m
+1h
+1d
+Latest 390
+All received
+⤢
+O 349.80
+H 349.80
+L 349.69
+C 349.70
+ VOL Unknown
+	
+	
+
+
+
+	
+	
+
+	
+	
+Up candle
+Down candle
+6 candles
+·
+Scroll to zoom · drag to explore
+ⓘ
+Streamed observations · not guaranteed real-time
+
+Yahoo WebSocket observations are persisted before candle calculation. Quotes can be delayed, volume may be unknown, and candles can be revised.
+
+Feed monitor
+AAPL
+Available
+Data source
+Yahoo Finance
+Delivery
+Yahoo WS → FastAPI WS
+Upstream
+available · socket open
+Market
+Open · regular session
+Data age
+0s
+NEWEST SOURCE OBSERVATION · UTC
+Nov 10, 2026, 20:52:41
+LATEST SOURCE RECEIPT · UTC
+Nov 10, 2026, 20:52:41
+LAST SUCCESSFUL POLL · UTC
+Nov 10, 2026, 20:52:30
+↻
+Reconnect
+KNOW YOUR DATA
+Context before conviction.
+
+Raw candles are calculated from stored Yahoo WebSocket observations. Polling fallback is a separate dataset. Neither source guarantees real-time exchange prices.
+
+Age uses the newest received source timestamp for streamed observations, or candle start for polling fallback. Unknown volume is shown explicitly; completion does not guarantee finality.
+
+EXPLICIT PROVENANCE · NO REAL-TIME GUARANTEE
+Observation ledger
+
+Most recent derived candles · UTC
+
+LAST 5 OBSERVATIONS
+Latest AAPL candles, including coverage and completion status
+EVENT TIME · UTC	OPEN	HIGH	LOW	CLOSE	VOLUME	COVERAGE	INTERVAL
+Nov 10, 2026, 20:52:00	349.80	349.80	349.69	349.70	Unknown	1/1 min	Forming
+Nov 10, 2026, 20:51:00	349.78	349.86	349.77	349.83	Unknown	1/1 min	Complete*
+Nov 10, 2026, 20:50:00	349.70	349.90	349.62	349.77	Unknown	1/1 min	Complete*
+Nov 10, 2026, 20:49:00	349.48	349.64	349.43	349.62	Unknown	1/1 min	Complete*
+Nov 10, 2026, 20:48:00	349.34	349.51	349.31	349.44	Unknown	1/1 min	Complete*
+
+*Interval elapsed is inferred; provider corrections can still arrive.
+
+MARKET OBSERVATORY / IST 402 · Assignment 4.1
+TradingView Lightweight Charts™ · Copyright (с) 2025 TradingView, Inc. · TradingView

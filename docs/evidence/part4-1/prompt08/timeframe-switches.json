@@ -1,0 +1,18 @@
+[
+  {
+    "frame": "15m",
+    "state": "Browser tab: 1, Title: \"AAPL · Market Observatory\", URL: \"http://127.0.0.1:5173/\".\nThe following is a diff from the previous accessibility tree with ~ and + representing changed and added elements, respectively. Removed elements are summarized by ID range.\nRemoved element IDs: 23, 25, 71, 73, 75\n+\t\t\t\t114 text 15 minutes\n+\t\t\t\t115 text Unknown\n~\t\t\t\t\t31 text 15 minutes candles  ·  UTC  ·  Forming candle\n~\t\t\t\t32 pop up button (collapsed, settable) Description: Candle timeframe, Value: 15m, Secondary Actions: Expand\n~\t\t\t\t\t\t35 5m\n~\t\t\t\t\t\t36 (selected) 15m\n~\t\t\t\t\t44 text O  349.32 H  349.90 L  349.29 C  349.81\n~\t\t\t\t46 container AAPL 15m OHLC candlesticks and trading volume, Yahoo Finance observations. Unknown volume is not drawn. Times in UTC.\n~\t\t\t\t47 text Up candle Down candle 1 candles · Scroll to zoom · drag to explore\n+\t\t\t\t\t\t116 text 1s\n+\t\t\t\t\t117 text Nov 10, 2026, 20:51:12\n+\t\t\t\t\t118 text Nov 10, 2026, 20:51:13\nThe focused UI element is 0 AXWebArea AAPL · Market Observatory, URL: 127.0.0.1:5173/"
+  },
+  {
+    "frame": "1h",
+    "state": "Browser tab: 1, Title: \"AAPL · Market Observatory\", URL: \"http://127.0.0.1:5173/\".\nThe following is a diff from the previous accessibility tree with ~ and + representing changed and added elements, respectively. Removed elements are summarized by ID range.\nRemoved element IDs: 114-115\n+\t\t\t\t119 text 1 hour\n+\t\t\t\t120 text Unknown\n~\t\t\t\t\t31 text 1 hour candles  ·  UTC  ·  Forming candle\n~\t\t\t\t32 pop up button (collapsed, settable) Description: Candle timeframe, Value: 1h, Secondary Actions: Expand\n~\t\t\t\t\t\t36 15m\n~\t\t\t\t\t\t37 (selected) 1h\n~\t\t\t\t46 container AAPL 1h OHLC candlesticks and trading volume, Yahoo Finance observations. Unknown volume is not drawn. Times in UTC.\nThe focused UI element is 0 AXWebArea AAPL · Market Observatory, URL: 127.0.0.1:5173/"
+  },
+  {
+    "frame": "1d",
+    "state": "Browser tab: 1, Title: \"AAPL · Market Observatory\", URL: \"http://127.0.0.1:5173/\".\nThe following is a diff from the previous accessibility tree with ~ and + representing changed and added elements, respectively. Removed elements are summarized by ID range.\n~\t\t\t\t119 text Daily\n~\t\t\t\t\t31 text Daily candles  ·  UTC  ·  Forming candle\n~\t\t\t\t32 pop up button (collapsed, settable) Description: Candle timeframe, Value: 1d, Secondary Actions: Expand\n~\t\t\t\t\t\t37 1h\n~\t\t\t\t\t\t38 (selected) 1d\n~\t\t\t\t46 container AAPL 1d OHLC candlesticks and trading volume, Yahoo Finance observations. Unknown volume is not drawn. Times in UTC.\nThe focused UI element is 0 AXWebArea AAPL · Market Observatory, URL: 127.0.0.1:5173/"
+  },
+  {
+    "frame": "1m",
+    "state": "Browser tab: 1, Title: \"AAPL · Market Observatory\", URL: \"http://127.0.0.1:5173/\".\nThe following is a diff from the previous accessibility tree with ~ and + representing changed and added elements, respectively. Removed elements are summarized by ID range.\n~\t\t\t\t119 text 1 minute\n~\t\t\t\t\t31 text 1 minute candles  ·  UTC  ·  Forming candle\n~\t\t\t\t32 pop up button (collapsed, settable) Description: Candle timeframe, Value: 1m, Secondary Actions: Expand\n~\t\t\t\t\t\t34 (selected) 1m\n~\t\t\t\t\t\t38 1d\n~\t\t\t\t\t44 text O  349.78 H  349.86 L  349.77 C  349.81\n~\t\t\t\t46 container AAPL 1m OHLC candlesticks and trading volume, Yahoo Finance observations. Unknown volume is not drawn. Times in UTC.\n~\t\t\t\t47 text Up candle Down candle 5 candles · Scroll to zoom · drag to explore\nThe focused UI element is 0 AXWebArea AAPL · Market Observatory, URL: 127.0.0.1:5173/"
+  }
+]
