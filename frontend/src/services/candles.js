@@ -1,5 +1,7 @@
+import { decodeSma } from './sma'
+
 // Wire candles keep the CSV's six fields; metadata stays outside the candle.
-export function decodeCandleState(data, timeframe) {
+export function decodeCandleState(data, timeframe, periods) {
   if (data.symbol !== 'AAPL' || data.timeframe !== timeframe || !['raw', 'polling'].includes(data.dataset) ||
       !['yahoo_finance_websocket', 'yahoo_finance_chart'].includes(data.source) ||
       !Array.isArray(data.candles) || !Array.isArray(data.metadata) || !data.feed_status ||
@@ -19,5 +21,5 @@ export function decodeCandleState(data, timeframe) {
       source: data.source, is_complete: state.is_complete, coverage: state }
   })
   return { observations, status: data.feed_status, sequence: data.sequence, asOf: Date.parse(data.as_of),
-    dataset: data.dataset, lastArrival: data.last_recorded_arrival }
+    dataset: data.dataset, lastArrival: data.last_recorded_arrival, sma: decodeSma(data.sma, observations, periods) }
 }

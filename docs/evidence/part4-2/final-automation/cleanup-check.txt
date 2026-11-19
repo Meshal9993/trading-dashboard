@@ -1,0 +1,6 @@
+Forced Chrome launch failure (expected smoke exit 1)
+Command exited 1. See browser.log.
+FAIL: /Users/alqufaidi/Desktop/trading-dashboard/artifacts/final-cleanup-check/run-wr2kwv2e
+PASS: Both loopback servers stopped and the saved database remained unchanged.
+PASS: Forced Chrome failure returned status 1 and removed the disposable runtime directory.
+PASS: Both successful runs released their loopback ports. No smoke browser, runner, or backend process remained.

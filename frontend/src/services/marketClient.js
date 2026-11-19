@@ -1,20 +1,24 @@
 import { decodeCandleState } from './candles'
+import { appendSmaPeriods, validSmaPeriods } from './sma'
 
 export function createMarketClient({ onChange, location = window.location, WebSocketImpl = WebSocket,
-  fetchImpl = fetch, clock = () => Date.now() }) {
-  let state = { observations: [], status: null, timeframe: '1m', connection: 'connecting', loading: true, error: '', now: clock() }
+  fetchImpl = fetch, clock = () => Date.now(), smaPeriods }) {
+  let state = { observations: [], sma: null, status: null, timeframe: '1m', connection: 'connecting', loading: true, error: '', now: clock() }
+  let periods = smaPeriods
   let socket, retryTimer, ticker, controller, stopped = false, attempts = 0, generation = 0
   let lastMessage = clock(), latestSequence = -1, latestAsOf = -Infinity
   const emit = patch => { state = { ...state, ...patch, now: clock() }; onChange(state) }
 
   function apply(data, currentGeneration) {
     if (stopped || currentGeneration !== generation) return
-    const decoded = decodeCandleState(data, state.timeframe)
+    const decoded = decodeCandleState(data, state.timeframe, periods)
     if (decoded.sequence < latestSequence || (decoded.sequence === latestSequence && decoded.asOf < latestAsOf)) return
     latestSequence = decoded.sequence
     latestAsOf = decoded.asOf
     const same = JSON.stringify(decoded.observations) === JSON.stringify(state.observations)
-    emit({ observations: same ? state.observations : decoded.observations, status: decoded.status,
+    const sameSma = JSON.stringify(decoded.sma) === JSON.stringify(state.sma)
+    emit({ observations: same ? state.observations : decoded.observations, sma: sameSma ? state.sma : decoded.sma,
+      status: decoded.status,
       dataset: decoded.dataset, lastArrival: decoded.lastArrival, snapshotAsOf: data.as_of, loading: false, error: '' })
   }
 
@@ -22,7 +26,7 @@ export function createMarketClient({ onChange, location = window.location, WebSo
     controller?.abort()
     controller = new AbortController()
     try {
-      const query = new URLSearchParams({ symbol: 'AAPL', timeframe, dataset: 'auto' })
+      const query = appendSmaPeriods(new URLSearchParams({ symbol: 'AAPL', timeframe, dataset: 'auto' }), periods)
       const response = await fetchImpl(`/history?${query}`, { signal: controller.signal })
       if (!response.ok) throw new Error('Saved candles unavailable')
       apply(await response.json(), currentGeneration)
@@ -43,7 +47,7 @@ export function createMarketClient({ onChange, location = window.location, WebSo
     savedSnapshot(currentGeneration, state.timeframe)
     const url = new URL('/ws/candles', location.href)
     url.protocol = location.protocol === 'https:' ? 'wss:' : 'ws:'
-    url.search = new URLSearchParams({ symbol: 'AAPL', timeframe: state.timeframe }).toString()
+    url.search = appendSmaPeriods(new URLSearchParams({ symbol: 'AAPL', timeframe: state.timeframe }), periods).toString()
     try {
       socket = new WebSocketImpl(url.href)
     } catch {
@@ -102,7 +106,14 @@ export function createMarketClient({ onChange, location = window.location, WebSo
     setTimeframe(timeframe) {
       if (!['1m', '5m', '15m', '1h', '1d'].includes(timeframe)) throw new Error('Invalid timeframe')
       if (state.timeframe === timeframe) return
-      emit({ timeframe, observations: [], loading: true, error: '' })
+      emit({ timeframe, observations: [], sma: null, loading: true, error: '' })
+      retry()
+    },
+    setSmaPeriods(next) {
+      if (!validSmaPeriods(next)) throw new Error('Invalid SMA periods')
+      if (periods?.short === next.short && periods?.long === next.long) return
+      periods = next
+      emit({ sma: null })
       retry()
     },
     retry,

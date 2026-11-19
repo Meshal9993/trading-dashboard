@@ -1,0 +1,116 @@
+{
+    "symbol": "AAPL",
+    "start_date": "2026-11-09",
+    "end_date": "2026-11-09",
+    "short_period": 2,
+    "long_period": 3,
+    "initial_cash_micros": 1000000000,
+    "completed_candles": 7,
+    "as_of": "2026-11-09T15:07:04+00:00",
+    "signals": [
+        {
+            "side": "up",
+            "candle_time": "2026-11-09T15:04:00+00:00",
+            "decision_time": "2026-11-09T15:05:00+00:00",
+            "short": 16.0,
+            "long": 13.0,
+            "order_id": 1
+        },
+        {
+            "side": "down",
+            "candle_time": "2026-11-09T15:06:00+00:00",
+            "decision_time": "2026-11-09T15:07:00+00:00",
+            "short": 4.0,
+            "long": 9.0,
+            "order_id": 2
+        }
+    ],
+    "orders": [
+        {
+            "id": 1,
+            "side": "buy",
+            "quantity": 1,
+            "status": "filled",
+            "submitted_at": "2026-11-09T15:05:00+00:00",
+            "rejection_reason": null
+        },
+        {
+            "id": 2,
+            "side": "close",
+            "quantity": 1,
+            "status": "filled",
+            "submitted_at": "2026-11-09T15:07:00+00:00",
+            "rejection_reason": null
+        }
+    ],
+    "fills": [
+        {
+            "order_id": 1,
+            "side": "buy",
+            "quantity": 1,
+            "price_micros": 17000000,
+            "source_time": "2026-11-09T15:05:03+00:00",
+            "receipt_time": "2026-11-09T15:05:04+00:00",
+            "arrival_sequence": 6
+        },
+        {
+            "order_id": 2,
+            "side": "close",
+            "quantity": 1,
+            "price_micros": 5000000,
+            "source_time": "2026-11-09T15:07:03+00:00",
+            "receipt_time": "2026-11-09T15:07:04+00:00",
+            "arrival_sequence": 9
+        }
+    ],
+    "performance": {
+        "cash_micros": 988000000,
+        "shares": 0,
+        "average_cost_micros": null,
+        "realized_micros": -12000000,
+        "unrealized_micros": 0,
+        "total_micros": -12000000,
+        "equity_micros": 988000000,
+        "price_micros": 5000000,
+        "price_time": "2026-11-09T15:07:04+00:00"
+    },
+    "equity_curve": [
+        {
+            "timestamp": "2026-11-09T15:01:00+00:00",
+            "equity_micros": 1000000000
+        },
+        {
+            "timestamp": "2026-11-09T15:02:00+00:00",
+            "equity_micros": 1000000000
+        },
+        {
+            "timestamp": "2026-11-09T15:03:00+00:00",
+            "equity_micros": 1000000000
+        },
+        {
+            "timestamp": "2026-11-09T15:04:00+00:00",
+            "equity_micros": 1000000000
+        },
+        {
+            "timestamp": "2026-11-09T15:05:00+00:00",
+            "equity_micros": 1000000000
+        },
+        {
+            "timestamp": "2026-11-09T15:05:04+00:00",
+            "equity_micros": 1000000000
+        },
+        {
+            "timestamp": "2026-11-09T15:06:00+00:00",
+            "equity_micros": 990000000
+        },
+        {
+            "timestamp": "2026-11-09T15:07:00+00:00",
+            "equity_micros": 984000000
+        },
+        {
+            "timestamp": "2026-11-09T15:07:04+00:00",
+            "equity_micros": 988000000
+        }
+    ],
+    "warnings": []
+}

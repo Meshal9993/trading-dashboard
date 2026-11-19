@@ -11,9 +11,9 @@ class Socket {
 }
 const flush = async () => { await Promise.resolve(); await Promise.resolve(); await Promise.resolve() }
 let client, states
-function setup(fetchImpl = vi.fn().mockResolvedValue({ ok: true, json: async () => candleState() })) {
+function setup(fetchImpl = vi.fn().mockResolvedValue({ ok: true, json: async () => candleState() }), smaPeriods) {
   states = []
-  client = createMarketClient({ onChange: state => states.push(state), location: new URL('https://dashboard.example/'), WebSocketImpl: Socket, fetchImpl })
+  client = createMarketClient({ onChange: state => states.push(state), location: new URL('https://dashboard.example/'), WebSocketImpl: Socket, fetchImpl, smaPeriods })
   client.start()
   return { latest: () => states.at(-1), socket: Socket.instances.at(-1) }
 }
@@ -124,4 +124,32 @@ it('replaces datasets rather than merging polling and raw prices and preserves u
   expect(latest().observations).toHaveLength(1)
   expect(latest().observations[0].volume).toBeNull()
   expect(latest().status.fallback_active).toBe(false)
+})
+
+it('requests the selected SMA periods and drops overlays from the previous connection', async () => {
+  const reply = (short_period, long_period, sequence = 1) => ({
+    ...candleState({ sequence }),
+    sma: { short_period, long_period, points: [{ timestamp: candle().event_time, short: 16, long: 13, crossover: 'up' }] },
+  })
+  const fetchImpl = vi.fn().mockImplementation(async () => ({ ok: true, json: async () => reply(9, 21) }))
+  const { socket, latest } = setup(fetchImpl, { short: 9, long: 21 })
+  await flush()
+  expect(fetchImpl.mock.calls[0][0]).toContain('sma_short=9&sma_long=21')
+  expect(socket.url).toContain('sma_short=9&sma_long=21')
+  expect(latest().sma.short_period).toBe(9)
+
+  client.setSmaPeriods({ short: 2, long: 3 })
+  expect(latest().sma).toBeNull()
+  expect(latest().observations[0].close).toBe(105)
+  expect(Socket.instances.at(-1).url).toContain('sma_short=2&sma_long=3')
+  socket.message(reply(9, 21, 100))
+  await flush()
+  expect(latest().sma).toBeNull()
+
+  Socket.instances.at(-1).message(reply(2, 3, 2))
+  expect(latest().sma.short_period).toBe(2)
+  const forming = { ...reply(2, 3, 3), metadata: [{ timestamp: candle().event_time, is_complete: false }] }
+  Socket.instances.at(-1).message(forming)
+  expect(latest().observations[0].is_complete).toBe(false)
+  expect(latest().sma).toBeNull()
 })

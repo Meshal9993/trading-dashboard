@@ -1,12 +1,37 @@
 <script setup>
 import { onBeforeUnmount, onMounted, ref, watch } from 'vue'
-import { CandlestickSeries, ColorType, createChart, HistogramSeries } from 'lightweight-charts'
+import { CandlestickSeries, ColorType, createChart, createSeriesMarkers, HistogramSeries, LineSeries } from 'lightweight-charts'
 import { chartData } from '../services/observations'
 
-const props = defineProps({ mode: { type: String, default: 'live' }, observations: { type: Array, default: () => [] }, timeframe: { type: String, default: '1m' } })
+const props = defineProps({
+  mode: { type: String, default: 'live' },
+  observations: { type: Array, default: () => [] },
+  sma: Object,
+  timeframe: { type: String, default: '1m' },
+})
 const emit = defineEmits(['hover'])
 const container = ref(null)
 let chart, candles, volume, observer, previous = [], hasData = false
+let shortSma, longSma, crossoverMarkers
+
+function renderSma() {
+  if (!chart) return
+  const visibleTimes = new Set(props.observations.map(candle => candle.event_time))
+  const points = (props.sma?.points ?? []).filter(point => visibleTimes.has(point.timestamp))
+  const time = point => Date.parse(point.timestamp) / 1000
+  const line = field => points.map(point => point[field] === null
+    ? { time: time(point) }
+    : { time: time(point), value: point[field] })
+  shortSma.setData(line('short'))
+  longSma.setData(line('long'))
+  crossoverMarkers.setMarkers(points.filter(point => point.crossover !== null).map(point => {
+    const up = point.crossover === 'up'
+    return {
+      time: time(point), position: up ? 'belowBar' : 'aboveBar', shape: up ? 'arrowUp' : 'arrowDown',
+      color: up ? '#2ec4a0' : '#ee7581', text: up ? 'SMA cross up' : 'SMA cross down',
+    }
+  }))
+}
 
 function render() {
   if (!chart) return
@@ -44,6 +69,10 @@ onMounted(() => {
   })
   candles = chart.addSeries(CandlestickSeries, { upColor: '#2ec4a0', downColor: '#ee7581', borderVisible: false, wickUpColor: '#2ec4a0', wickDownColor: '#ee7581' })
   candles.priceScale().applyOptions({ scaleMargins: { top: 0.12, bottom: 0.06 } })
+  const smaStyle = { lineWidth: 2, lastValueVisible: false, priceLineVisible: false, crosshairMarkerVisible: false }
+  shortSma = chart.addSeries(LineSeries, { ...smaStyle, color: '#83c9fc' })
+  longSma = chart.addSeries(LineSeries, { ...smaStyle, color: '#f4bf70' })
+  crossoverMarkers = createSeriesMarkers(candles, [])
   volume = chart.addSeries(HistogramSeries, { priceFormat: { type: 'volume' }, lastValueVisible: false, priceLineVisible: false }, 1)
   volume.priceScale().applyOptions({ scaleMargins: { top: 0.12, bottom: 0 }, visible: true })
   chart.panes()[1].setHeight(90)
@@ -54,10 +83,12 @@ onMounted(() => {
   })
   observer.observe(container.value)
   render()
+  renderSma()
 })
 watch(() => props.observations, render)
+watch([() => props.observations, () => props.sma], renderSma)
 watch(() => props.timeframe, () => { previous = []; hasData = false; render() })
-onBeforeUnmount(() => { observer?.disconnect(); chart?.remove() })
+onBeforeUnmount(() => { observer?.disconnect(); crossoverMarkers?.detach(); chart?.remove() })
 defineExpose({ fit: () => chart?.timeScale().fitContent() })
 </script>
 

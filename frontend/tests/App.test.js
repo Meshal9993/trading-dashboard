@@ -5,8 +5,11 @@ import App from '../src/App.vue'
 import { candle, status } from './fixtures'
 
 let update
-const retry = vi.fn(), stop = vi.fn(), setTimeframe = vi.fn()
-vi.mock('../src/services/marketClient', () => ({ createMarketClient: options => { update = options.onChange; return { start: vi.fn(), setTimeframe: (...args) => setTimeframe(...args), retry: (...args) => retry(...args), stop: () => stop() } } }))
+const retry = vi.fn(), stop = vi.fn(), setTimeframe = vi.fn(), setSmaPeriods = vi.fn()
+vi.mock('../src/services/marketClient', () => ({ createMarketClient: options => {
+  update = options.onChange
+  return { start: vi.fn(), setTimeframe, setSmaPeriods, retry, stop }
+} }))
 vi.mock('../src/components/MarketChart.vue', () => ({ default: { props: ['observations'], template: '<div data-testid="chart">{{ observations.length }} candles</div>' } }))
 let wrapper
 const render = () => { wrapper = mount(App); return wrapper }
@@ -90,4 +93,43 @@ it('isolates Replay from incoming live updates and restores the live dashboard',
   await wrapper.findAll('.mode-switch button')[0].trigger('click')
   expect(wrapper.text()).toContain('109.00')
   vi.unstubAllGlobals()
+})
+
+it('validates entered SMA periods and displays values for the applied periods only', async () => {
+  render()
+  const first = candle()
+  const points = [{ timestamp: first.event_time, short: 16, long: 13, crossover: 'up' }]
+  await push({ sma: { short_period: 9, long_period: 21, points } })
+  expect(wrapper.get('.sma-legend').text()).toContain('Confirmed crossover ↑ up')
+  const [short, long] = wrapper.findAll('.sma-periods input')
+  expect(short.element.value).toBe('9')
+  expect(long.element.value).toBe('21')
+  await short.setValue('3')
+  await long.setValue('3')
+  await wrapper.get('.sma-periods').trigger('submit')
+  expect(wrapper.get('.sma-error').text()).toContain('smaller short period')
+  expect(setSmaPeriods).not.toHaveBeenCalled()
+  await short.setValue('2')
+  await wrapper.get('.sma-periods').trigger('submit')
+  expect(setSmaPeriods).toHaveBeenCalledWith({ short: 2, long: 3 })
+  expect(wrapper.get('.sma-legend').text()).not.toContain('Confirmed crossover')
+  await push({ sma: { short_period: 2, long_period: 3, points } })
+  expect(wrapper.get('.sma-legend').text()).toContain('Short SMA (2) 16.00')
+  expect(wrapper.get('.sma-legend').text()).toContain('Long SMA (3) 13.00')
+})
+
+it('opens an isolated Backtest view and keeps existing paper and chart controls mounted', async () => {
+  wrapper = mount(App, { attachTo: document.body })
+  await push({})
+  const modes = wrapper.findAll('.mode-switch button')
+  const paper = wrapper.get('.paper-panel').element
+  await modes[2].trigger('click')
+  expect(wrapper.get('#backtest-settings-title').text()).toBe('Backtest settings')
+  expect(wrapper.get('[data-testid=chart]').isVisible()).toBe(false)
+  expect(wrapper.get('.paper-panel').isVisible()).toBe(false)
+  expect(modes[2].attributes('aria-pressed')).toBe('true')
+  await modes[0].trigger('click')
+  expect(wrapper.find('#backtest-settings-title').exists()).toBe(false)
+  expect(wrapper.get('.paper-panel').element).toBe(paper)
+  expect(wrapper.get('[data-testid=chart]').isVisible()).toBe(true)
 })

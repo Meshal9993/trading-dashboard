@@ -717,3 +717,239 @@ recordings, not an optimized long-session replay engine. Unknown volume and part
 coverage remain honest limitations of the captured source. Replay requires the local
 backend, even though Yahoo can be disconnected. No report.md, commit, push or paid
 API call was made. Submission/report writing remains with the project owner.
+
+## Prompt 09A — Simple moving averages
+
+Verified November 16, 2026 on local branch `part4-2`. The branch starts from
+Part 4.1 main commit `a806b32b6608ef3b2f9c4230ba3660409c7e0ebb`.
+The instructor's constructed closes were loaded into an isolated SQLite test
+database with both Yahoo workers disabled. The prices in this check are synthetic.
+Each receipt followed the end of its source candle so the seven replay steps
+each revealed one additional completed minute.
+
+| Candle (UTC) | Close | Short SMA (2) | Long SMA (3) | Confirmed crossover |
+| --- | ---: | ---: | ---: | --- |
+| 14:30 | 13 | Unavailable | Unavailable | None |
+| 14:31 | 10 | 11.5 | Unavailable | None |
+| 14:32 | 7 | 8.5 | 10 | None |
+| 14:33 | 13 | 10 | 10 | None |
+| 14:34 | 19 | 16 | 13 | Up |
+| 14:35 | 7 | 13 | 13 | None |
+| 14:36 | 1 | 4 | 9 | Down |
+
+A single history calculation and all seven successive replay snapshots matched
+the hand calculation. Each replay snapshot matched the corresponding batch
+prefix, including both warm-up gaps and ties. In the browser, Replay displayed
+the upward marker at 14:34 UTC and the downward marker at 14:36 UTC, with both
+SMA lines. The fifth replay step displayed 16.00 and 13.00. The final step
+displayed 4.00 and 9.00. Changing the long period to 4 at the fifth step kept
+the cursor at 5 of 7 and changed the long value to 12.25. Trying equal periods
+showed an error and kept the applied settings.
+
+Backend tests verify that a forming candle cannot fill a window or emit a
+signal, a missing minute consumes no window slot, and a recorded correction
+changes the affected averages and signals only after its arrival becomes
+available in replay. Additional tests cover precision before rounding and period
+validation in HTTP and WebSocket requests. Frontend tests verify period controls,
+line and marker data, rejection of stale overlays, and replay cursor preservation.
+
+- **Backend** · 193 tests passed.
+- **Frontend** · 44 tests passed.
+- **Production build** · passed. Vitest and Vite ran through the existing Node
+  runtime because the local npm launcher had a missing module.
+
+[Batch and replay results](evidence/part4-2/prompt09a/instructor-example.json) ·
+[Browser screenshot with both markers](evidence/part4-2/prompt09a/instructor-replay-markers.jpg) ·
+[Test and build logs](evidence/part4-2/prompt09a/)
+
+To reproduce the numerical comparison, run from the repository root with a
+new disposable SQLite path:
+
+```sh
+fixture_dir=$(mktemp -d)
+PYTHONPATH=. backend/.venv/bin/python backend/tests/evidence/verify_sma.py \
+  "$fixture_dir/instructor.sqlite3" --output "$fixture_dir/instructor-example.json"
+```
+
+For the browser check, run the backend against that fixture with both Yahoo
+workers disabled. In the dashboard, set periods to 2 and 3, select Replay, and
+load and play the seven recorded arrivals. The screenshot and browser captures
+in the evidence folder use this constructed fixture.
+
+## Prompt 09C · Paper trading
+
+Verified November 17, 2026 on `part4-2` using a disposable SQLite database.
+The browser used the real Vue controls and FastAPI order endpoints. Both Yahoo
+workers were disabled. A loopback test-only receiver delivered the three
+constructed prices through the usual raw quote handler after the associated
+orders were submitted. The production entry point excludes that test receiver.
+
+| Browser action and next quote | Expected cash and shares | Observed cash and shares |
+| --- | --- | --- |
+| Buy 4, before any eligible quote | $1,000 and 0, pending | $1,000 and 0, pending |
+| Buy 4 at $100 | $600 and 4 | $600 and 4 |
+| Sell 1 at $110 | $710 and 3 | $710 and 3 |
+| Close 3 at $105 | $1,025 and 0 | $1,025 and 0 |
+| Sell 1 from the empty position | Rejected, $1,025 and 0 | Insufficient shares, $1,025 and 0 |
+| Restart the backend and reload Vue | $1,025 and 0, exactly three fills | $1,025 and 0, exactly three fills |
+
+The test server accepted the first Buy request and returned a synthetic 503
+to represent a lost response. **Retry order request** sent the same request ID.
+The dashboard showed one pending Buy before the first price was delivered.
+After all three fills and the rejected sale, the test backend was stopped and
+the normal FastAPI app was started against the same database with both feeds
+disabled. A read-only SQLite query confirmed exactly three fills and four order
+rows. The filled quantities, prices, and final balances matched the browser.
+Each fill linked to its triggering arrival and followed its order submission.
+
+Automated tests also covered invalid quantities, cash and position checks for
+competing pending orders, duplicate and revised quotes, late and future-dated
+source timestamps, pending orders surviving shutdown, full rollback on write
+failure, and paper replay advancing only as saved quotes are revealed. The
+frontend tests exercised balances and fills, rejection, an idempotent retry,
+account switching, and paper replay opt-in.
+
+- **Backend** · 207 tests passed.
+- **Frontend** · 49 tests passed.
+- **Production build** · passed using the installed Vite entry point. The local
+  npm launcher was missing a module, so Vitest and Vite ran directly through Node.
+
+[Browser results](evidence/part4-2/prompt09c/browser-results.json) ·
+[SQLite comparison after restart](evidence/part4-2/prompt09c/sqlite-after-restart.json) ·
+[Dashboard after restart](evidence/part4-2/prompt09c/simulated-account-after-restart.jpg) ·
+[Test and build logs](evidence/part4-2/prompt09c/)
+
+## Prompt 09D · Paper profit and loss
+
+Verified November 17, 2026 on `part4-2`. The browser used Vue and the normal
+paper order endpoints with a new $1,000 simulated account. The offline
+`backend/tests/evidence/pnl_server.py` fixture delivered the instructor's
+constructed quotes and completed the two one-minute candles. Both Yahoo
+workers were disabled. The production app has no fixture routes.
+
+| Event | Cash | Shares | Realized | Unrealized | Total |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| Buy 4 at $100 | $600 | 4 | $0 | $0 | $0 |
+| Completed candle at $110 | $600 | 4 | $0 | $40 | $40 |
+| Sell 1 at $110 | $710 | 3 | $10 | $30 | $40 |
+| Completed candle at $95 | $710 | 3 | $10 | −$15 | −$5 |
+| Close 3 at $105 | $1,025 | 0 | $25 | $0 | $25 |
+
+The expected amounts above matched the Vue summary at every step. A direct
+SQLite query matched all five displayed history rows, including each source,
+price, timestamp, and balance. After stopping the fixture backend and starting
+the standard backend against the same database, the browser and SQLite
+matched again. Exactly three fills and five P&L rows persisted. No discrepancy
+was observed.
+
+Backend tests cover fractional weighted cost, keeping the remaining cost after
+partial sales, old fill reconstruction, repeat processing, a stale valuation
+with intact history, and replay prefix isolation. Frontend tests cover loss
+display, source and price timestamps, and unavailable current amounts with
+earlier rows still visible.
+
+- **Backend** · 211 passed.
+- **Frontend** · 51 passed.
+- **Production build** · passed. Vitest and Vite ran through the existing Node
+  runtime because the npm launcher was missing a module.
+
+[Before restart browser results](evidence/part4-2/prompt09d/browser-before-restart.json) ·
+[Before restart SQLite query](evidence/part4-2/prompt09d/sqlite-before-restart.json) ·
+[After restart browser results](evidence/part4-2/prompt09d/browser-after-restart.json) ·
+[After restart SQLite comparison](evidence/part4-2/prompt09d/sqlite-after-restart.json) ·
+[After restart screenshot](evidence/part4-2/prompt09d/pnl-after-restart.jpg) ·
+[Test and build logs](evidence/part4-2/prompt09d/)
+
+## SMA crossover backtest verification
+
+Verified November 17, 2026 on local branch `part4-2`. A disposable SQLite
+fixture provides nine **constructed** AAPL quote arrivals on November 9,
+2026. The browser uses the normal FastAPI entry point with both Yahoo workers
+disabled and the real Vue controls. The test selects 2/3 SMA periods and
+$1,000 initial cash. The seven completed closes are 13, 10, 7, 13, 19, 7, and 1.
+The final quote arrives in an unfinished eighth minute.
+
+| Decision time (UTC) | Short / long SMA | Trade at later receipt | Cash after fill | Shares |
+| --- | --- | --- | ---: | ---: |
+| 15:05:00 | 16 / 13, up | Buy 1 at $17 at 15:05:04, arrival 6 | $983 | 1 |
+| 15:07:00 | 4 / 9, down | Close 1 at $5 at 15:07:04, arrival 9 | $988 | 0 |
+
+Final realized P&L is −$12, unrealized P&L is $0, and equity is $988. In the
+equity history, cash of $983 plus the next completed close of $7 gave $990
+before the close of $1 marked equity at $984. The $5 exit then moved cash and
+equity to $988. These hand calculations matched the API and browser results.
+
+The backend test compares crossover values and directions with the batch SMA
+calculator for every increasing receipt prefix. It checks that an unfinished
+signal candle produces no order, missing minutes add no price, and a correction
+before the decision may change it. The same correction received after the
+deadline leaves the recorded signal unchanged. Tests also cover delayed
+old-source observations, same-boundary receipts, duplicate quotes, a pending
+last order, insufficient cash, invalid settings, empty ranges, and repeat runs
+that leave the paper account, P&L ledger, and receipt journal identical.
+
+The browser test checked required dates, both signal directions, later fill
+times, the curve, identical results after a rerun, an empty date range, and
+unchanged cash, share count, and order history upon returning to the live
+dashboard.
+
+- **Backend** · 223 tests passed.
+- **Frontend** · 60 tests passed.
+- **Production build** · passed using the installed Vite and Vitest entry
+  points under Node. The local npm launcher was incomplete.
+- **Browser workflow** · passed against the disposable fixture.
+
+[API result](evidence/part4-2/backtest/instructor-api.json) ·
+[Browser assertions](evidence/part4-2/backtest/browser-results.json) ·
+[Browser screenshot](evidence/part4-2/backtest/instructor-backtest.jpg) ·
+[Test and build logs](evidence/part4-2/backtest/)
+
+For a repeatable browser check, seed a fresh database with
+`backend/tests/evidence/backtest_server.py`, start the normal backend with both
+Yahoo workers disabled, then start Vue. The CUA browser test is
+`backend/tests/evidence/verify_backtest_browser.mjs`.
+
+## Final Part 4.2 offline verification
+
+Local verification used Chrome, Node 22, and the existing backend environment.
+The backend suite passed **223 tests**, the frontend suite passed **60 tests**,
+and the Vite production build passed. The local npm launcher was incomplete,
+so the frontend tests and build used the installed Vitest and Vite entry
+points directly. The workflow YAML, push and pull request triggers, offline
+settings, shell syntax, failure propagation, and artifact upload configuration
+passed local checks.
+
+The smoke command ran against two fresh SQLite fixtures with both Yahoo
+workers disabled. Each Chrome run checked the following:
+
+| Check | Expected and observed |
+| --- | --- |
+| SMA | The chart showed 3.00 and 4.33 for periods 2/3, then 4.33 and 8.00 for periods 3/4. |
+| Paper orders | Buy 4, sell 1, and close 3 each waited for the next eligible fixture quote. The three fills used $100, $110, and $105. |
+| Paper P&L | The $95 completed-candle mark produced −$5 total P&L. The final account held $1,025 cash and zero shares, with $25 realized and $0 unrealized P&L. |
+| Backtest | Both submissions showed upward and downward crossovers, later fills at $17 and $5, and $988 final equity with −$12 total P&L. The paper account still had its original $1,000 and no orders when the browser returned from Backtest. |
+| SQLite | Each disposable database retained all nine original fixture observations and contained five new fixture observations, three fills, and five P&L entries. The two runs returned identical browser assertions and SQLite results. |
+
+The initial browser attempt failed because Chrome's hostname block also
+matched the loopback address. After exempting loopback, the order-count check
+exposed a difference between displayed capitalization and the source status
+text. Both issues were corrected before the successful runs. A deliberate
+Chrome launch failure returned status 1, stopped both local servers, and
+removed the temporary fixture directory. File-content checks confirmed the
+local saved observations and paper account database stayed unchanged.
+
+[Backend log](evidence/part4-2/final-automation/backend-tests.txt) ·
+[Frontend log](evidence/part4-2/final-automation/frontend-tests.txt) ·
+[Build log](evidence/part4-2/final-automation/frontend-build.txt) ·
+[Unit and build isolation check](evidence/part4-2/final-automation/unit-isolation.txt) ·
+[Workflow checks](evidence/part4-2/final-automation/workflow-checks.txt) ·
+[Cleanup log](evidence/part4-2/final-automation/cleanup-check.txt)
+
+[First smoke run](evidence/part4-2/final-automation/smoke-run-1/) ·
+[Second smoke run](evidence/part4-2/final-automation/smoke-run-2/) ·
+[SMA screenshot](evidence/part4-2/final-automation/smoke-run-1/smoke-sma.png) ·
+[Paper and P&L screenshot](evidence/part4-2/final-automation/smoke-run-1/smoke-paper-pnl.png) ·
+[Backtest screenshot](evidence/part4-2/final-automation/smoke-run-1/smoke-backtest.png)
+
+These screenshots show constructed test observations. A hosted GitHub Actions
+run is still pending.

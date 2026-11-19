@@ -65,3 +65,63 @@ it('reports validation errors and cancels playback on unmount', async () => {
   await wrapper.get('button').trigger('click'); await flushPromises()
   expect(wrapper.get('[role="alert"]').text()).toContain('start must not be after end')
 })
+
+it('changes SMA periods at the current replay cursor without advancing or reopening the range', async () => {
+  await setup(url => {
+    const params = new URL(url, 'http://localhost').searchParams
+    const cursor = Number(params.get('cursor')) + (params.get('advance') === 'true' ? 1 : 0)
+    return response(state(cursor))
+  })
+  await wrapper.get('button').trigger('click'); await flushPromises()
+  await wrapper.findAll('button')[2].trigger('click'); await flushPromises()
+  await wrapper.setProps({ smaPeriods: { short: 2, long: 3 } }); await flushPromises()
+  const params = new URL(fetch.mock.calls.at(-1)[0], 'http://localhost').searchParams
+  expect(Object.fromEntries(params)).toMatchObject({
+    cursor: '1', advance: 'false', high_water: '10', sma_short: '2', sma_long: '3',
+  })
+  expect(wrapper.emitted('state').at(-1)[0].replay.processed).toBe(1)
+})
+
+it('keeps paper replay opt-in and advances a dedicated account without changing it on timeframe refresh', async () => {
+  vi.stubGlobal('fetch', vi.fn(async url => {
+    if (url === '/replay/catalog') return response(catalog)
+    const parsed = new URL(url, 'http://localhost')
+    const cursor = Number(parsed.searchParams.get('cursor')) + (parsed.searchParams.get('advance') === 'true' ? 1 : 0)
+    const id = parsed.pathname.split('/')[3]
+    return response({ ...state(cursor, false, false, parsed.searchParams.get('timeframe')), paper_account_id: id })
+  }))
+  wrapper = mount(ReplayControls, { props: { paperTrading: true } })
+  await flushPromises()
+  await wrapper.get('button').trigger('click'); await flushPromises()
+  expect(fetch.mock.calls.at(-1)[0]).toMatch(/^\/replay\/frame\?/)
+  expect(fetch.mock.calls.at(-1)[1].method).toBe('GET')
+
+  await wrapper.get('input[type=checkbox]').setValue(true)
+  await wrapper.get('button').trigger('click'); await flushPromises()
+  const id = wrapper.emitted('state').at(-1)[0].paperAccountId
+  expect(id).toMatch(/^[a-f\d-]{36}$/)
+  expect(fetch.mock.calls.at(-1)[1].method).toBe('POST')
+  await wrapper.findAll('button')[2].trigger('click'); await flushPromises()
+  expect(wrapper.emitted('state').at(-1)[0].replay.cursor).toBe(1)
+  await wrapper.setProps({ timeframe: '5m' }); await flushPromises()
+  const request = fetch.mock.calls.at(-1)[0]
+  expect(request).toContain(`/paper/replay/${id}/frame?`)
+  expect(request).toContain('timeframe=5m&cursor=1&advance=false')
+})
+
+it('pauses replay without resetting the selection when another dashboard mode covers it', async () => {
+  vi.useFakeTimers()
+  await setup(url => {
+    const query = new URL(url, 'http://localhost').searchParams
+    return response(state(Number(query.get('cursor')) + (query.get('advance') === 'true' ? 1 : 0)))
+  })
+  await wrapper.get('button').trigger('click'); await flushPromises()
+  await wrapper.findAll('button')[1].trigger('click'); await flushPromises()
+  expect(wrapper.text()).toContain('1 / 2 arrivals · Playing')
+  await wrapper.setProps({ suspended: true })
+  await vi.advanceTimersByTimeAsync(300); await flushPromises()
+  expect(wrapper.text()).toContain('1 / 2 arrivals · Paused')
+  await wrapper.setProps({ suspended: false })
+  await wrapper.findAll('button')[2].trigger('click'); await flushPromises()
+  expect(wrapper.emitted('state').at(-1)[0].replay.cursor).toBe(2)
+})

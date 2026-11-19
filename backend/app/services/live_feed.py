@@ -41,7 +41,7 @@ class YahooQuoteConnection:
 
 class LiveCandleFeed:
     def __init__(self, raw_repository, history, polling, *, connection_factory=YahooQuoteConnection,
-                 enabled=True, clock=utc_now, retry_seconds=2, idle_seconds=60):
+                 enabled=True, clock=utc_now, retry_seconds=2, idle_seconds=60, on_record=None):
         self.repository, self.history, self.polling = raw_repository, history, polling
         self.connection_factory, self.enabled, self.clock = connection_factory, enabled, clock
         self.retry_seconds, self.idle_seconds = retry_seconds, idle_seconds
@@ -57,6 +57,7 @@ class LiveCandleFeed:
         self.clients = set()
         self.lock = asyncio.Lock()
         self.connection = None
+        self.on_record = on_record
 
     def signal(self):
         self.sequence += 1
@@ -89,7 +90,7 @@ class LiveCandleFeed:
             # Short serialized transaction completes before state publication. No
             # cancellable worker-thread write can outlive receiver shutdown.
             recorded = self.repository.record(message, receipt, correction_of=correction_of,
-                                              correction_evidence=correction_evidence)
+                                              correction_evidence=correction_evidence, on_record=self.on_record)
             if self.latest is None or parse_time(quote["source_time_utc"]) >= parse_time(self.latest["source_time_utc"]):
                 self.latest = quote
             self.last_receipt = receipt

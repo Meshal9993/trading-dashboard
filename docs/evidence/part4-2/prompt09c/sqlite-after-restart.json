@@ -1,0 +1,65 @@
+{
+  "result": "PASS",
+  "source": "Constructed instructor prices",
+  "after_backend_restart": true,
+  "account": {
+    "cash_micros": 1025000000,
+    "shares": 0
+  },
+  "fills": 3,
+  "orders": [
+    {
+      "id": 1,
+      "side": "buy",
+      "quantity": 4,
+      "submitted_at": "2026-11-17T22:19:06.613718+00:00",
+      "status": "filled",
+      "rejection_reason": null,
+      "price_micros": 100000000,
+      "executed_at": "2026-11-17T22:19:15.084765+00:00",
+      "arrival_sequence": 1,
+      "observation_id": 1,
+      "source_time_utc": "2026-11-17T22:19:15.084000+00:00"
+    },
+    {
+      "id": 2,
+      "side": "sell",
+      "quantity": 1,
+      "submitted_at": "2026-11-17T22:19:21.862311+00:00",
+      "status": "filled",
+      "rejection_reason": null,
+      "price_micros": 110000000,
+      "executed_at": "2026-11-17T22:19:27.818957+00:00",
+      "arrival_sequence": 2,
+      "observation_id": 2,
+      "source_time_utc": "2026-11-17T22:19:27.818000+00:00"
+    },
+    {
+      "id": 3,
+      "side": "close",
+      "quantity": 3,
+      "submitted_at": "2026-11-17T22:19:32.880018+00:00",
+      "status": "filled",
+      "rejection_reason": null,
+      "price_micros": 105000000,
+      "executed_at": "2026-11-17T22:19:40.035640+00:00",
+      "arrival_sequence": 3,
+      "observation_id": 3,
+      "source_time_utc": "2026-11-17T22:19:40.035000+00:00"
+    },
+    {
+      "id": 4,
+      "side": "sell",
+      "quantity": 1,
+      "submitted_at": "2026-11-17T22:19:46.295361+00:00",
+      "status": "rejected",
+      "rejection_reason": "Insufficient shares",
+      "price_micros": null,
+      "executed_at": null,
+      "arrival_sequence": null,
+      "observation_id": null,
+      "source_time_utc": null
+    }
+  ],
+  "browser_matches_sqlite": true
+}

@@ -1,34 +1,46 @@
 <script setup>
 import { onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import { decodeCandleState } from '../services/candles'
+import { appendSmaPeriods } from '../services/sma'
 
-const props = defineProps({ timeframe: { type: String, default: '1m' } })
+const props = defineProps({
+  timeframe: { type: String, default: '1m' },
+  smaPeriods: Object,
+  paperTrading: Boolean,
+  suspended: Boolean,
+})
 const emit = defineEmits(['state'])
 const symbols = ref([]), symbol = ref(''), start = ref(''), end = ref('')
+const paperEnabled = ref(false)
 const replay = ref(null), playing = ref(false), busy = ref(false), error = ref(''), ready = ref(false)
-let cursor = 0, highWater, generation = 0, controller, timer
+let cursor = 0, highWater, generation = 0, controller, timer, paperAccountId
 const emptyState = () => emit('state', { observations: [], timeframe: props.timeframe, connection: 'replay', loading: false, now: Date.now(), status: { state: 'replay', fallback_active: false }, replay: null })
 function pause() { playing.value = false; clearTimeout(timer) }
-function invalidate() { pause(); generation++; controller?.abort(); cursor = 0; highWater = undefined; replay.value = null; ready.value = false; busy.value = false; error.value = ''; emptyState() }
+function invalidate() { pause(); generation++; controller?.abort(); cursor = 0; highWater = undefined; paperAccountId = undefined; replay.value = null; ready.value = false; busy.value = false; error.value = ''; emptyState() }
 async function frame(advance = false, reset = false) {
   if (!symbol.value || !start.value || !end.value) return
-  if (reset) { invalidate(); ready.value = true }
+  if (reset) {
+    invalidate()
+    if (props.paperTrading && paperEnabled.value) paperAccountId = crypto.randomUUID()
+    ready.value = true
+  }
   const token = ++generation
   controller?.abort(); controller = new AbortController(); busy.value = true; error.value = ''
   try {
-    const params = new URLSearchParams({ symbol: symbol.value, start: start.value, end: end.value,
-      timeframe: props.timeframe, cursor: String(cursor), advance: String(advance) })
+    const params = appendSmaPeriods(new URLSearchParams({ symbol: symbol.value, start: start.value, end: end.value,
+      timeframe: props.timeframe, cursor: String(cursor), advance: String(advance) }), props.smaPeriods)
     if (highWater !== undefined) params.set('high_water', String(highWater))
-    const response = await fetch(`/replay/frame?${params}`, { signal: controller.signal })
+    const path = paperAccountId ? `/paper/replay/${paperAccountId}/frame` : '/replay/frame'
+    const response = await fetch(`${path}?${params}`, { method: paperAccountId ? 'POST' : 'GET', signal: controller.signal })
     if (!response.ok) { const body = await response.json(); throw new Error(body.detail || 'Replay unavailable') }
     const data = await response.json()
     if (token !== generation) return
-    const decoded = decodeCandleState(data, props.timeframe)
-    if (data.mode !== 'replay' || !data.replay) throw new Error('Invalid replay response')
+    const decoded = decodeCandleState(data, props.timeframe, props.smaPeriods)
+    if (data.mode !== 'replay' || !data.replay || (paperAccountId && data.paper_account_id !== paperAccountId)) throw new Error('Invalid replay response')
     replay.value = data.replay; cursor = data.replay.cursor; highWater = data.replay.high_water; ready.value = true
-    emit('state', { observations: decoded.observations, status: decoded.status, timeframe: props.timeframe,
+    emit('state', { observations: decoded.observations, sma: decoded.sma, status: decoded.status, timeframe: props.timeframe,
       connection: 'replay', loading: false, error: '', replay: data.replay, now: Date.parse(data.replay.clock),
-      lastArrival: decoded.lastArrival, snapshotAsOf: data.as_of })
+      lastArrival: decoded.lastArrival, snapshotAsOf: data.as_of, paperAccountId })
     if (data.replay.complete) pause()
     else if (playing.value) timer = setTimeout(() => frame(true), 300)
   } catch (failure) {
@@ -36,9 +48,15 @@ async function frame(advance = false, reset = false) {
   } finally { if (token === generation) busy.value = false }
 }
 function play() { playing.value = true; frame(true) }
-watch([symbol, start, end], invalidate)
-watch(() => props.timeframe, () => { pause(); if (ready.value) frame(false); else emptyState() })
+watch([symbol, start, end, paperEnabled], invalidate)
+watch(() => props.suspended, suspended => { if (suspended) pause() })
+watch([() => props.timeframe, () => props.smaPeriods], () => {
+  pause()
+  if (ready.value) frame(false)
+  else emptyState()
+})
 onMounted(async () => {
+  emptyState()
   const token = generation
   try {
     const response = await fetch('/replay/catalog')
@@ -64,6 +82,7 @@ onBeforeUnmount(() => { pause(); generation++; controller?.abort() })
       <label>Start receipt (UTC ISO)<input v-model="start" aria-label="Replay start UTC" placeholder="2026-11-10T20:47:00Z" /></label>
       <label>End receipt (UTC ISO)<input v-model="end" aria-label="Replay end UTC" placeholder="2026-11-10T20:53:00Z" /></label>
     </div>
+    <label v-if="paperTrading" class="paper-replay-option"><input v-model="paperEnabled" type="checkbox" /> Enable paper trading for this replay</label>
     <div class="replay-actions">
       <button :disabled="!symbol || busy" @click="frame(false, true)">Load / restart replay</button>
       <button :disabled="!ready || busy || replay?.complete" @click="playing ? pause() : play()">{{ playing ? 'Pause replay' : 'Play replay' }}</button>

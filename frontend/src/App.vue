@@ -1,13 +1,21 @@
 <script setup>
 import { computed, onBeforeUnmount, onMounted, ref, shallowRef } from 'vue'
 import ReplayControls from './components/ReplayControls.vue'
+import BacktestView from './components/BacktestView.vue'
+import PaperAccount from './components/PaperAccount.vue'
 import MarketChart from './components/MarketChart.vue'
 import { createMarketClient } from './services/marketClient'
 import { ageSeconds, formatAge } from './services/observations'
+import { DEFAULT_SMA_PERIODS, MAX_SMA_PERIOD, validSmaPeriods } from './services/sma'
 
+const smaPeriods = shallowRef(DEFAULT_SMA_PERIODS)
+const shortPeriod = ref(smaPeriods.value.short)
+const longPeriod = ref(smaPeriods.value.long)
+const smaError = ref('')
 const liveFeed = shallowRef({ observations: [], status: null, connection: 'connecting', loading: true, error: '', timeframe: '1m', now: Date.now() })
-const client = createMarketClient({ onChange: state => { liveFeed.value = state } })
+const client = createMarketClient({ onChange: state => { liveFeed.value = state }, smaPeriods: smaPeriods.value })
 const mode = ref('live')
+const backtestActive = ref(false)
 const replayFeed = shallowRef({ observations: [], timeframe: '1m', connection: 'replay', loading: false, now: Date.now(), status: { state: 'replay', fallback_active: false } })
 const feed = computed(() => mode.value === 'replay' ? replayFeed.value : liveFeed.value)
 function changeTimeframe(value) {
@@ -15,13 +23,37 @@ function changeTimeframe(value) {
   if (mode.value === 'replay') replayFeed.value = { ...replayFeed.value, timeframe: value, observations: [], loading: true }
   else client.setTimeframe(value)
 }
-function changeMode(value) { mode.value = value; hovered.value = null }
+function changeMode(value) {
+  backtestActive.value = value === 'backtest'
+  if (!backtestActive.value) mode.value = value
+  hovered.value = null
+}
 const chart = ref(null)
 const hovered = ref(null)
 const windowSize = ref('recent')
 const observations = computed(() => windowSize.value === 'recent' ? feed.value.observations.slice(-390) : feed.value.observations)
 const latest = computed(() => feed.value.observations.at(-1))
 const selected = computed(() => hovered.value || latest.value)
+const sma = computed(() => {
+  const overlay = feed.value.sma
+  return overlay?.short_period === smaPeriods.value.short &&
+    overlay.long_period === smaPeriods.value.long ? overlay : null
+})
+const selectedSma = computed(() => sma.value?.points.find(point => point.timestamp === selected.value?.event_time))
+
+function applySmaPeriods() {
+  const next = { short: shortPeriod.value, long: longPeriod.value }
+  if (!validSmaPeriods(next)) {
+    smaError.value = `Use whole numbers from 1 to ${MAX_SMA_PERIOD}, with a smaller short period.`
+    return
+  }
+  smaError.value = ''
+  if (next.short === smaPeriods.value.short && next.long === smaPeriods.value.long) return
+  smaPeriods.value = next
+  hovered.value = null
+  client.setSmaPeriods(next)
+}
+
 const status = computed(() => feed.value.status)
 const timeframe = computed(() => feed.value.timeframe || '1m')
 const timeframeLabel = computed(() => ({ '1m': '1 minute', '5m': '5 minutes', '15m': '15 minutes', '1h': '1 hour', '1d': 'Daily' })[timeframe.value])
@@ -60,14 +92,20 @@ onBeforeUnmount(() => client.stop())
   <div class="dashboard">
     <header class="topbar">
       <a class="brand" href="#main" aria-label="Market Observatory home"><span class="brand-mark" aria-hidden="true">▥</span><span>MARKET<span class="brand-light"> / OBSERVATORY</span></span></a>
-      <div class="header-meta"><span class="assignment">IST 402 <span> / </span> A4.1</span><span class="connection" :class="feed.connection"><i />{{ connectionLabel }}</span></div>
+      <div class="header-meta"><span class="assignment">IST 402 <span> / </span> A4.1</span><span class="connection" :class="backtestActive ? null : feed.connection"><i />{{ backtestActive ? 'Historical simulation' : connectionLabel }}</span></div>
     </header>
 
     <main id="main">
-      <div class="page-heading"><div><p class="eyebrow">MARKET WORKSPACE <span>/</span> EQUITIES</p><h1>A clearer view of the market.</h1><p class="subtitle">Price, volume, and the context behind every observation.</p></div><span class="source-pill">Y! <span>Yahoo Finance</span><span class="pill-separator">|</span><b>{{ mode === 'replay' ? 'REPLAY · RECORDED DATA' : fallback ? 'POLLING FALLBACK · DELAYED/POLLED' : 'WEBSOCKET · DELAY MAY VARY' }}</b></span></div>
+      <div v-if="!backtestActive" class="page-heading"><div><p class="eyebrow">MARKET WORKSPACE <span>/</span> EQUITIES</p><h1>A clearer view of the market.</h1><p class="subtitle">Price, volume, and the context behind every observation.</p></div><span class="source-pill">Y! <span>Yahoo Finance</span><span class="pill-separator">|</span><b>{{ mode === 'replay' ? 'REPLAY · RECORDED DATA' : fallback ? 'POLLING FALLBACK · DELAYED/POLLED' : 'WEBSOCKET · DELAY MAY VARY' }}</b></span></div>
 
-      <div class="mode-switch" aria-label="Dashboard mode"><button :aria-pressed="mode === 'live'" @click="changeMode('live')">Live dashboard</button><button :aria-pressed="mode === 'replay'" @click="changeMode('replay')">Replay</button></div>
-      <ReplayControls v-if="mode === 'replay'" :timeframe="timeframe" @state="replayFeed = $event" />
+      <div class="mode-switch" aria-label="Dashboard mode">
+        <button :aria-pressed="!backtestActive && mode === 'live'" @click="changeMode('live')">Live dashboard</button>
+        <button :aria-pressed="!backtestActive && mode === 'replay'" @click="changeMode('replay')">Replay</button>
+        <button :aria-pressed="backtestActive" @click="changeMode('backtest')">Backtest</button>
+      </div>
+      <BacktestView v-if="backtestActive" />
+      <div v-show="!backtestActive">
+      <ReplayControls v-if="mode === 'replay'" :timeframe="timeframe" :sma-periods="smaPeriods" :suspended="backtestActive" paper-trading @state="replayFeed = $event" />
 
       <section class="instrument-panel" aria-label="AAPL overview">
         <div class="instrument"><span class="ticker-icon">A</span><div><div class="ticker-name">AAPL <span>NASDAQ</span></div><p>Apple Inc. <span>·</span> USD</p></div></div>
@@ -80,8 +118,23 @@ onBeforeUnmount(() => client.stop())
         <section class="chart-panel panel" aria-labelledby="chart-title" :data-arrival-sequence="feed.lastArrival?.arrival_sequence" :data-timeframe="timeframe" :data-snapshot-as-of="feed.snapshotAsOf">
           <div class="panel-heading"><div><h2 id="chart-title">{{ mode === 'replay' ? 'Replay' : 'Price & volume' }} <span class="subtle">/ AAPL</span></h2><p>{{ timeframeLabel }} candles <span>·</span> UTC <span>·</span> {{ latest ? latest.is_complete ? 'Complete interval' : 'Forming candle' : 'Awaiting candles' }}</p></div><div class="chart-actions"><select class="timeframe-select" aria-label="Candle timeframe" :value="timeframe" @change="changeTimeframe($event.target.value)"><option value="1m">1m</option><option value="5m">5m</option><option value="15m">15m</option><option value="1h">1h</option><option value="1d">1d</option></select><div class="segmented" aria-label="Observation window"><button :aria-pressed="windowSize === 'recent'" :class="{ active: windowSize === 'recent' }" @click="windowSize = 'recent'; hovered = null">Latest 390</button><button :aria-pressed="windowSize === 'all'" :class="{ active: windowSize === 'all' }" @click="windowSize = 'all'; hovered = null">All received</button></div><button class="icon-button" title="Fit chart to observations" aria-label="Fit chart to observations" @click="chart?.fit()">⤢</button></div></div>
           <div class="ohlc-strip" aria-label="Selected candle"><span v-for="[label, key] of [['O', 'open'], ['H', 'high'], ['L', 'low'], ['C', 'close']]" :key="key">{{ label }} <b>{{ money(selected?.[key]) }}</b></span><span class="volume-legend"><i /> VOL <b>{{ integer(selected?.volume) }}</b></span></div>
+          <div class="sma-controls">
+            <form class="sma-periods" aria-label="Moving average periods" novalidate @submit.prevent="applySmaPeriods">
+              <label>Short SMA period <input v-model="shortPeriod" type="number" min="1" :max="MAX_SMA_PERIOD" step="1" required /></label>
+              <label>Long SMA period <input v-model="longPeriod" type="number" min="1" :max="MAX_SMA_PERIOD" step="1" required /></label>
+              <button type="submit">Apply SMA periods</button>
+            </form>
+            <p v-if="smaError" class="sma-error" role="alert">{{ smaError }}</p>
+            <div class="sma-legend" aria-label="Moving averages for selected candle">
+              <span><i class="sma-short-swatch" />Short SMA ({{ smaPeriods.short }}) <b>{{ money(selectedSma?.short) }}</b></span>
+              <span><i class="sma-long-swatch" />Long SMA ({{ smaPeriods.long }}) <b>{{ money(selectedSma?.long) }}</b></span>
+              <span v-if="selectedSma?.crossover">Confirmed crossover {{ selectedSma.crossover === 'up' ? '↑ up' : '↓ down' }}</span>
+              <span v-else-if="selected && !selected.is_complete">Awaiting candle close</span>
+              <span v-else-if="sma && selectedSma?.long === null">Waiting for completed candles</span>
+            </div>
+          </div>
           <div class="chart-wrap">
-            <MarketChart ref="chart" :observations="observations" :timeframe="timeframe" :mode="mode" @hover="hovered = $event" />
+            <MarketChart ref="chart" :observations="observations" :sma="sma" :timeframe="timeframe" :mode="mode" @hover="hovered = $event" />
             <div v-if="!observations.length" class="chart-empty" role="status"><span class="empty-icon" aria-hidden="true">⌁</span><h3>{{ mode === 'replay' ? 'Replay · no observations displayed' : feed.loading ? 'Loading market observations' : 'No saved observations yet' }}</h3><p>{{ mode === 'replay' ? feed.replay?.empty ? 'No recorded observations in this selection.' : 'Load a saved selection, then play or step through arrivals.' : feed.loading ? 'Connecting to the backend and retrieving saved candles.' : 'Candles will appear when the backend receives valid Yahoo Finance data.' }}</p><span>No placeholder prices. Only provider observations.</span></div>
           </div>
           <div class="chart-footer"><span><i class="legend-up" /> Up candle <i class="legend-down" /> Down candle</span><span>{{ observations.length }} candles <span>·</span> {{ hovered ? time(hovered.event_time) : 'Scroll to zoom · drag to explore' }}</span></div>
@@ -94,7 +147,11 @@ onBeforeUnmount(() => client.stop())
         </aside>
       </div>
 
+      <PaperAccount :account-id="mode === 'replay' ? replayFeed.paperAccountId ?? null : 'live'"
+        :arrival-sequence="feed.lastArrival?.arrival_sequence" />
+
       <section class="panel ledger" aria-labelledby="ledger-title"><div class="panel-heading"><div><h2 id="ledger-title">Observation ledger</h2><p>Most recent derived candles · UTC</p></div><span class="small-label">LAST 5 OBSERVATIONS</span></div><div class="table-scroll"><table><caption class="sr-only">Latest AAPL candles, including coverage and completion status</caption><thead><tr><th>EVENT TIME · UTC</th><th>OPEN</th><th>HIGH</th><th>LOW</th><th>CLOSE</th><th>VOLUME</th><th>COVERAGE</th><th>INTERVAL</th></tr></thead><tbody><tr v-for="item in feed.observations.slice(-5).toReversed()" :key="item.observation_id"><td>{{ time(item.event_time) }}</td><td>{{ money(item.open) }}</td><td>{{ money(item.high) }}</td><td>{{ money(item.low) }}</td><td :class="item.close >= item.open ? 'positive' : 'negative'">{{ money(item.close) }}</td><td>{{ integer(item.volume) }}</td><td>{{ item.coverage ? `${item.coverage.available_minutes}/${item.coverage.expected_minutes} min` : 'Not measured' }}</td><td><span class="interval-tag">{{ item.is_complete ? 'Complete*' : 'Forming' }}</span></td></tr><tr v-if="!feed.observations.length"><td colspan="8" class="empty-row">{{ feed.loading ? 'Retrieving observations…' : 'No observations available. The ledger never uses simulated prices.' }}</td></tr></tbody></table></div><p class="table-note">*Interval elapsed is inferred; provider corrections can still arrive.</p></section>
+      </div>
     </main>
     <footer class="page-footer"><span>MARKET OBSERVATORY <span> / </span> IST 402 · Assignment 4.1</span><span>TradingView Lightweight Charts™ · Copyright (с) 2025 TradingView, Inc. · <a href="https://www.tradingview.com/" target="_blank" rel="noopener noreferrer">TradingView</a></span></footer>
   </div>

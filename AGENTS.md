@@ -60,3 +60,17 @@ calculator and Vue timeframe selector, while preserving the polling fallback.
 Document actual results in docs/verification.md and docs/design-pipeline.md.
 Prompt 09 is authorized: read-only arrival-order SQLite replay, Vue controls, tests and evidence.
 Do not create report.md; the project owner writes it.
+
+## Part 4.2 automated verification
+
+- Run `backend/.venv/bin/python scripts/smoke.py` from the repository root to
+  check SMA, simulated orders, P&L, and backtesting in a headless browser.
+- Keep both Yahoo workers disabled in CI and browser smoke tests. Seed a
+  disposable SQLite database and use an isolated browser profile. Put fixture
+  controls exclusively under `backend/tests/`.
+- Verify that teardown stops the servers and browser. Compare the saved
+  database and SQLite sidecars before and after the smoke test. Keep local
+  databases, browser profiles, and credentials out of evidence.
+- Save measured logs and screenshots under `docs/evidence/part4-2/`. Scripts
+  should return a failing exit status for a failed check.
+- Ask for approval before installing any missing local dependencies or browsers.

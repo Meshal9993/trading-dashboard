@@ -5,7 +5,8 @@ import sqlite3
 from contextlib import asynccontextmanager
 from datetime import datetime
 from pathlib import Path
-from typing import Literal, Optional
+from typing import Literal, Optional, Union
+from uuid import UUID
 
 import httpx
 import anyio
@@ -13,11 +14,17 @@ from fastapi import Query, FastAPI, HTTPException, WebSocket, WebSocketDisconnec
 
 from backend.app.db.database import Database
 from backend.app.db.observations import ObservationRepository
+from backend.app.db.paper import PaperRepository
 from backend.app.db.raw_observations import RawObservationRepository
+from backend.app.schemas.backtest import BacktestRequest
+from backend.app.schemas.paper import PaperOrderRequest
+from backend.app.services.backtest import run_backtest
+from backend.app.services.paper import PaperAccountMissing, PaperConflict, PaperTrading
 from backend.app.services.replay import ReplayService
 from backend.app.services.history import HistoryService
 from backend.app.services.live_feed import LiveCandleFeed, YahooQuoteConnection, utc_now
 from backend.app.services.feed import MarketFeed
+from backend.app.services.sma import sma_periods, with_sma
 from backend.app.services.yahoo import SOURCE, YahooChartClient
 
 DEFAULT_DATABASE_PATH = Path(__file__).resolve().parents[1] / "data" / "market.sqlite3"
@@ -30,7 +37,9 @@ def create_app(database_path: Optional[Path] = None, provider=None,
         os.environ.get("DATABASE_PATH", str(DEFAULT_DATABASE_PATH))
     ))
     repository = ObservationRepository(database)
-    history_service = HistoryService(RawObservationRepository(database), repository)
+    paper = PaperTrading(PaperRepository(database), stream_clock)
+    raw_repository = RawObservationRepository(database)
+    history_service = HistoryService(raw_repository, repository)
     enabled = feed_enabled if feed_enabled is not None else os.environ.get("YAHOO_FEED_ENABLED", "true").lower() == "true"
     interval = poll_seconds if poll_seconds is not None else float(os.environ.get("YAHOO_POLL_SECONDS", "30"))
 
@@ -39,6 +48,7 @@ def create_app(database_path: Optional[Path] = None, provider=None,
     @asynccontextmanager
     async def lifespan(app: FastAPI):
         database.initialize()
+        await asyncio.to_thread(paper.initialize_live)
         async with httpx.AsyncClient() as client:
             feed = MarketFeed(provider if provider is not None else YahooChartClient(client), repository, interval)
             app.state.feed = feed
@@ -46,23 +56,26 @@ def create_app(database_path: Optional[Path] = None, provider=None,
             feed.state = "starting" if enabled else "disabled"
             live = LiveCandleFeed(RawObservationRepository(database), history_service, feed,
                                  enabled=streaming, connection_factory=stream_factory or YahooQuoteConnection,
-                                 clock=stream_clock)
+                                 clock=stream_clock, on_record=paper.observe_live)
             app.state.live_feed = live
             await live.restore()
             feed.on_change = live.signal
             task = asyncio.create_task(feed.run()) if enabled else None
             stream_task = asyncio.create_task(live.run()) if streaming else None
+            valuation_task = asyncio.create_task(paper.run_valuations())
+            workers = (task, stream_task, valuation_task)
             try:
                 yield
             finally:
-                for running in (task, stream_task):
+                for running in workers:
                     if running:
                         running.cancel()
-                await asyncio.gather(*(running for running in (task, stream_task) if running), return_exceptions=True)
+                await asyncio.gather(*(running for running in workers if running), return_exceptions=True)
 
     application = FastAPI(title="Trading Dashboard API", lifespan=lifespan)
     application.state.database = database
     application.state.repository = repository
+    application.state.paper = paper
 
     @application.get("/health")
     def health():
@@ -85,14 +98,18 @@ def create_app(database_path: Optional[Path] = None, provider=None,
     @application.get("/history")
     async def history(symbol: Literal["AAPL"] = "AAPL",
                       timeframe: Literal["1m", "5m", "15m", "1h", "1d"] = "1m",
-                      dataset: Literal["raw", "polling", "auto"] = "raw", as_of: Optional[datetime] = None):
+                      dataset: Literal["raw", "polling", "auto"] = "raw", as_of: Optional[datetime] = None,
+                      sma_short: Optional[str] = None, sma_long: Optional[str] = None):
         try:
+            periods = sma_periods(sma_short, sma_long)
             if dataset == "auto":
                 if as_of is not None:
                     raise ValueError("Automatic live dataset selection does not accept an as-of clock; select raw or polling")
-                return await application.state.live_feed.snapshot(timeframe)
-            return await asyncio.to_thread(history_service.calculate, symbol=symbol, timeframe=timeframe,
-                                           dataset=dataset, as_of=as_of)
+                result = await application.state.live_feed.snapshot(timeframe)
+            else:
+                result = await asyncio.to_thread(history_service.calculate, symbol=symbol, timeframe=timeframe,
+                                                 dataset=dataset, as_of=as_of)
+            return await asyncio.to_thread(with_sma, result, periods)
         except ValueError as error:
             raise HTTPException(status_code=422, detail=str(error)) from error
         except sqlite3.Error as error:
@@ -107,22 +124,81 @@ def create_app(database_path: Optional[Path] = None, provider=None,
         except sqlite3.Error as error:
             raise HTTPException(status_code=503, detail="Replay database unavailable") from error
 
+    async def calculate_replay(symbol, start, end, timeframe, cursor, high_water, advance, sma_short, sma_long):
+        periods = sma_periods(sma_short, sma_long)
+        result = await asyncio.to_thread(replay_service.frame, symbol=symbol, start=start, end=end,
+                                         timeframe=timeframe, cursor=cursor, high_water=high_water, advance=advance)
+        return await asyncio.to_thread(with_sma, result, periods)
+
     @application.get("/replay/frame")
     async def replay_frame(start: datetime, end: datetime, symbol: Literal["AAPL"] = "AAPL",
                            timeframe: Literal["1m", "5m", "15m", "1h", "1d"] = "1m",
                            cursor: int = Query(0, ge=0), high_water: Optional[int] = Query(None, ge=0),
-                           advance: bool = True):
+                           advance: bool = True, sma_short: Optional[str] = None,
+                           sma_long: Optional[str] = None):
         try:
-            return await asyncio.to_thread(replay_service.frame, symbol=symbol, start=start, end=end,
-                                           timeframe=timeframe, cursor=cursor, high_water=high_water, advance=advance)
+            return await calculate_replay(symbol, start, end, timeframe, cursor, high_water, advance, sma_short, sma_long)
         except ValueError as error:
             raise HTTPException(status_code=422, detail=str(error)) from error
         except sqlite3.Error as error:
             raise HTTPException(status_code=503, detail="Replay database unavailable") from error
 
+    @application.post("/paper/replay/{account_id}/frame")
+    async def paper_replay_frame(account_id: UUID, start: datetime, end: datetime, symbol: Literal["AAPL"] = "AAPL",
+                                 timeframe: Literal["1m", "5m", "15m", "1h", "1d"] = "1m",
+                                 cursor: int = Query(0, ge=0), high_water: Optional[int] = Query(None, ge=0),
+                                 advance: bool = False, sma_short: Optional[str] = None, sma_long: Optional[str] = None):
+        try:
+            result = await calculate_replay(symbol, start, end, timeframe, cursor, high_water, advance, sma_short, sma_long)
+            await asyncio.to_thread(paper.apply_replay_frame, str(account_id), start=start, end=end,
+                                    previous=cursor, replay=result["replay"], advance=advance)
+            return dict(result, paper_account_id=str(account_id))
+        except PaperConflict as error:
+            raise HTTPException(status_code=409, detail=str(error)) from error
+        except ValueError as error:
+            raise HTTPException(status_code=422, detail=str(error)) from error
+        except sqlite3.Error as error:
+            raise HTTPException(status_code=503, detail="Paper replay database unavailable") from error
+
+    def calculate_backtest(request):
+        return run_backtest(request, raw_repository.arrivals())
+
+    @application.post("/backtest/run")
+    async def backtest(request: BacktestRequest):
+        try:
+            return await asyncio.to_thread(calculate_backtest, request)
+        except sqlite3.Error as error:
+            raise HTTPException(status_code=503, detail="Historical observation database unavailable") from error
+
+    @application.get("/paper/accounts/{account_id}")
+    async def paper_account(account_id: Union[Literal["live"], UUID]):
+        try:
+            return await asyncio.to_thread(paper.snapshot, str(account_id))
+        except PaperAccountMissing as error:
+            raise HTTPException(status_code=404, detail=str(error)) from error
+        except sqlite3.Error as error:
+            raise HTTPException(status_code=503, detail="Paper account database unavailable") from error
+
+    @application.post("/paper/accounts/{account_id}/orders")
+    async def paper_order(account_id: Union[Literal["live"], UUID], request: PaperOrderRequest):
+        try:
+            return await asyncio.to_thread(paper.submit, str(account_id), request)
+        except PaperAccountMissing as error:
+            raise HTTPException(status_code=404, detail=str(error)) from error
+        except PaperConflict as error:
+            raise HTTPException(status_code=409, detail=str(error)) from error
+        except sqlite3.Error as error:
+            raise HTTPException(status_code=503, detail="Paper account database unavailable") from error
+
     @application.websocket("/ws/candles")
     async def candle_socket(websocket: WebSocket, symbol: Literal["AAPL"] = "AAPL",
-                            timeframe: Literal["1m", "5m", "15m", "1h", "1d"] = "1m"):
+                            timeframe: Literal["1m", "5m", "15m", "1h", "1d"] = "1m",
+                            sma_short: Optional[str] = None, sma_long: Optional[str] = None):
+        try:
+            periods = sma_periods(sma_short, sma_long)
+        except ValueError as error:
+            await websocket.close(code=1008, reason=str(error))
+            return
         await websocket.accept()
         live = application.state.live_feed
         queue = live.subscribe()
@@ -137,6 +213,7 @@ def create_app(database_path: Optional[Path] = None, provider=None,
                         pass  # Recompute completion and status even without new prices.
                 try:
                     message = await live.snapshot(timeframe)
+                    message = await asyncio.to_thread(with_sma, message, periods)
                 except (sqlite3.Error, ValueError):
                     await websocket.close(code=1011, reason="Candle calculation unavailable")
                     return

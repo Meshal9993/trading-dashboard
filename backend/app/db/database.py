@@ -3,6 +3,7 @@ import sqlite3
 from contextlib import contextmanager
 from pathlib import Path
 
+from backend.app.db.paper import PAPER_SCHEMA, PNL_SCHEMA
 from backend.app.db.raw_observations import RAW_SCHEMA
 
 SCHEMA = """
@@ -52,7 +53,7 @@ class Database:
     def initialize(self):
         self.path.parent.mkdir(parents=True, exist_ok=True)
         with self.connect() as connection:
-            connection.executescript(SCHEMA + RAW_SCHEMA)
+            connection.executescript(SCHEMA + RAW_SCHEMA + PAPER_SCHEMA + PNL_SCHEMA)
 
     def check_health(self):
         with self.connect() as connection:

@@ -1,6 +1,6 @@
 # Trading Dashboard
 
-**IST 402 — Assignment 4, Part 4.1, Prompt 09**
+**IST 402 — Assignment 4, Part 4.2, SMA, paper trading, and backtesting**
 
 Repository: https://github.com/Meshal9993/trading-dashboard
 
@@ -9,7 +9,10 @@ commits raw observations and arrival history to SQLite, calculates candles, and
 streams derived states to the Vue dashboard. Select 1m, 5m, 15m, 1h or daily
 candles. The free 30-second Yahoo HTTP poller remains a separately labeled fallback.
 Unknown volume stays unknown; neither source guarantees real-time exchange prices.
-No paid APIs or credentials are used. Prompts 08 and 09 are implemented, including read-only arrival-order replay.
+No paid APIs or credentials are used. The dashboard supports read-only arrival-order
+replay, two configurable simple moving averages with crossover markers, and a simulated
+paper trading account with P&L history. Backtest mode runs the SMA strategy on
+saved quote arrivals and shows trades and an equity curve.
 
 See [the current pipeline](docs/design-pipeline.md) and
 [verification results](docs/verification.md). The prompt sections below document the individual implementation steps.
@@ -101,7 +104,7 @@ and proxies the backend, normally at http://127.0.0.1:4173. It is a local check,
 not a production hosting server.
 
 For production hosting, serve `frontend/dist/` at the site root and reverse-proxy
-`/replay/`, `/observations`, `/history`, `/feed/`, `/health`, and `/ws/` to FastAPI on the same origin,
+`/backtest/`, `/paper/`, `/replay/`, `/observations`, `/history`, `/feed/`, `/health`, and `/ws/` to FastAPI on the same origin,
 including WebSocket upgrade headers and timeouts that permit the five-second
 heartbeat. HTTPS pages automatically use `wss:`. No permissive CORS policy is
 needed. Hosting/deployment is outside the current scope.
@@ -457,3 +460,106 @@ For deployment, proxy `/replay/` to FastAPI alongside the other API paths.
 See [verification](docs/verification.md) and `docs/evidence/part4-1/prompt09/` for
 real offline replay, two identical 69-step runs, SQL OHLC/unknown-volume checks,
 unchanged full-record hashes/counts, screenshots and automated tests.
+
+## Prompt 09A: Simple moving averages
+
+Set the short and long SMA periods in the chart controls and apply them. The
+default periods are 9 and 21. Enter whole numbers from 1 through 2,000 with the
+short period smaller than the long period. An upward or downward marker shows
+where the short SMA changed sides relative to the long SMA.
+
+The Python backend uses completed candle closes for the selected timeframe.
+Each line starts once its own window has enough completed candles. Missing
+intervals add no observations. Forming candles have no confirmed averages or
+signals. Replay uses the candles and revisions available at its current cursor.
+Changing the periods in Replay recalculates that position.
+
+The instructor's 2/3-period example uses the closes 13, 10, 7, 13, 19, 7, 1.
+It crosses up at the fifth candle (16 and 13) and down at the seventh (4 and 9).
+See [Prompt 09A verification](docs/verification.md#prompt-09a--simple-moving-averages)
+for the per-candle results, replay comparison, and browser evidence.
+
+## Prompt 09C · Paper trading
+
+The local **Paper trading** panel starts with $1,000 in simulated cash and no
+AAPL shares. Enter a whole-share quantity and select **Buy** or **Sell**.
+**Close Position** sells all shares held when the order executes. The order
+history shows pending, filled, and rejected orders alongside fill prices and
+source times. Leaving an existing position alone requires no order.
+
+In the live dashboard, an order waits for an eligible AAPL quote newly received
+by the Yahoo WebSocket. Older quotes and HTTP polling history are available to the
+chart. They cannot fill pending orders. Fills use the observed quote price with
+zero fees. Cash and shares are validated against that price at execution.
+If the first submission response is lost, **Retry order request** reuses the
+same request ID.
+
+For simulated orders against saved data, check **Enable paper trading for
+this replay** before loading a range. Each load or restart opens a separate
+$1,000 account. Use **Next observation** to step through the selection and
+fill orders only as quotes are revealed. Regular Replay remains read-only.
+
+Balances, orders, and fills persist in SQLite. See [paper execution design](docs/design-pipeline.md#prompt-09c--simulated-order-execution)
+and [verification](docs/verification.md#prompt-09c--paper-trading).
+
+## Prompt 09D · Paper performance
+
+The **Paper performance** section shows average cost per share, cumulative
+realized P&L, unrealized P&L, and total P&L. Its history lists the cash and share
+balances, source, price, and time for each recorded event. A fill uses its quoted
+price. While a position is open, the completed AAPL one-minute candle close
+supplies additional valuations. Changing the chart timeframe leaves that
+valuation interval fixed. If the latest price is missing or older than 180
+seconds on the live or replay clock, the open-position unrealized and total P&L
+show **Unavailable**. Earlier history stays visible.
+
+[Accounting and valuation design](docs/design-pipeline.md#prompt-09d--paper-valuation) ·
+[Instructor example and restart check](docs/verification.md#prompt-09d--paper-profit-and-loss)
+
+## SMA crossover backtesting
+
+Select **Backtest**, choose AAPL and an inclusive New York date range, then enter
+the starting cash and short and long SMA periods. **Run backtest** uses the
+recorded Yahoo WebSocket quote arrivals in the configured SQLite database. A
+range requires saved quotes on the selected dates. The strategy starts with
+cash and builds both SMA windows from completed one-minute candles in the range.
+
+At an upward crossover the strategy queues a buy for one whole share when flat.
+At a downward crossover it queues a close when invested. A pending order waits
+for the next eligible later quote. The simulator uses its observed price with
+zero fees and zero slippage. Missing minutes occupy no SMA slots. The simulator
+freezes each candle at its decision boundary, and ignores later receipts and
+corrections to that candle. The clock stops at the last recorded receipt in the
+selection. An unfinished final minute contributes no signal, and an open
+position is valued at the latest recorded fill or completed close.
+
+The results show signals, orders, fills, P&L, and the equity curve. Runs use a
+fresh virtual account and are repeatable for the same inputs and saved tape.
+[Execution and accounting design](docs/design-pipeline.md#sma-crossover-backtesting) ·
+[Hand calculation and browser verification](docs/verification.md#sma-crossover-backtest-verification)
+
+## Offline verification
+
+With the backend and frontend dependencies from setup already available, run
+this command from the repository root on macOS or Linux. The smoke test also
+requires Node 22.12 or newer and a locally installed Chrome or Chromium.
+
+```sh
+backend/.venv/bin/python scripts/smoke.py
+```
+
+The command starts FastAPI and Vue on temporary local ports, opens a headless
+browser with a fresh profile, and checks SMA lines and settings, paper order
+execution, P&L, and a repeatable backtest. It uses a disposable SQLite database,
+with both Yahoo feed workers disabled. It stops the browser and servers on
+exit and compares the saved database files before and after the test.
+
+The command prints the path to a fresh folder under `artifacts/smoke/` with
+logs, assertions, and screenshots. Use `--output-dir PATH` for a different
+location. If needed, point `SMOKE_NODE` or `SMOKE_CHROME` to an installed
+executable.
+
+GitHub Actions runs the backend tests, frontend tests, production build, and
+browser smoke test on each push and pull request. The workflow saves logs and
+screenshots in its `verification-evidence` artifact. See the
+[verification results](docs/verification.md#final-part-42-offline-verification).

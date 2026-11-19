@@ -1,0 +1,38 @@
+INFO:     Started server process [24505]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:64128 (Press CTRL+C to quit)
+INFO:     127.0.0.1:64134 - "GET /health/smoke-ready HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64138 - "GET /health/smoke-ready HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64149 - "GET /paper/accounts/live HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64152 - "WebSocket /ws/candles?symbol=AAPL&timeframe=1m&sma_short=9&sma_long=21" [accepted]
+INFO:     connection open
+INFO:     127.0.0.1:64155 - "WebSocket /ws/candles?symbol=AAPL&timeframe=1m&sma_short=2&sma_long=3" [accepted]
+INFO:     connection open
+INFO:     connection closed
+INFO:     127.0.0.1:64154 - "GET /history?symbol=AAPL&timeframe=1m&dataset=auto&sma_short=2&sma_long=3 HTTP/1.1" 200 OK
+INFO:     connection closed
+INFO:     127.0.0.1:64158 - "WebSocket /ws/candles?symbol=AAPL&timeframe=1m&sma_short=3&sma_long=4" [accepted]
+INFO:     connection open
+INFO:     127.0.0.1:64157 - "GET /history?symbol=AAPL&timeframe=1m&dataset=auto&sma_short=3&sma_long=4 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64159 - "POST /backtest/run HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64160 - "POST /backtest/run HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64162 - "POST /paper/accounts/live/orders HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64163 - "POST /test/smoke/price/buy-price HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64165 - "GET /paper/accounts/live HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64163 - "POST /test/smoke/price/first-close HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64167 - "GET /paper/accounts/live HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64169 - "POST /paper/accounts/live/orders HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64171 - "GET /paper/accounts/live HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64163 - "POST /test/smoke/price/sell-price HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64173 - "GET /paper/accounts/live HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64163 - "POST /test/smoke/price/second-close HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64175 - "GET /paper/accounts/live HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64177 - "POST /paper/accounts/live/orders HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64163 - "POST /test/smoke/price/exit-price HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64179 - "GET /paper/accounts/live HTTP/1.1" 200 OK
+INFO:     connection closed
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [24505]
