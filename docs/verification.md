@@ -951,5 +951,23 @@ local saved observations and paper account database stayed unchanged.
 [Paper and P&L screenshot](evidence/part4-2/final-automation/smoke-run-1/smoke-paper-pnl.png) ·
 [Backtest screenshot](evidence/part4-2/final-automation/smoke-run-1/smoke-backtest.png)
 
-These screenshots show constructed test observations. A hosted GitHub Actions
-run is still pending.
+These screenshots show constructed test observations. Hosted GitHub Actions
+completed successfully for commit `10f6e7c40b5b380be202b034cb8309126a9cce6d`.
+The run passed 223 backend tests, 60 frontend tests, the production build, browser
+smoke testing, and evidence upload. Backend tests reported nine dependency
+deprecation warnings. [Successful workflow run](https://github.com/Meshal9993/trading-dashboard/actions/runs/44643421817)
+
+### Part 4.2 submission recording
+
+The supplied November 20 recording is saved as
+`docs/evidence/part4-2/final-demo.mov`. Its bytes match the original source.
+The exact duration is 62.76 seconds, which exceeds the earlier 60-second target
+by 2.76 seconds. Native playback decoding completed for all 2,143 video frames
+without an error. The file has no audio track.
+
+The recording shows SMA lines and crossover markers, paper controls and existing
+P&L/fill history, and backtest results of $988 equity and −$12 total P&L. The
+filmed Buy stays pending, while Sell and Close attempts are rejected for
+insufficient shares. Part of the equity curve is visible near the end. The
+backtest trade rows are outside the recorded view.
+[Final Part 4.2 video](evidence/part4-2/final-demo.mov)

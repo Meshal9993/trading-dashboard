@@ -200,8 +200,9 @@ SQLite repository: `backend/app/db/`; models: `backend/app/schemas/`; tests:
 `frontend/src/components/MarketChart.vue`; protocol and data rules:
 `frontend/src/services/`; frontend tests: `frontend/tests/`.
 
-The local `main` branch has `origin` configured to this repository. No commits or
-pushes are authorized. Review changes and remote history before publishing.
+The `part4-2` branch contains the Part 4.2 implementation. The completed Part 4.1
+submission is preserved on `main`, and its original report is archived in
+[report-part4-1.md](report-part4-1.md).
 
 
 ## End-to-end verification evidence
@@ -223,6 +224,13 @@ records.
 - [Final test and replay evidence](docs/evidence/part4-1/prompt09/), including 182
   backend tests, 40 frontend tests, and a successful production build
 - [Demonstration video (53.7 seconds)](docs/evidence/part4-1/final-demo.mov)
+
+Part 4.2 evidence includes the SMA, paper trading, P&L, backtest, and offline
+verification results, together with the supplied final recording. Its measured
+duration is 62.76 seconds. The verification document records its visible
+content and limitations. [Part 4.2 evidence](docs/evidence/part4-2/) ·
+[Final Part 4.2 video](docs/evidence/part4-2/final-demo.mov) ·
+[Recording verification](docs/verification.md#part-42-submission-recording)
 
 ## Official Prompt 05 — bounded Yahoo WebSocket check
 

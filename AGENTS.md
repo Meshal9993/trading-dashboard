@@ -2,8 +2,9 @@
 
 ## Project context
 
-Trading Dashboard for IST 402, Assignment 4, Part 4.1. The selected stack is
-Vue 3, FastAPI, SQLite, WebSockets, and Yahoo Finance.
+Trading Dashboard for IST 402, Assignment 4, Part 4.2, built on the completed
+Part 4.1 application. The selected stack is Vue 3, FastAPI, SQLite, WebSockets,
+and Yahoo Finance.
 
 ## Authorized scope
 
@@ -55,10 +56,10 @@ Vue 3, FastAPI, SQLite, WebSockets, and Yahoo Finance.
 
 ## Current authorized milestone
 
-Prompt 08 connects persistent Yahoo WebSocket observations to the existing candle
-calculator and Vue timeframe selector, while preserving the polling fallback.
+Part 4.2 includes SMA indicators, simulated paper trading, P&L, backtesting,
+and offline automated verification. Preserve the Part 4.1 observation recording,
+candle calculation, polling fallback, and read-only replay.
 Document actual results in docs/verification.md and docs/design-pipeline.md.
-Prompt 09 is authorized: read-only arrival-order SQLite replay, Vue controls, tests and evidence.
 Do not create report.md; the project owner writes it.
 
 ## Part 4.2 automated verification

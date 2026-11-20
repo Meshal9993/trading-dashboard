@@ -92,7 +92,7 @@ onBeforeUnmount(() => client.stop())
   <div class="dashboard">
     <header class="topbar">
       <a class="brand" href="#main" aria-label="Market Observatory home"><span class="brand-mark" aria-hidden="true">▥</span><span>MARKET<span class="brand-light"> / OBSERVATORY</span></span></a>
-      <div class="header-meta"><span class="assignment">IST 402 <span> / </span> A4.1</span><span class="connection" :class="backtestActive ? null : feed.connection"><i />{{ backtestActive ? 'Historical simulation' : connectionLabel }}</span></div>
+      <div class="header-meta"><span class="assignment">IST 402 <span> / </span> A4.2</span><span class="connection" :class="backtestActive ? null : feed.connection"><i />{{ backtestActive ? 'Historical simulation' : connectionLabel }}</span></div>
     </header>
 
     <main id="main">
@@ -153,6 +153,6 @@ onBeforeUnmount(() => client.stop())
       <section class="panel ledger" aria-labelledby="ledger-title"><div class="panel-heading"><div><h2 id="ledger-title">Observation ledger</h2><p>Most recent derived candles · UTC</p></div><span class="small-label">LAST 5 OBSERVATIONS</span></div><div class="table-scroll"><table><caption class="sr-only">Latest AAPL candles, including coverage and completion status</caption><thead><tr><th>EVENT TIME · UTC</th><th>OPEN</th><th>HIGH</th><th>LOW</th><th>CLOSE</th><th>VOLUME</th><th>COVERAGE</th><th>INTERVAL</th></tr></thead><tbody><tr v-for="item in feed.observations.slice(-5).toReversed()" :key="item.observation_id"><td>{{ time(item.event_time) }}</td><td>{{ money(item.open) }}</td><td>{{ money(item.high) }}</td><td>{{ money(item.low) }}</td><td :class="item.close >= item.open ? 'positive' : 'negative'">{{ money(item.close) }}</td><td>{{ integer(item.volume) }}</td><td>{{ item.coverage ? `${item.coverage.available_minutes}/${item.coverage.expected_minutes} min` : 'Not measured' }}</td><td><span class="interval-tag">{{ item.is_complete ? 'Complete*' : 'Forming' }}</span></td></tr><tr v-if="!feed.observations.length"><td colspan="8" class="empty-row">{{ feed.loading ? 'Retrieving observations…' : 'No observations available. The ledger never uses simulated prices.' }}</td></tr></tbody></table></div><p class="table-note">*Interval elapsed is inferred; provider corrections can still arrive.</p></section>
       </div>
     </main>
-    <footer class="page-footer"><span>MARKET OBSERVATORY <span> / </span> IST 402 · Assignment 4.1</span><span>TradingView Lightweight Charts™ · Copyright (с) 2025 TradingView, Inc. · <a href="https://www.tradingview.com/" target="_blank" rel="noopener noreferrer">TradingView</a></span></footer>
+    <footer class="page-footer"><span>MARKET OBSERVATORY <span> / </span> IST 402 · Assignment 4.2</span><span>TradingView Lightweight Charts™ · Copyright (с) 2025 TradingView, Inc. · <a href="https://www.tradingview.com/" target="_blank" rel="noopener noreferrer">TradingView</a></span></footer>
   </div>
 </template>
