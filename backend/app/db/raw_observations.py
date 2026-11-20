@@ -53,7 +53,7 @@ class RawObservationRepository:
     def __init__(self, database):
         self.database = database
 
-    def record(self, message, receipt_time, *, source=SOURCE, correction_of=None, correction_evidence=None):
+    def record(self, message, receipt_time, *, source=SOURCE, correction_of=None, correction_evidence=None, on_record=None):
         symbol, stamp, event, receipt, payload = prepare_message(message, receipt_time)
         if not isinstance(source, str) or not source.strip():
             raise ValueError("Source is required")
@@ -96,15 +96,23 @@ class RawObservationRepository:
                 "INSERT INTO observation_arrivals (observation_id,receipt_time_utc,disposition,correction_evidence) "
                 "VALUES (?,?,?,?)", (observation_id, receipt, disposition, correction_evidence)
             )
-            return RecordedArrival(observation_id, arrival.lastrowid, disposition, revision)
+            recorded = RecordedArrival(observation_id, arrival.lastrowid, disposition, revision)
+            if on_record is not None:
+                on_record(connection, recorded)
+            return recorded
 
-    def arrivals(self, *, after_sequence=0):
-        """Read-only journal inspection, not Prompt 09 replay or a latest-state view."""
-        with self.database.connect() as connection:
-            rows = connection.execute(
-                "SELECT a.arrival_sequence,a.receipt_time_utc,a.disposition,"
-                "a.correction_evidence AS arrival_correction_evidence,o.* "
-                "FROM observation_arrivals a JOIN raw_observations o USING(observation_id) "
-                "WHERE a.arrival_sequence>? ORDER BY a.arrival_sequence", (after_sequence,)
-            ).fetchall()
+    def arrivals(self, *, after_sequence=0, through_sequence=None, transaction=None):
+        """Read a receipt-journal prefix, optionally inside an existing transaction."""
+        if transaction is None:
+            with self.database.connect() as connection:
+                return self.arrivals(after_sequence=after_sequence, through_sequence=through_sequence,
+                                     transaction=connection)
+        upper = through_sequence if through_sequence is not None else (1 << 63) - 1
+        rows = transaction.execute(
+            "SELECT a.arrival_sequence,a.receipt_time_utc,a.disposition,"
+            "a.correction_evidence AS arrival_correction_evidence,o.* "
+            "FROM observation_arrivals a JOIN raw_observations o USING(observation_id) "
+            "WHERE a.arrival_sequence>? AND a.arrival_sequence<=? ORDER BY a.arrival_sequence",
+            (after_sequence, upper),
+        ).fetchall()
         return [dict(dict(row), source_fields=json.loads(row["payload_json"])) for row in rows]

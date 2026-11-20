@@ -1,0 +1,29 @@
+{
+  "result": "PASS",
+  "fixture": "Constructed AAPL quote arrivals; both Yahoo workers disabled.",
+  "first": {
+    "equity": "$988.00",
+    "total": "-$12.00",
+    "fills": "Backtest fills\nOrder\tAction\tShares\tFill price\tSource time (UTC)\tReceived (UTC)\tArrival\n#1\tBuy\t1\t$17.00\t2026-11-09 15:05:03\t2026-11-09 15:05:04\t#6\n#2\tClose position\t1\t$5.00\t2026-11-09 15:07:03\t2026-11-09 15:07:04\t#9",
+    "orders": "Backtest orders\nOrder\tAction\tShares\tSubmitted (UTC)\tStatus\n#1\tBuy\t1\t2026-11-09 15:05:00\tFilled\n#2\tClose position\t1\t2026-11-09 15:07:00\tFilled",
+    "signals": "Strategy signals\nCrossover\tCandle (UTC)\tDecision (UTC)\tShort SMA\tLong SMA\tOrder\nUpward\t2026-11-09 15:04:00\t2026-11-09 15:05:00\t16\t13\t#1\nDownward\t2026-11-09 15:06:00\t2026-11-09 15:07:00\t4\t9\t#2"
+  },
+  "second": {
+    "equity": "$988.00",
+    "total": "-$12.00",
+    "fills": "Backtest fills\nOrder\tAction\tShares\tFill price\tSource time (UTC)\tReceived (UTC)\tArrival\n#1\tBuy\t1\t$17.00\t2026-11-09 15:05:03\t2026-11-09 15:05:04\t#6\n#2\tClose position\t1\t$5.00\t2026-11-09 15:07:03\t2026-11-09 15:07:04\t#9",
+    "orders": "Backtest orders\nOrder\tAction\tShares\tSubmitted (UTC)\tStatus\n#1\tBuy\t1\t2026-11-09 15:05:00\tFilled\n#2\tClose position\t1\t2026-11-09 15:07:00\tFilled",
+    "signals": "Strategy signals\nCrossover\tCandle (UTC)\tDecision (UTC)\tShort SMA\tLong SMA\tOrder\nUpward\t2026-11-09 15:04:00\t2026-11-09 15:05:00\t16\t13\t#1\nDownward\t2026-11-09 15:06:00\t2026-11-09 15:07:00\t4\t9\t#2"
+  },
+  "emptyRange": "Visible no-data message, starting equity preserved",
+  "paperBefore": [
+    "$1,000.00",
+    "0",
+    "Order history\nOrder\tAction\tShares\tStatus\tFill price\tObserved at (UTC)\nNo paper orders yet."
+  ],
+  "paperAfter": [
+    "$1,000.00",
+    "0",
+    "Order history\nOrder\tAction\tShares\tStatus\tFill price\tObserved at (UTC)\nNo paper orders yet."
+  ]
+}

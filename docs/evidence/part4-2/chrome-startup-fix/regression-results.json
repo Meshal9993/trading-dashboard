@@ -1,0 +1,17 @@
+[
+  {
+    "case": "previous-12s-v2",
+    "result": "PASS expected startup failure",
+    "exit_code": 1
+  },
+  {
+    "case": "delayed-15s",
+    "result": "PASS",
+    "startupElapsedMs": 15968
+  },
+  {
+    "case": "forced-failure",
+    "result": "PASS expected startup failure",
+    "exit_code": 1
+  }
+]

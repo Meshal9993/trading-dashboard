@@ -1,0 +1,10 @@
+file:///Users/alqufaidi/Desktop/trading-dashboard/backend/tests/evidence/smoke_browser.mjs:229
+      throw launchError ?? new Error(chromeLog || `Chrome exited with code ${chrome.exitCode}, signal ${chrome.signalCode}`)
+                           ^
+
+Error: Chrome exited with code 1, signal null
+    at file:///Users/alqufaidi/Desktop/trading-dashboard/backend/tests/evidence/smoke_browser.mjs:229:28
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async file:///Users/alqufaidi/Desktop/trading-dashboard/backend/tests/evidence/smoke_browser.mjs:220:18
+
+Node.js v22.23.4

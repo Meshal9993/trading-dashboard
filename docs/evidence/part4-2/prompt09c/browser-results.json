@@ -1,0 +1,29 @@
+{
+  "source": "Three constructed instructor quotes. Test-only receiver, both Yahoo workers disabled.",
+  "steps": [
+    {
+      "step": "Buy 4 pending after retry of same request",
+      "visible": "Paper trading\n\nLive-feed simulation · No real money\n\nRefresh account\nCash balance\n$1,000.00\nAAPL shares held\n0\nShare quantity\nBuy\nSell\nClose Position\n\nOrders wait for the next eligible AAPL WebSocket quote. No fees.\n\nOrder history\nOrder\tAction\tShares\tStatus\tFill price\tObserved at (UTC)\n#1\tBuy\t4\tPending\t—\t—"
+    },
+    {
+      "step": "Buy 4 at $100",
+      "visible": "Paper trading\n\nLive-feed simulation · No real money\n\nRefresh account\nCash balance\n$600.00\nAAPL shares held\n4\nShare quantity\nBuy\nSell\nClose Position\n\nOrders wait for the next eligible AAPL WebSocket quote. No fees.\n\nOrder history\nOrder\tAction\tShares\tStatus\tFill price\tObserved at (UTC)\n#1\tBuy\t4\tFilled\t$100.00\t2026-11-17T22:19:15.084000+00:00"
+    },
+    {
+      "step": "Sell 1 at $110",
+      "visible": "Paper trading\n\nLive-feed simulation · No real money\n\nRefresh account\nCash balance\n$710.00\nAAPL shares held\n3\nShare quantity\nBuy\nSell\nClose Position\n\nOrders wait for the next eligible AAPL WebSocket quote. No fees.\n\nOrder history\nOrder\tAction\tShares\tStatus\tFill price\tObserved at (UTC)\n#2\tSell\t1\tFilled\t$110.00\t2026-11-17T22:19:27.818000+00:00\n#1\tBuy\t4\tFilled\t$100.00\t2026-11-17T22:19:15.084000+00:00"
+    },
+    {
+      "step": "Close 3 at $105",
+      "visible": "Paper trading\n\nLive-feed simulation · No real money\n\nRefresh account\nCash balance\n$1,025.00\nAAPL shares held\n0\nShare quantity\nBuy\nSell\nClose Position\n\nOrders wait for the next eligible AAPL WebSocket quote. No fees.\n\nOrder history\nOrder\tAction\tShares\tStatus\tFill price\tObserved at (UTC)\n#3\tClose Position\t3\tFilled\t$105.00\t2026-11-17T22:19:40.035000+00:00\n#2\tSell\t1\tFilled\t$110.00\t2026-11-17T22:19:27.818000+00:00\n#1\tBuy\t4\tFilled\t$100.00\t2026-11-17T22:19:15.084000+00:00"
+    },
+    {
+      "step": "Reject sale from an empty position",
+      "visible": "Paper trading\n\nLive-feed simulation · No real money\n\nRefresh account\nCash balance\n$1,025.00\nAAPL shares held\n0\nShare quantity\nBuy\nSell\nClose Position\n\nOrders wait for the next eligible AAPL WebSocket quote. No fees.\n\nOrder history\nOrder\tAction\tShares\tStatus\tFill price\tObserved at (UTC)\n#4\tSell\t1\tRejected\nInsufficient shares\n\t—\t—\n#3\tClose Position\t3\tFilled\t$105.00\t2026-11-17T22:19:40.035000+00:00\n#2\tSell\t1\tFilled\t$110.00\t2026-11-17T22:19:27.818000+00:00\n#1\tBuy\t4\tFilled\t$100.00\t2026-11-17T22:19:15.084000+00:00"
+    },
+    {
+      "step": "After real backend process restart",
+      "visible": "Paper trading\n\nLive-feed simulation · No real money\n\nRefresh account\nCash balance\n$1,025.00\nAAPL shares held\n0\nShare quantity\nBuy\nSell\nClose Position\n\nOrders wait for the next eligible AAPL WebSocket quote. No fees.\n\nOrder history\nOrder\tAction\tShares\tStatus\tFill price\tObserved at (UTC)\n#4\tSell\t1\tRejected\nInsufficient shares\n\t—\t—\n#3\tClose Position\t3\tFilled\t$105.00\t2026-11-17T22:19:40.035000+00:00\n#2\tSell\t1\tFilled\t$110.00\t2026-11-17T22:19:27.818000+00:00\n#1\tBuy\t4\tFilled\t$100.00\t2026-11-17T22:19:15.084000+00:00"
+    }
+  ]
+}

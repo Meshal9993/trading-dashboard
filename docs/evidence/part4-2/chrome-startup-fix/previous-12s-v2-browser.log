@@ -1,0 +1,9 @@
+file:///private/tmp/ist402-chrome-regression2-j01as91n/original-smoke.mjs:28
+  throw new Error(`Timed out waiting for ${label}${lastError ? `: ${lastError.message}` : ''}`)
+        ^
+
+Error: Timed out waiting for a local Chrome page target: ENOENT: no such file or directory, open '/var/folders/20/7d6ym4q54q907m_10zpjv1zw0000gn/T/ist402-smoke-ht0itqen/chrome-profile/DevToolsActivePort'
+    at waitFor (file:///private/tmp/ist402-chrome-regression2-j01as91n/original-smoke.mjs:28:9)
+    at async file:///private/tmp/ist402-chrome-regression2-j01as91n/original-smoke.mjs:206:18
+
+Node.js v22.23.4

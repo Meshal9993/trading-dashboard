@@ -1,0 +1,15 @@
+{
+  "result": "PASS",
+  "failure": null,
+  "saved_database_files_unchanged": true,
+  "checked_database_locations": [
+    "default"
+  ],
+  "existing_saved_databases": [
+    "default"
+  ],
+  "offline_feed_workers": {
+    "YAHOO_FEED_ENABLED": "false",
+    "YAHOO_STREAM_ENABLED": "false"
+  }
+}

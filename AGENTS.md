@@ -2,8 +2,9 @@
 
 ## Project context
 
-Trading Dashboard for IST 402, Assignment 4, Part 4.1. The selected stack is
-Vue 3, FastAPI, SQLite, WebSockets, and Yahoo Finance.
+Trading Dashboard for IST 402, Assignment 4, Part 4.2, built on the completed
+Part 4.1 application. The selected stack is Vue 3, FastAPI, SQLite, WebSockets,
+and Yahoo Finance.
 
 ## Authorized scope
 
@@ -55,8 +56,22 @@ Vue 3, FastAPI, SQLite, WebSockets, and Yahoo Finance.
 
 ## Current authorized milestone
 
-Prompt 08 connects persistent Yahoo WebSocket observations to the existing candle
-calculator and Vue timeframe selector, while preserving the polling fallback.
+Part 4.2 includes SMA indicators, simulated paper trading, P&L, backtesting,
+and offline automated verification. Preserve the Part 4.1 observation recording,
+candle calculation, polling fallback, and read-only replay.
 Document actual results in docs/verification.md and docs/design-pipeline.md.
-Prompt 09 is authorized: read-only arrival-order SQLite replay, Vue controls, tests and evidence.
 Do not create report.md; the project owner writes it.
+
+## Part 4.2 automated verification
+
+- Run `backend/.venv/bin/python scripts/smoke.py` from the repository root to
+  check SMA, simulated orders, P&L, and backtesting in a headless browser.
+- Keep both Yahoo workers disabled in CI and browser smoke tests. Seed a
+  disposable SQLite database and use an isolated browser profile. Put fixture
+  controls exclusively under `backend/tests/`.
+- Verify that teardown stops the servers and browser. Compare the saved
+  database and SQLite sidecars before and after the smoke test. Keep local
+  databases, browser profiles, and credentials out of evidence.
+- Save measured logs and screenshots under `docs/evidence/part4-2/`. Scripts
+  should return a failing exit status for a failed check.
+- Ask for approval before installing any missing local dependencies or browsers.

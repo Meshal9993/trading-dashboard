@@ -644,3 +644,38 @@ and `/replay/frame`, sharing live candle calculations and preserving receipt-pre
 isolation. See [design-pipeline.md](design-pipeline.md) for range, baseline, clock,
 revision and frozen-boundary semantics. Earlier pending-Prompt-09 notes describe
 prior milestones. No schema migration was needed.
+
+## Prompt 09A indicators
+
+Optional SMA data in history, streaming, and replay responses is derived from
+the completed candles in the corresponding snapshot. The calculator and
+crossover rules are described in [the pipeline design](design-pipeline.md#prompt-09a-simple-moving-averages-and-crossovers).
+
+## Prompt 09C paper trading
+
+The local SQLite schema adds paper accounts, order requests and linked fills.
+A shared Python execution function updates a simulated AAPL position from the
+next eligible observation. See [the pipeline design](design-pipeline.md#prompt-09c--simulated-order-execution)
+for timing, replay separation, eligibility, and transaction rules.
+
+## Prompt 09D paper valuation
+
+`paper_pnl_history` stores immutable account snapshots after fills and eligible
+completed one-minute candles. Rows carry the event identity and price
+provenance. See [the pipeline design](design-pipeline.md#prompt-09d--paper-valuation)
+for weighted-average accounting, replay, and unavailable valuations.
+
+## SMA crossover backtest
+
+The backtester reads a saved receipt journal and uses an isolated virtual
+account. See [the pipeline design](design-pipeline.md#sma-crossover-backtesting)
+for candle deadlines, next-quote fills, and the shared accounting rules.
+
+## Offline browser startup
+
+The smoke launcher gives Chrome 45 seconds to expose its loopback debugging
+target before loading the dashboard. Application checks retain their existing
+12-second deadlines and assertions. Chrome exit or launch errors fail startup
+immediately. The normal temporary profile, sandbox, offline fixtures, and
+process cleanup remain in use. Artifacts include the Chrome executable/version,
+startup timing, and complete stderr for diagnosing runner failures.

@@ -1,0 +1,101 @@
+{
+  "result": "PASS",
+  "fixture": "Constructed AAPL data with both Yahoo workers disabled",
+  "historical_arrivals_unchanged": 9,
+  "new_paper_arrivals": 5,
+  "paper_account": {
+    "id": "live",
+    "cash_micros": 1025000000,
+    "shares": 0
+  },
+  "fills": [
+    {
+      "order_id": 1,
+      "arrival_sequence": 10,
+      "quantity": 4,
+      "price_micros": 100000000,
+      "executed_at": "2026-11-10T15:00:02.000000+00:00"
+    },
+    {
+      "order_id": 2,
+      "arrival_sequence": 12,
+      "quantity": 1,
+      "price_micros": 110000000,
+      "executed_at": "2026-11-10T15:01:02.000000+00:00"
+    },
+    {
+      "order_id": 3,
+      "arrival_sequence": 14,
+      "quantity": 3,
+      "price_micros": 105000000,
+      "executed_at": "2026-11-10T15:02:02.000000+00:00"
+    }
+  ],
+  "pnl_history": [
+    {
+      "event_key": "fill:1",
+      "event": "fill",
+      "order_id": 1,
+      "account_id": "live",
+      "symbol": "AAPL",
+      "price_micros": 100000000,
+      "cash_micros": 600000000,
+      "shares": 4,
+      "realized_micros": "0",
+      "unrealized_micros": "0",
+      "total_micros": "0"
+    },
+    {
+      "event_key": "candle:2026-11-10T15:00:00Z",
+      "event": "completed_candle",
+      "order_id": null,
+      "account_id": "live",
+      "symbol": "AAPL",
+      "price_micros": 110000000,
+      "cash_micros": 600000000,
+      "shares": 4,
+      "realized_micros": "0",
+      "unrealized_micros": "40000000",
+      "total_micros": "40000000"
+    },
+    {
+      "event_key": "fill:2",
+      "event": "fill",
+      "order_id": 2,
+      "account_id": "live",
+      "symbol": "AAPL",
+      "price_micros": 110000000,
+      "cash_micros": 710000000,
+      "shares": 3,
+      "realized_micros": "10000000",
+      "unrealized_micros": "30000000",
+      "total_micros": "40000000"
+    },
+    {
+      "event_key": "candle:2026-11-10T15:01:00Z",
+      "event": "completed_candle",
+      "order_id": null,
+      "account_id": "live",
+      "symbol": "AAPL",
+      "price_micros": 95000000,
+      "cash_micros": 710000000,
+      "shares": 3,
+      "realized_micros": "10000000",
+      "unrealized_micros": "-15000000",
+      "total_micros": "-5000000"
+    },
+    {
+      "event_key": "fill:3",
+      "event": "fill",
+      "order_id": 3,
+      "account_id": "live",
+      "symbol": "AAPL",
+      "price_micros": 105000000,
+      "cash_micros": 1025000000,
+      "shares": 0,
+      "realized_micros": "25000000",
+      "unrealized_micros": "0",
+      "total_micros": "25000000"
+    }
+  ]
+}

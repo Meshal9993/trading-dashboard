@@ -36,3 +36,6 @@ htmlcov/
 .DS_Store
 .idea/
 .vscode/
+
+# Local smoke runs and CI artifact staging
+/artifacts/

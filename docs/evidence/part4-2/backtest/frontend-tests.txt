@@ -1,0 +1,17 @@
+
+ RUN  v3.2.7 /Users/alqufaidi/Desktop/trading-dashboard/frontend
+
+ ✓ tests/observations.test.js (11 tests) 5ms
+ ✓ tests/marketClient.test.js (11 tests) 15ms
+ ✓ tests/MarketChart.test.js (4 tests) 19ms
+ ✓ tests/PaperPerformance.test.js (2 tests) 34ms
+ ✓ tests/PaperAccount.test.js (4 tests) 63ms
+ ✓ tests/ReplayControls.test.js (8 tests) 89ms
+ ✓ tests/BacktestView.test.js (7 tests) 108ms
+ ✓ tests/App.test.js (13 tests) 192ms
+
+ Test Files  8 passed (8)
+      Tests  60 passed (60)
+   Start at  23:00:33
+   Duration  871ms (transform 456ms, setup 0ms, collect 1.42s, tests 525ms, environment 2.43s, prepare 409ms)
+

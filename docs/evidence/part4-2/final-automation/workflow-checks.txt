@@ -1,0 +1,1 @@
+PASS: workflow YAML, push and pull request events, read permissions, offline flags, temporary SQLite path, Bash syntax, failure propagation, four checks, and always-run evidence upload.

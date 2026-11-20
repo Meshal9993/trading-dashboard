@@ -1,0 +1,203 @@
+- banner:
+  - link "Market Observatory home":
+    - /url: "#main"
+    - generic: ▥
+    - generic: MARKET / OBSERVATORY
+  - generic: IST 402 / A4.1
+  - generic: Replay · offline capable
+- main:
+  - paragraph: MARKET WORKSPACE / EQUITIES
+  - heading "A clearer view of the market." [level=1]
+  - paragraph: Price, volume, and the context behind every observation.
+  - text: Y!
+  - generic: Yahoo Finance
+  - generic: "|"
+  - generic: REPLAY · RECORDED DATA
+  - generic "Dashboard mode":
+    - button "Live dashboard"
+    - button "Replay" [pressed]
+  - region "Replay controls":
+    - heading "Replay recorded observations" [level=2]
+    - paragraph: Read-only SQLite playback · receipt range in UTC · original arrival order
+    - text: Saved symbol
+    - combobox "Saved symbol":
+      - option "Select symbol" [disabled]
+      - option "AAPL" [selected]
+    - text: Start receipt (UTC ISO)
+    - textbox "Replay start UTC":
+      - /placeholder: 2026-11-10T20:47:00Z
+      - text: 2026-11-09T14:31:00.000000+00:00
+    - text: End receipt (UTC ISO)
+    - textbox "Replay end UTC":
+      - /placeholder: 2026-11-10T20:53:00Z
+      - text: 2026-11-09T14:37:00.000000+00:00
+    - button "Load / restart replay"
+    - button "Play replay"
+    - button "Next observation"
+    - strong: Replay clock · 2026-11-09T14:35:00+00:00
+    - generic: 5 / 7 arrivals · Paused
+    - generic: "Arrival #5 · inserted · source 2026-11-09T14:34:05.000000+00:00 · original receipt 2026-11-09T14:35:00.000000+00:00"
+    - paragraph: Pre-range records supply baselines and correction context within affected candles. No observations are written. Playback advances one arrival every 300 ms, plus request time.
+  - region "AAPL overview":
+    - generic: A
+    - generic: AAPL NASDAQ
+    - paragraph: Apple Inc. · USD
+    - text: LATEST OBSERVED CLOSE
+    - generic: 19.00 USD
+    - paragraph: +46.15% over displayed candles
+    - generic: CANDLE INTERVAL
+    - strong: 1 minute
+    - generic: Regular session only
+    - generic: LATEST CANDLE VOLUME
+    - strong: "10"
+    - generic: Shares · observed volume
+  - region "Replay / AAPL":
+    - heading "Replay / AAPL" [level=2]
+    - paragraph: 1 minute candles · UTC · Complete interval
+    - combobox "Candle timeframe":
+      - option "1m" [selected]
+      - option "5m"
+      - option "15m"
+      - option "1h"
+      - option "1d"
+    - generic "Observation window":
+      - button "Latest 390" [pressed]
+      - button "All received"
+    - button "Fit chart to observations": ⤢
+    - generic "Selected candle":
+      - generic: O 19.00
+      - generic: H 19.00
+      - generic: L 19.00
+      - generic: C 19.00
+      - generic: VOL 10
+    - form "Moving average periods":
+      - text: Short SMA period
+      - spinbutton "Short SMA period": "2"
+      - text: Long SMA period
+      - spinbutton "Long SMA period": "4"
+      - button "Apply SMA periods" [active]
+    - generic "Moving averages for selected candle":
+      - generic: Short SMA (2) 16.00
+      - generic: Long SMA (4) 12.25
+      - generic: Confirmed crossover ↑ up
+    - img "Replay · AAPL 1m OHLC candlesticks and trading volume, Yahoo Finance observations. Unknown volume is not drawn. Times in UTC.":
+      - table:
+        - row:
+          - cell
+          - cell
+          - cell
+        - row:
+          - cell
+        - row "Charting by TradingView":
+          - cell
+          - cell "Charting by TradingView":
+            - link "Charting by TradingView":
+              - /url: https://www.tradingview.com/?utm_medium=lwc-link&utm_campaign=lwc-chart&utm_source=127.0.0.1/
+          - cell
+        - row:
+          - cell
+          - cell
+          - cell
+    - text: Up candle
+    - text: Down candle
+    - text: 5 candles
+    - generic: ·
+    - text: Scroll to zoom · drag to explore
+    - status:
+      - generic: ⓘ
+      - strong: Replay · recorded observations
+      - paragraph: Read-only arrival-order playback from SQLite. Source timestamps are preserved; late observations and revisions appear when their receipt is replayed. This is not live data.
+  - complementary:
+    - region "Feed monitor":
+      - heading "Feed monitor" [level=2]
+      - generic: AAPL
+      - strong: Replay · recorded data
+      - term: Data source
+      - definition: Yahoo Finance
+      - term: Delivery
+      - definition: SQLite arrival replay
+      - term: Upstream
+      - definition: Not required for replay · socket closed
+      - term: Market
+      - definition: Unknown
+      - term: Data age
+      - definition: 55s
+      - generic: NEWEST SOURCE OBSERVATION · UTC
+      - strong: Nov 09, 2026, 14:34:05
+      - generic: LATEST SOURCE RECEIPT · UTC
+      - strong: Nov 09, 2026, 14:35:00
+      - generic: LAST SUCCESSFUL POLL · UTC
+      - strong: Not available
+    - text: KNOW YOUR DATA
+    - heading "Context before conviction." [level=2]
+    - paragraph: Raw candles are calculated from stored Yahoo WebSocket observations. Polling fallback is a separate dataset. Neither source guarantees real-time exchange prices.
+    - paragraph: Age uses the newest received source timestamp for streamed observations, or the latest provider timestamp for polling fallback. Unknown volume is shown explicitly; completion does not guarantee finality.
+    - generic: EXPLICIT PROVENANCE · NO REAL-TIME GUARANTEE
+  - region "Observation ledger":
+    - heading "Observation ledger" [level=2]
+    - paragraph: Most recent derived candles · UTC
+    - generic: LAST 5 OBSERVATIONS
+    - table "Latest AAPL candles, including coverage and completion status":
+      - caption: Latest AAPL candles, including coverage and completion status
+      - rowgroup:
+        - row "EVENT TIME · UTC OPEN HIGH LOW CLOSE VOLUME COVERAGE INTERVAL":
+          - columnheader "EVENT TIME · UTC"
+          - columnheader "OPEN"
+          - columnheader "HIGH"
+          - columnheader "LOW"
+          - columnheader "CLOSE"
+          - columnheader "VOLUME"
+          - columnheader "COVERAGE"
+          - columnheader "INTERVAL"
+      - rowgroup:
+        - row "Nov 09, 2026, 14:34:00 19.00 19.00 19.00 19.00 10 1/1 min Complete*":
+          - cell "Nov 09, 2026, 14:34:00"
+          - cell "19.00"
+          - cell "19.00"
+          - cell "19.00"
+          - cell "19.00"
+          - cell "10"
+          - cell "1/1 min"
+          - cell "Complete*"
+        - row "Nov 09, 2026, 14:33:00 13.00 13.00 13.00 13.00 10 1/1 min Complete*":
+          - cell "Nov 09, 2026, 14:33:00"
+          - cell "13.00"
+          - cell "13.00"
+          - cell "13.00"
+          - cell "13.00"
+          - cell "10"
+          - cell "1/1 min"
+          - cell "Complete*"
+        - row "Nov 09, 2026, 14:32:00 7.00 7.00 7.00 7.00 10 1/1 min Complete*":
+          - cell "Nov 09, 2026, 14:32:00"
+          - cell "7.00"
+          - cell "7.00"
+          - cell "7.00"
+          - cell "7.00"
+          - cell "10"
+          - cell "1/1 min"
+          - cell "Complete*"
+        - row "Nov 09, 2026, 14:31:00 10.00 10.00 10.00 10.00 10 1/1 min Complete*":
+          - cell "Nov 09, 2026, 14:31:00"
+          - cell "10.00"
+          - cell "10.00"
+          - cell "10.00"
+          - cell "10.00"
+          - cell "10"
+          - cell "1/1 min"
+          - cell "Complete*"
+        - row "Nov 09, 2026, 14:30:00 13.00 13.00 13.00 13.00 Unknown 1/1 min Complete*":
+          - cell "Nov 09, 2026, 14:30:00"
+          - cell "13.00"
+          - cell "13.00"
+          - cell "13.00"
+          - cell "13.00"
+          - cell "Unknown"
+          - cell "1/1 min"
+          - cell "Complete*"
+    - paragraph: "*Interval elapsed is inferred; provider corrections can still arrive."
+- contentinfo:
+  - generic: MARKET OBSERVATORY / IST 402 · Assignment 4.1
+  - text: TradingView Lightweight Charts™ · Copyright (с) 2025 TradingView, Inc. ·
+  - link "TradingView":
+    - /url: https://www.tradingview.com/

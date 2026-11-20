@@ -1,87 +1,102 @@
-# IST 402 — Assignment 4, Part 4.1
-## Live Market Workstation: Market Data and Dashboard
+# IST 402 — Assignment 4, Part 4.2
+## Indicators, Simulated Trading, and Backtesting
 
 **Student:** Meshal Alqufaidi
 
 **GitHub Repository:** https://github.com/Meshal9993/trading-dashboard
 
-**Branch:** main
+**Branch:** part4-2
 
-**Submission Commit SHA:** `a687fe940c73cc9de691849b5ec35c3912c0caa5`
+**Submission Commit SHA:** `10f6e7c40b5b380be202b034cb8309126a9cce6d`
 
 ### 1. Project Overview
 
-In this assignment, I created a market dashboard that visualizes AAPL stock prices. The application is built with Vue 3 frontend, FastAPI backend, and SQLite database to store market data.
+For Part 4.2, I improved my trading dashboard by adding technical indicators, simulated trading, profit and loss calculations, and backtesting. The application uses Vue 3, FastAPI, and SQLite.
 
-The dashboard connects to Yahoo Finance through a WebSocket and shows candlestick charts, trading volumes when available, and information about the source of data. The user can also see saved market data if there is no live data feed.
+The goal was to understand how trading signals are calculated and how a simulated strategy performs using recorded market data.
 
 ### 2. Completed Features
 
-I have implemented the following features:
+**SMA Indicators**
 
-- Connected the backend to Yahoo Finance through a WebSocket.
-- Visualized AAPL candlestick charts and trading volumes when available.
-- Added five timeframes: 1 min, 5 mins, 15 mins, 1 hour, and 1 day.
-- Used WebSockets to send market updates from FastAPI to Vue.
-- Stored market observations in SQLite database.
-- Added source timestamps, receipt timestamps, and feed status.
-- Added a 30 second fallback polling if the Yahoo WebSocket becomes unavailable.
-- Created a Replay feature to visualize recorded market observations.
-- Added handling for duplicate messages, revisions, and late observations.
+I have included two Simple Moving Averages (SMA) with customizable time periods. Both SMA lines and their crossover points are shown on the dashboard.
 
+Calculations are done with the help of completed candlesticks only. I have checked my calculations even when replaying the chart.
+
+**Simulated Trading**
+
+I introduced an account that allows players to trade without spending real cash through paper trading.
+
+The software keeps track of the cash, stocks, orders, and transactions done through SQLite.
+
+**Profit and Loss**
+
+Calculations of profit made, profit not made, and total profit/loss have been incorporated.
+
+The account balance and Profit & Loss information is presented in the dashboard. The calculation of gains/losses is based on the weighted average cost of purchase.
+**Backtesting**
+
+The backtest component I have developed backtests the SMA crossing strategy on recorded data.
+
+This includes specifying the dates when testing occurs, starting balance, and the lengths of the SMAs. This component provides users with trading signals, completed trades, ending balance, and equity curve.
 ### 3. Design Decisions
 
-I used Vue 3 as it allows creating an interactive dashboard. FastAPI is responsible for the market data and sending updates to the frontend. SQLite database is used to store observations to reuse them later.
 
-One of the design decisions was to store incoming observations before sending updates to the dashboard. This allows keeping a record of the original market data.
 
-The application uses source timestamps to calculate candles. For Replay, it uses the original order of observations' arrival. This allows seeing how candles were changed due to new or revised data.
+In paper trading, orders are based on the next eligible price seen rather than making an assumption that the order is made at an earlier price.
 
-I also added a fallback connection and clear feed status messages to inform the user about the unavailability or delay of the data.
+Backtesting utilizes only data available at each decision point. This is to avoid using future data when generating signals for the application.
+
+It is also separated from the usual simulated trading account to avoid any changes to stored account balances during testing.
 
 ### 4. Testing and Verification
 
-I tested the backend, frontend, database, and dashboard.
+I tested the indicators, paper trading, P&L calculations, and backtesting.
 
-**Final test results:**
+**Final results:**
 
-- Backend: 182 tests passed.
-- Frontend: 40 tests passed.
+- Backend: 223 tests passed.
+- Frontend: 60 tests passed.
 - Production build: passed.
+- Browser smoke tests: passed.
+- GitHub Actions: passed.
 
-I verified that the real Yahoo Finance update was processed by the backend, stored in SQLite database, sent through WebSocket, and appeared on the visible chart.
+For the SMA calculations, I verified the instructor's example with upward crossover values of 16 and 13 and downward crossover values of 4 and 9.
 
-I simulated a Yahoo Finance feed outage during testing and verified recovery. The application kept showing saved data during the simulated outage.
+For paper trading, I tested buying four shares at $100, selling one at $110, and closing three at $105. The account finished with $1,025 and zero shares.
 
-For Replay, I tested 69 saved real market observations twice: both tests gave the same result without changing the stored records.
+For profit and loss, the final realized profit was $25.
 
-I also tested duplicate observations, revisions, late arrivals, and various chart timeframes.
+For backtesting, I tested the SMA crossover strategy using a $1,000 starting balance. The application bought one share at $17 and sold it at $5. The final account equity was $988, with a $12 loss.
+
+I also verified that repeated tests produced the same results and did not change the original paper trading account.
 
 ### 5. Limitations
 
-Candle aggregation focuses on AAPL regular market sessions. Saved history and replay are available outside market hours.
+The strategy currently implemented is based on AAPL, and operates with a hypothetical long-only trading account.
 
-The data from Yahoo Finance might be delayed, and the application does not guarantee real-time exchange prices. Some volume values are unknown as the available market observations do not provide enough information to calculate them correctly.
+The strategy involves trading full shares with no trading costs or slippage. Orders may remain pending or be rejected. Successful simulated fills execute the full order quantity. One-share entries are applied to backtesting.
 
-Replay works with a constant playback speed. The application is a learning project and is not intended for real trading.
+SMA, paper trading, P&L, and backtesting tests used constructed offline fixtures. No confirmation of real-time market delay and paper trading powered by Yahoo was provided.
+
+Backtesting shows how the strategy performed on the selected historical data, but it does not guarantee future trading performance.
 
 ### 6. Supporting Documentation and Evidence
 
-- [README](https://github.com/Meshal9993/trading-dashboard/blob/main/README.md)
-- [Design Pipeline](https://github.com/Meshal9993/trading-dashboard/blob/main/docs/design-pipeline.md)
-- [Verification Results](https://github.com/Meshal9993/trading-dashboard/blob/main/docs/verification.md)
-- [Live Streaming Evidence](https://github.com/Meshal9993/trading-dashboard/tree/main/docs/evidence/part4-1/prompt08)
-- [Replay and Final Test Evidence](https://github.com/Meshal9993/trading-dashboard/tree/main/docs/evidence/part4-1/prompt09)
+- [README](https://github.com/Meshal9993/trading-dashboard/blob/part4-2/README.md)
+- [Design Pipeline](https://github.com/Meshal9993/trading-dashboard/blob/part4-2/docs/design-pipeline.md)
+- [Verification Results](https://github.com/Meshal9993/trading-dashboard/blob/part4-2/docs/verification.md)
+- [Part 4.2 Evidence](https://github.com/Meshal9993/trading-dashboard/tree/part4-2/docs/evidence/part4-2)
+- [GitHub Actions Results](https://github.com/Meshal9993/trading-dashboard/actions/runs/44643421817)
 
 ### 7. Demonstration Video
 
-**Duration:** 53.7 seconds
+[Watch the Part 4.2 Demonstration](https://github.com/Meshal9993/trading-dashboard/blob/part4-2/docs/evidence/part4-2/final-demo.mov)
 
-[Watch the Application Demonstration](https://github.com/Meshal9993/trading-dashboard/blob/main/docs/evidence/part4-1/final-demo.mov)
+The video shows the SMA indicators, paper trading controls, P&L history, and backtesting results.
 
-The video shows the dashboard, candlestick chart, market data status, timeframe selection, and Replay feature.
+The video is approximately 63 seconds long. Some filmed trade requests remained pending or were rejected, while separate automated tests verified the successful trade sequence and accounting results.
 
 ### 8. Conclusion
 
-This project allowed me to learn how market information flows from an external source to backend, database, and frontend dashboard. I also learned how to handle connection failures, store market observations, and test the application based on recorded data.
-
+This project helped me understand how trading indicators work and how simulated trading can be tested. I learned how to calculate moving averages, record paper trades, measure profits and losses, and evaluate a strategy using historical market data.

@@ -1,0 +1,4 @@
+Chrome debugging target ready after 15968 ms.
+PASS SMA chart: 2/3 shows $3.00 and $4.33; 3/4 shows $4.33 and $8.00.
+PASS Backtest: both runs show upward and downward signals, $17 and $5 next-observation fills, $988 final equity.
+PASS Paper trading and P&L: three orders waited for distinct fixture arrivals; $1,025 cash, 0 shares, $25 realized, $0 unrealized.
