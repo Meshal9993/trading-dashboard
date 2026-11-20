@@ -1,0 +1,7 @@
+{
+  "executable": "/private/tmp/ist402-chrome-regression2-j01as91n/delayed-chrome",
+  "version": "Google Chrome 157.0.8103.80",
+  "versionError": null,
+  "startupTimeoutMs": 45000,
+  "startupElapsedMs": 15968
+}

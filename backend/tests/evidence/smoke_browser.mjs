@@ -1,6 +1,8 @@
-import { spawn } from 'node:child_process'
+import { spawn, spawnSync } from 'node:child_process'
+import { createWriteStream } from 'node:fs'
 import { mkdir, readFile, writeFile } from 'node:fs/promises'
 import { join } from 'node:path'
+import { finished } from 'node:stream/promises'
 import { setTimeout as delay } from 'node:timers/promises'
 import assert from 'node:assert/strict'
 
@@ -95,6 +97,16 @@ async function stopChrome(chrome, exited) {
 }
 
 await mkdir(outputDir, { recursive: true })
+const startupTimeout = 45_000
+const version = spawnSync(chromePath, ['--version'], { encoding: 'utf8', timeout: 5_000 })
+const diagnostics = {
+  executable: chromePath,
+  version: (version.stdout || version.stderr || '').trim(),
+  versionError: version.error?.message ?? null,
+  startupTimeoutMs: startupTimeout,
+}
+await writeFile(join(outputDir, 'chrome-startup.json'), JSON.stringify(diagnostics, null, 2))
+const startupStarted = Date.now()
 const chrome = spawn(chromePath, [
   '--headless=new', '--disable-background-networking', '--disable-dev-shm-usage', '--no-first-run',
   '--no-default-browser-check', '--no-proxy-server',
@@ -102,6 +114,8 @@ const chrome = spawn(chromePath, [
   '--remote-debugging-address=127.0.0.1', '--remote-debugging-port=0', `--user-data-dir=${profileDir}`,
   '--window-size=1440,1140', 'about:blank',
 ], { stdio: ['ignore', 'ignore', 'pipe'] })
+const chromeLogFile = createWriteStream(join(outputDir, 'chrome.log'))
+chrome.stderr.pipe(chromeLogFile)
 let chromeLog = ''
 chrome.stderr.on('data', chunk => { chromeLog = (chromeLog + chunk).slice(-3000) })
 let launchError
@@ -203,15 +217,21 @@ async function backtestResult() {
 }
 
 try {
-  const target = await waitFor('a local Chrome page target', async () => {
-    if (launchError) throw launchError
-    if (chrome.exitCode !== null) throw new Error(chromeLog || `Chrome exited with code ${chrome.exitCode}`)
-    const portFile = await readFile(join(profileDir, 'DevToolsActivePort'), 'utf8')
-    const [port] = portFile.split('\n')
-    const response = await fetchOk(`http://127.0.0.1:${port}/json/list`)
-    const targets = await response.json()
-    return targets.find(item => item.type === 'page')?.webSocketDebuggerUrl
-  })
+  const target = await Promise.race([
+    waitFor('a local Chrome page target', async () => {
+      const portFile = await readFile(join(profileDir, 'DevToolsActivePort'), 'utf8')
+      const [port] = portFile.split('\n')
+      const response = await fetchOk(`http://127.0.0.1:${port}/json/list`)
+      const targets = await response.json()
+      return targets.find(item => item.type === 'page')?.webSocketDebuggerUrl
+    }, startupTimeout),
+    exited.then(() => {
+      throw launchError ?? new Error(chromeLog || `Chrome exited with code ${chrome.exitCode}, signal ${chrome.signalCode}`)
+    }),
+  ])
+  diagnostics.startupElapsedMs = Date.now() - startupStarted
+  await writeFile(join(outputDir, 'chrome-startup.json'), JSON.stringify(diagnostics, null, 2))
+  console.log(`Chrome debugging target ready after ${diagnostics.startupElapsedMs} ms.`)
   devtools = await openDevTools(target)
   await devtools.send('Page.enable')
   await devtools.send('Runtime.enable')
@@ -289,4 +309,5 @@ try {
 } finally {
   devtools?.close()
   await stopChrome(chrome, exited)
+  await finished(chromeLogFile)
 }

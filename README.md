@@ -567,6 +567,10 @@ logs, assertions, and screenshots. Use `--output-dir PATH` for a different
 location. If needed, point `SMOKE_NODE` or `SMOKE_CHROME` to an installed
 executable.
 
+Chrome has a separate 45-second startup deadline. Dashboard checks retain their
+12-second deadlines. Each run also saves `chrome-startup.json` with the executable,
+version, and startup timing, plus the complete Chrome stderr in `chrome.log`.
+
 GitHub Actions runs the backend tests, frontend tests, production build, and
 browser smoke test on each push and pull request. The workflow saves logs and
 screenshots in its `verification-evidence` artifact. See the

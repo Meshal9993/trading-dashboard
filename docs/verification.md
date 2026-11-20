@@ -971,3 +971,22 @@ filmed Buy stays pending, while Sell and Close attempts are rejected for
 insufficient shares. Part of the equity curve is visible near the end. The
 backtest trade rows are outside the recorded view.
 [Final Part 4.2 video](evidence/part4-2/final-demo.mov)
+
+### Chrome startup verification
+
+Both attempts of [run 44682729956](https://github.com/Meshal9993/trading-dashboard/actions/runs/44682729956)
+passed 223 backend tests, 60 frontend tests, and the production build, then failed
+before dashboard navigation. Chrome was still running when the shared 12-second
+wait expired without a `DevToolsActivePort` file. The logs contained D-Bus
+warnings, which do not establish the cause of the startup delay.
+
+The launcher now uses a separate 45-second Chrome startup deadline and records
+its version, readiness timing, and full stderr. The application assertion body
+is byte-for-byte identical to the previous version, including its 12-second
+waits. A controlled 15-second Chrome delay reproduced the previous startup
+failure. With the fix, Chrome became ready in 15,968 ms and the full SMA, paper
+trading, P&L, backtest, and SQLite checks passed. A forced launch failure still
+returned status 1. Saved database fingerprints matched before and after these
+runs. Local checks also passed all 223 backend tests, 60 frontend tests, and the
+production build.
+[Local startup verification evidence](evidence/part4-2/chrome-startup-fix/)

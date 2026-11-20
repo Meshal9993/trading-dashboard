@@ -670,3 +670,12 @@ for weighted-average accounting, replay, and unavailable valuations.
 The backtester reads a saved receipt journal and uses an isolated virtual
 account. See [the pipeline design](design-pipeline.md#sma-crossover-backtesting)
 for candle deadlines, next-quote fills, and the shared accounting rules.
+
+## Offline browser startup
+
+The smoke launcher gives Chrome 45 seconds to expose its loopback debugging
+target before loading the dashboard. Application checks retain their existing
+12-second deadlines and assertions. Chrome exit or launch errors fail startup
+immediately. The normal temporary profile, sandbox, offline fixtures, and
+process cleanup remain in use. Artifacts include the Chrome executable/version,
+startup timing, and complete stderr for diagnosing runner failures.
